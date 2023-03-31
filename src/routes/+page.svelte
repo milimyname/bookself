@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { trpc } from '$lib/trpc/client';
 
@@ -10,6 +11,9 @@
 		greeting = await trpc($page).greeting.query();
 		loading = false;
 	};
+
+	// If the user is not signed in, redirect to the login page
+	if (!$page.data.session) goto('/login');
 </script>
 
 <h6>Loading data in<br /><code>+page.svelte</code></h6>
