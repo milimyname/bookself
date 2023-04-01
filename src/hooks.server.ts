@@ -35,6 +35,6 @@ export const handle: Handle = sequence(
 	protect,
 	createTRPCHandle({
 		router,
-		context: createContext
+		createContext
 	})
 );

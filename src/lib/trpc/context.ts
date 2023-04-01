@@ -4,11 +4,17 @@ import type { inferAsyncReturnType } from '@trpc/server';
 
 // we're not using the event parameter is this example,
 // hence the eslint-disable rule
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export async function createContext(event: RequestEvent) {
-	return {
-		// context information
-	};
+	try {
+		const session = await event.locals.getSession();
+		return {
+			session
+		};
+	} catch (error) {
+		return {
+			session: null
+		};
+	}
 }
 
 export type Context = inferAsyncReturnType<typeof createContext>;
