@@ -2,6 +2,7 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { trpc } from '$lib/trpc/client';
+	import { signOut } from '@auth/sveltekit/client';
 
 	let greeting = 'press the button to load data';
 	let server;
@@ -12,6 +13,7 @@
 		greeting = await trpc($page).greeting.query();
 		server = await trpc($page).log.mutate('Hi');
 		loading = false;
+		signOut();
 	};
 
 	// If the user is not signed in, redirect to the login page
