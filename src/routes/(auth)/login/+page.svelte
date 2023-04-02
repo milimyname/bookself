@@ -6,16 +6,30 @@
 	import { goto } from '$app/navigation';
 
 	if ($page.data.session) goto('/');
+	let loading = false;
 
 	const handleSignIn = async (provider: string) => {
 		try {
+			loading = true;
 			await signIn(provider);
 			goto('/');
+			loading = false;
 		} catch (error) {
 			console.log(error);
 		}
 	};
 </script>
+
+{#if loading}
+	<div
+		class="fixed left-0 top-0 z-50 flex h-full w-full items-center justify-center bg-black bg-opacity-50"
+	>
+		<div class="flex items-center gap-5 rounded-md bg-white p-5">
+			<Icon src={icons.loading} className="h-5 w-5 animate-spin " />
+			<span class="text-xl font-medium">Pending...</span>
+		</div>
+	</div>
+{/if}
 
 <main class="flex h-full w-full">
 	<div class="hidden w-1/2 bg-gradient-to-r from-cyan-500 to-blue-500 lg:block" />
