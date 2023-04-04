@@ -1,7 +1,5 @@
 <script>
-	import { signIn, signOut } from '@auth/sveltekit/client';
 	import { page } from '$app/stores';
-	import logo from '$lib/assets/favicon.png';
 	import { icons } from '$lib/assets/icons';
 	import Icon from 'svelte-icons-pack/Icon.svelte';
 	import { goto } from '$app/navigation';
@@ -14,9 +12,12 @@
 		class="flex w-full flex-col items-center justify-center gap-7 px-10 md:gap-10 lg:w-1/2 lg:px-0"
 	>
 		<div class="flex w-full flex-col gap-5 md:w-2/3 lg:gap-10">
-			<div class="flex flex-col gap-2 text-left">
-				<h1 class="text-3xl font-bold">Welcome back.</h1>
-				<p class="text-gray-500">Log in to access your account</p>
+			<div class="flex items-center gap-5">
+				<a href="/login"> <Icon src={icons.chevronRight} className="w-5 h-5 rotate-180" /></a>
+				<div class="flex flex-col gap-2 text-left">
+					<h1 class="text-3xl font-bold">Welcome back.</h1>
+					<p class="text-gray-500">Log in to access your account</p>
+				</div>
 			</div>
 			<!-- <div class="flex flex-col justify-between gap-5 md:flex-row">
 				<button
@@ -34,11 +35,11 @@
 					<span class="group-hover:text-white"> Log in with Github </span></button
 				>
 			</div> -->
-			<div class="flex items-center gap-5">
+			<!-- <div class="flex items-center gap-5">
 				<div class="h-[1px] w-full bg-neutral-200" />
 				<span>or</span>
 				<div class="h-[1px] w-full bg-neutral-200" />
-			</div>
+			</div> -->
 		</div>
 		<form class=" flex w-full flex-col gap-7 md:w-2/3">
 			<fieldset class="flex flex-col gap-2">
