@@ -6,7 +6,12 @@
 	let greeting = 'press the button to load data';
 	import { spring } from 'svelte/motion';
 	import { icons } from '$lib/assets/icons';
+	import { slide } from 'svelte/transition';
+	import { quintOut } from 'svelte/easing';
 	import Icon from 'svelte-icons-pack/Icon.svelte';
+	import { config } from '$lib/config/config';
+
+	let alone = 'no';
 
 	// let server;
 	// let loading = false;
@@ -18,13 +23,14 @@
 	// 	signOut();
 	// };
 
+	// If the user is not signed in, redirect to the login page
+	if (!$page.data.session) goto('/login');
+
 	let isDrawerOpen = false;
+	let springValue = spring(100, { stiffness: 0.06, damping: 0.4 });
+	let drawerSlide = 0;
 
-	let springValue = spring(100, { stiffness: 0.05, damping: 0.5 });
-
-	let slide = 0;
-
-	$: slide = $springValue;
+	$: drawerSlide = $springValue;
 
 	// Close the drawer if the user clicks outside of it except for the button
 	function clickOutside(e: MouseEvent) {
@@ -38,46 +44,84 @@
 			springValue.set(100, { soft: true });
 		}
 	}
-
-	// If the user is not signed in, redirect to the login page
-	if (!$page.data.session) goto('/login');
 </script>
 
 <svelte:window on:click={clickOutside} />
 
-<form
-	class={`drawer absolute z-10 h-full w-1/2 rounded-r-2xl bg-orange-300 px-28 py-20  `}
-	style="transform: translateX({-slide}%)"
->
-	<h2 class="text-2xl font-bold">New Booking</h2>
-	<fieldset>
-		<label for="nationality">Nationality</label>
-		<select name="nationality" id="nationality">
-			<option value="1">1</option>
-			<option value="2">2</option>
-			<option value="3">3</option>
-		</select>
-	</fieldset>
-	<fieldset>
-		<label for="applicants">Amount of applicants</label>
-		<select name="applicants" id="applicants">
-			<option value="1">1</option>
-			<option value="2">2</option>
-			<option value="3">3</option>
-		</select>
-	</fieldset>
-</form>
-
 {#if isDrawerOpen}
-	<div class="absolute z-0 h-full w-full bg-black opacity-50" />
+	<div class="fixed z-20 h-full w-full bg-[#00000080] opacity-50" />
 {/if}
+
+<form
+	class={`drawer absolute z-40 h-full w-1/2 rounded-r-2xl bg-white px-28 py-20  `}
+	style="transform: translateX({-drawerSlide}%)"
+>
+	<h2 class="mb-5 text-3xl">New Booking</h2>
+	<div class="flex flex-col gap-5">
+		<fieldset class="flex flex-col gap-2">
+			<label for="citizenship" class="font-medium">Citizenship</label>
+			<select name="citizenship" id="citizenship" class="rounded-md">
+				{#each config.de.citizenship as citizenship}
+					<option value={citizenship}>{citizenship}</option>
+				{/each}
+			</select>
+		</fieldset>
+		<fieldset class="flex flex-col gap-2">
+			<label for="applicants" class="font-medium">Amount of applicants</label>
+			<select
+				name="applicants"
+				id="applicants"
+				class="rounded-md"
+				on:change={(e) => console.log('ye')}
+			>
+				{#each config.de.applicant as applicant}
+					<option value={applicant}>{applicant}</option>
+				{/each}
+			</select>
+		</fieldset>
+		<fieldset class="flex flex-col gap-2">
+			<label for="alone" class="font-medium"
+				>Do you live in Berlin together with a family member (e.g. spouse, child)?</label
+			>
+			<select name="alone" class="rounded-md" id="alone" bind:value={alone}>
+				<option value="no">no</option>
+				<option value="yes">yes</option>
+			</select>
+		</fieldset>
+		{#if alone === 'yes'}
+			<fieldset
+				class="flex flex-col gap-2"
+				transition:slide={{ duration: 500, easing: quintOut, axis: 'y' }}
+			>
+				<label for="familyCitizenship" class="font-medium">Citizenship of the family member?</label>
+				<select name="familyCitizenship" id="familyCitizenship" class="rounded-md">
+					{#each config.de.citizenship as citizenship}
+						<option value={citizenship}>{citizenship}</option>
+					{/each}
+				</select>
+			</fieldset>
+		{/if}
+		<fieldset class="mb-auto flex flex-col gap-2">
+			<label for="visaType" class="font-medium">Visa Type</label>
+			<select name="visaType" id="visaType" class="rounded-md">
+				{#each config.de.visaType as visaType}
+					<option value={visaType}>{visaType}</option>
+				{/each}
+			</select>
+		</fieldset>
+		<div class="flex justify-between">
+			<button class="rounded-full bg-black px-4 py-2 text-white">Cancel</button>
+			<button class="rounded-full bg-black px-4 py-2 text-white">Submit</button>
+		</div>
+	</div>
+</form>
 
 <main
 	class={`${
-		isDrawerOpen ? 'blur ' : 'bg-[#F9F9F9] blur-0 '
-	} flex flex-1 flex-col items-center gap-10 py-20 transition-all`}
+		isDrawerOpen ? 'blur' : ' blur-0 '
+	} flex  flex-1 flex-col items-center gap-10 py-20 transition-all`}
 >
-	<header class="flex w-1/2 items-center justify-between">
+	<header class="flex w-full items-center justify-between gap-5 px-10 xl:w-7/12 xl:px-0">
 		<div>
 			<h1 class="mb-2 text-4xl font-bold">Bookings</h1>
 			<p>There are 8 total bookings</p>
@@ -99,7 +143,7 @@
 			</button>
 		</div>
 	</header>
-	<div class="flex w-1/2 flex-col gap-5">
+	<div class="flex w-full flex-col gap-5 px-10 xl:w-7/12 xl:px-0">
 		<!-- <a
 				href="#load"
 				role="button"
@@ -114,25 +158,10 @@
 			{:then value}
 				<p>Value: {JSON.stringify(value)}</p>
 			{/await} -->
-		<div class="flex justify-between rounded-md border px-8 py-5">
-			<h2>1</h2>
-			<span>02 Day </span>
-			<span>02 Night</span>
-			<span>02 Person</span>
-			<span>02 Room</span>
-			<span>02 Room</span>
-		</div>
-		<div class="flex justify-between rounded-md border px-8 py-5">
-			<h2>1</h2>
-			<span>02 Day </span>
-			<span>02 Night</span>
-			<span>02 Person</span>
-			<span>02 Room</span>
-			<span>02 Room</span>
-		</div>
+
 		<a
-			href="/booking/1"
-			class={`flex items-center justify-between rounded-lg border bg-white py-5 pl-8 pr-4 drop-shadow-sm transition-colors duration-300 hover:border-[#ff9100] ${
+			href="/booking/2"
+			class={`grid  grid-cols-[20px_minmax(100px,_1fr)_minmax(100px,_1fr)_minmax(100px,_1fr)_minmax(100px,_1fr)] items-center justify-items-end  rounded-lg border bg-white py-5 pl-8 pr-4 drop-shadow-sm transition-colors duration-300 hover:border-[#ff9100] ${
 				isDrawerOpen && 'pointer-events-none'
 			}`}
 		>
@@ -140,13 +169,36 @@
 			<h3 class="text-sm font-medium text-slate-500">Studium/Ausbildung</h3>
 			<h3 class="text-sm text-slate-500">Jessica Nomann</h3>
 			<h3 class="text-sm text-slate-500">14 Oct 2023</h3>
-			<div class="flex items-center gap-2">
-				<div class="flex items-center gap-2 rounded-md bg-[#ff91000f] py-2 px-4">
+			<div class="flex items-center justify-end gap-2">
+				<div
+					class="flex w-28 items-center justify-center gap-2 rounded-md bg-[#ff91000f] py-2 px-4"
+				>
 					<div class="relative flex h-3 w-3 items-center">
 						<span class="absolute inline-flex h-2 w-2 animate-ping rounded-full bg-[#ff9100]" />
 						<span class="relative inline-flex h-2 w-2 rounded-full bg-[#ff9100]" />
 					</div>
 					<span class="font-medium text-[#ff9100]">Pending</span>
+				</div>
+				<Icon src={icons.chevronRight} className="w-5 h-5 fill-[#1A120B]" />
+			</div>
+		</a>
+
+		<a
+			href="/booking/2"
+			class={`grid  grid-cols-[20px_minmax(100px,_1fr)_minmax(100px,_1fr)_minmax(100px,_1fr)_minmax(100px,_1fr)] items-center justify-items-end  rounded-lg border bg-white py-5 pl-8 pr-4 drop-shadow-sm transition-colors duration-300 hover:border-green-400 ${
+				isDrawerOpen && 'pointer-events-none'
+			}`}
+		>
+			<h2 class="font-semibold">#1</h2>
+			<h3 class="text-sm font-medium text-slate-500">Studium/Ausbildung</h3>
+			<h3 class="text-sm text-slate-500">Jessica Nomann</h3>
+			<h3 class="text-sm text-slate-500">14 Oct 2023</h3>
+			<div class="flex items-center justify-end gap-2">
+				<div
+					class="flex w-28 items-center justify-center gap-2 rounded-md bg-[#87ff662b] py-2 px-4"
+				>
+					<span class="relative inline-flex h-2 w-2 rounded-full bg-green-400" />
+					<span class="font-medium text-green-400">Done</span>
 				</div>
 				<Icon src={icons.chevronRight} className="w-5 h-5 fill-[#1A120B]" />
 			</div>
