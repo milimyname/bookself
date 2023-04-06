@@ -3,8 +3,32 @@
 	import { icons } from '$lib/assets/icons';
 	import Icon from 'svelte-icons-pack/Icon.svelte';
 	import { goto } from '$app/navigation';
+	import { superForm } from 'sveltekit-superforms/client';
+	import SuperDebug from 'sveltekit-superforms/client/SuperDebug.svelte';
+	import { z } from 'zod';
+
+	const schema = z.object({
+		password: z.string().min(8),
+		confirmPassword: z.string().min(8),
+		email: z.string().email(),
+		privacy: z.boolean().refine((v) => v === true, {
+			message: 'You must agree to the privacy policy'
+		})
+	});
+
+	export let data;
+
+	// Redirect if logged in
 	if ($page.data.session) goto('/');
+
+	// Form
+	const { form, enhance, errors, constraints } = superForm(data.form, {
+		taintedMessage: 'Are you sure you want to leave?',
+		validators: schema
+	});
 </script>
+
+<!-- <SuperDebug data={$form} /> -->
 
 <main class="flex h-full w-full">
 	<div class="hidden w-1/2 bg-gradient-to-r from-cyan-500 to-blue-500 lg:block" />
@@ -15,8 +39,8 @@
 			<div class="flex items-center gap-5">
 				<a href="/login"> <Icon src={icons.chevronRight} className="w-5 h-5 rotate-180" /></a>
 				<div class="flex flex-col gap-2 text-left">
-					<h1 class="text-3xl font-bold">Welcome back.</h1>
-					<p class="text-gray-500">Log in to access your account</p>
+					<h1 class="text-3xl font-bold">Hi Newbie!</h1>
+					<p class="text-gray-500">Let's make it quick</p>
 				</div>
 			</div>
 			<!-- <div class="flex flex-col justify-between gap-5 md:flex-row">
@@ -41,28 +65,65 @@
 				<div class="h-[1px] w-full bg-neutral-200" />
 			</div> -->
 		</div>
-		<form class=" flex w-full flex-col gap-7 md:w-2/3">
+		<form class=" flex w-full flex-col gap-7 md:w-2/3" method="POST" use:enhance>
 			<fieldset class="flex flex-col gap-2">
 				<label for="email">Email</label>
-				<input type="text" name="email" class="rounded-md" />
+				<input
+					type="text"
+					name="email"
+					class="rounded-md"
+					bind:value={$form.email}
+					{...$constraints.email}
+				/>
+				{#if $errors.email}
+					<p class="text-sm text-red-500">{$errors.email}</p>
+				{/if}
 			</fieldset>
 			<fieldset class="flex flex-col gap-2">
 				<label for="password">Password</label>
-				<input type="password" name="password" class="rounded-md" />
+				<input
+					type="password"
+					name="password"
+					class="rounded-md"
+					bind:value={$form.password}
+					{...$constraints.password}
+				/>
+				{#if $errors.password}
+					<p class="text-sm text-red-500">{$errors.password}</p>
+				{/if}
 			</fieldset>
 			<fieldset class="flex flex-col gap-2">
-				<label for="repeat-password">Repeat password</label>
-				<input type="password" name="epeat-password" class="rounded-md" />
+				<label for="confirmPassword">Repeat password</label>
+				<input
+					type="password"
+					name="confirmPassword"
+					class="rounded-md"
+					bind:value={$form.confirmPassword}
+					{...$constraints.confirmPassword}
+				/>
+				{#if $errors.confirmPassword}
+					<p class="text-sm text-red-500">{$errors.confirmPassword}</p>
+				{/if}
 			</fieldset>
 			<fieldset class="flex items-center gap-2">
-				<input type="checkbox" name="privacy" class="rounded-sm" />
+				<input
+					type="checkbox"
+					name="privacy"
+					class="rounded-sm"
+					bind:value={$form.privacy}
+					{...$constraints.privacy}
+				/>
+
 				<label for="password"
 					>I agree to the
 					<a href="/terms-privacy" class="underline"> Terms & Privacy </a>
 				</label>
+				{#if $errors.privacy}
+					<p class="text-sm text-red-500">{$errors.privacy}</p>
+				{/if}
 			</fieldset>
 
-			<button type="submit" class="w-full rounded-md bg-black p-4 text-white"> Log in</button>
+			<button type="submit" class="w-full rounded-md bg-black p-4 text-white"> Sign up</button>
 		</form>
 	</section>
 </main>

@@ -7,6 +7,8 @@ import { router } from '$lib/trpc/router';
 import { redirect, type Handle } from '@sveltejs/kit';
 import { createTRPCHandle } from 'trpc-sveltekit';
 import { sequence } from '@sveltejs/kit/hooks';
+import { prisma } from '$lib/db/prisma';
+import { PrismaAdapter } from '@next-auth/prisma-adapter';
 // import '$lib/cron/cronjob';
 
 // Protect all routes in the protectedPaths array
@@ -25,10 +27,17 @@ async function protect({ event, resolve }) {
 }
 
 const authenticate = SvelteKitAuth({
+	adapter: PrismaAdapter(prisma),
 	providers: [
 		GitHub({ clientId: env.GITHUB_ID, clientSecret: env.GITHUB_SECRET }),
 		Google({ clientId: env.GOOGLE_ID, clientSecret: env.GOOGLE_SECRET })
-	]
+	],
+	session: {
+		strategy: 'database',
+		generateSessionToken: () => {
+			return crypto.randomUUID();
+		}
+	}
 });
 
 export const handle: Handle = sequence(

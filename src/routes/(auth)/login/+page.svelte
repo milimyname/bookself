@@ -4,9 +4,16 @@
 	import { icons } from '$lib/assets/icons';
 	import Icon from 'svelte-icons-pack/Icon.svelte';
 	import { goto } from '$app/navigation';
+	import { superForm } from 'sveltekit-superforms/client';
 
 	if ($page.data.session) goto('/');
+
 	let loading = false;
+
+	export let data;
+
+	// Form
+	const { form, enhance } = superForm(data.form);
 
 	const handleSignIn = async (provider: string) => {
 		try {
@@ -63,14 +70,14 @@
 				<div class="h-[1px] w-full bg-neutral-200" />
 			</div>
 		</div>
-		<form class=" flex w-full flex-col gap-7 md:w-2/3">
+		<form class="flex w-full flex-col gap-7 md:w-2/3" method="POST" use:enhance>
 			<fieldset class="flex flex-col gap-2">
 				<label for="email">Email</label>
-				<input type="text" name="email" class="rounded-md" />
+				<input type="text" name="email" class="rounded-md" bind:value={$form.email} />
 			</fieldset>
 			<fieldset class="flex flex-col gap-2">
 				<label for="password">Password</label>
-				<input type="password" name="password" class="rounded-md" />
+				<input type="password" name="password" class="rounded-md" bind:value={$form.password} />
 			</fieldset>
 			<fieldset class="flex flex-col gap-2">
 				<span>
