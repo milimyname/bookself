@@ -1,34 +1,46 @@
 <script>
 	import { page } from '$app/stores';
 	import { icons } from '$lib/assets/icons';
+	// @ts-ignore
 	import Icon from 'svelte-icons-pack/Icon.svelte';
 	import { goto } from '$app/navigation';
 	import { superForm } from 'sveltekit-superforms/client';
-	import SuperDebug from 'sveltekit-superforms/client/SuperDebug.svelte';
 	import { z } from 'zod';
+
+	// Redirect if logged in
+	if ($page.data.session) goto('/');
 
 	const schema = z.object({
 		password: z.string().min(8),
 		confirmPassword: z.string().min(8),
 		email: z.string().email(),
-		privacy: z.boolean().refine((v) => v === true, {
-			message: 'You must agree to the privacy policy'
-		})
+		privacy: z.boolean()
 	});
 
 	export let data;
-
-	// Redirect if logged in
-	if ($page.data.session) goto('/');
 
 	// Form
 	const { form, enhance, errors, constraints } = superForm(data.form, {
 		taintedMessage: 'Are you sure you want to leave?',
 		validators: schema
 	});
+
+	let loading = false;
+
+	// If there is an error
+	$: if ($errors) loading = false;
 </script>
 
-<!-- <SuperDebug data={$form} /> -->
+{#if loading}
+	<div
+		class="fixed left-0 top-0 z-50 flex h-full w-full items-center justify-center bg-black bg-opacity-50"
+	>
+		<div class="flex items-center gap-5 rounded-md bg-white p-5">
+			<Icon src={icons.loading} className="h-5 w-5 animate-spin " />
+			<span class="text-xl font-medium">Pending...</span>
+		</div>
+	</div>
+{/if}
 
 <main class="flex h-full w-full">
 	<div class="hidden w-1/2 bg-gradient-to-r from-cyan-500 to-blue-500 lg:block" />
@@ -65,7 +77,12 @@
 				<div class="h-[1px] w-full bg-neutral-200" />
 			</div> -->
 		</div>
-		<form class=" flex w-full flex-col gap-7 md:w-2/3" method="POST" use:enhance>
+		<form
+			class=" flex w-full flex-col gap-7 md:w-2/3"
+			method="POST"
+			use:enhance
+			on:submit={() => (loading = true)}
+		>
 			<fieldset class="flex flex-col gap-2">
 				<label for="email">Email</label>
 				<input
@@ -93,7 +110,7 @@
 				{/if}
 			</fieldset>
 			<fieldset class="flex flex-col gap-2">
-				<label for="confirmPassword">Repeat password</label>
+				<label for="confirmPassword">Confirm password</label>
 				<input
 					type="password"
 					name="confirmPassword"
@@ -110,7 +127,7 @@
 					type="checkbox"
 					name="privacy"
 					class="rounded-sm"
-					bind:value={$form.privacy}
+					bind:checked={$form.privacy}
 					{...$constraints.privacy}
 				/>
 

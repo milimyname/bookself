@@ -5,26 +5,42 @@
 	import Icon from 'svelte-icons-pack/Icon.svelte';
 	import { goto } from '$app/navigation';
 	import { superForm } from 'sveltekit-superforms/client';
+	import { z } from 'zod';
 
+	// Redirect if logged in
 	if ($page.data.session) goto('/');
+
+	const schema = z.object({
+		password: z.string().min(8),
+		email: z.string().email()
+	});
 
 	let loading = false;
 
 	export let data;
 
 	// Form
-	const { form, enhance } = superForm(data.form);
+	const { form, enhance, errors, constraints } = superForm(data.form, {
+		taintedMessage: 'Are you sure you want to leave?',
+		validators: schema
+	});
 
 	const handleSignIn = async (provider: string) => {
 		try {
 			loading = true;
 			await signIn(provider);
-			goto('/');
-			loading = false;
+
+			setTimeout(() => {
+				goto('/');
+				loading = false;
+			}, 1500);
 		} catch (error) {
 			console.log(error);
 		}
 	};
+
+	// If there is an error, stop loading
+	$: if ($errors) loading = false;
 </script>
 
 {#if loading}
@@ -70,14 +86,37 @@
 				<div class="h-[1px] w-full bg-neutral-200" />
 			</div>
 		</div>
-		<form class="flex w-full flex-col gap-7 md:w-2/3" method="POST" use:enhance>
+		<form
+			class="flex w-full flex-col gap-7 md:w-2/3"
+			method="POST"
+			use:enhance
+			on:submit={() => (loading = true)}
+		>
 			<fieldset class="flex flex-col gap-2">
 				<label for="email">Email</label>
-				<input type="text" name="email" class="rounded-md" bind:value={$form.email} />
+				<input
+					type="text"
+					name="email"
+					class="rounded-md"
+					bind:value={$form.email}
+					{...$constraints.email}
+				/>
+				{#if $errors.email}
+					<p class="text-sm text-red-500">{$errors.email}</p>
+				{/if}
 			</fieldset>
 			<fieldset class="flex flex-col gap-2">
 				<label for="password">Password</label>
-				<input type="password" name="password" class="rounded-md" bind:value={$form.password} />
+				<input
+					type="password"
+					name="password"
+					class="rounded-md"
+					bind:value={$form.password}
+					{...$constraints.password}
+				/>
+				{#if $errors.password}
+					<p class="text-sm text-red-500">{$errors.password}</p>
+				{/if}
 			</fieldset>
 			<fieldset class="flex flex-col gap-2">
 				<span>

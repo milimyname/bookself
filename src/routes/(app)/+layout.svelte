@@ -1,5 +1,6 @@
 <script lang="ts">
 	import bookself from '$lib/assets/white-bookself.svg';
+	import logo from '$lib/assets/favicon.png';
 	import { page } from '$app/stores';
 	import { icons } from '$lib/assets/icons';
 	import { signOut } from '@auth/sveltekit/client';
@@ -19,15 +20,11 @@
 	{#if $page.data.session}
 		<button on:click={() => signOut()}>
 			<img
-				src={$page.data.session.user?.image}
+				src={$page.data.session.user?.image ? $page.data.session.user?.image : logo}
 				alt={$page.data.session.user?.name}
 				class="mb-5 h-10 w-10 cursor-pointer rounded-full transition-transform hover:scale-125"
 			/>
 		</button>
-	{:else}
-		<div
-			class="bg-bg-gradient-to-r from-10% via-30% to-90% mb-5 h-8 w-8 rounded-full from-indigo-500 via-sky-500 to-emerald-500"
-		/>
 	{/if}
 </aside>
 <slot />
