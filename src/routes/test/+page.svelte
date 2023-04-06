@@ -1,22 +1,27 @@
 <script>
-	import { spring } from 'svelte/motion';
+	import { goto } from '$app/navigation';
+	import { onMount } from 'svelte';
 
-	let slideIn = false;
-	let slide = 0;
-	let springValue = spring(0, { stiffness: 0.05, damping: 0.55 });
+	let count = 0;
 
-	const handleButtonClick = () => {
-		slideIn = !slideIn;
-		springValue.set(slideIn ? 100 : 0);
+	const increment = () => {
+		count += 1;
 	};
 
-	$: slide = $springValue * -1;
+	const decrement = () => {
+		count -= 1;
+	};
+
+	onMount(() => {
+		const interval = setInterval(() => {
+			count += 1;
+		}, 1000);
+
+		return () => clearInterval(interval);
+	});
 </script>
 
-<button on:click={handleButtonClick} class="z-10">
-	{slideIn ? 'Slide Out' : 'Slide In'}
-</button>
-
-<div style="transform: translateX({slide}%)" class="bg-orange-400 p-10">
-	<p>This text will slide in and out smoothly!</p>
-</div>
+<button on:click={increment}>+</button>
+<p>Count: {count}</p>
+<button on:click={decrement}>-</button>
+<button on:click={() => goto('/')}>Go to About page</button>
