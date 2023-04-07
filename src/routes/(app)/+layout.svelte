@@ -9,7 +9,7 @@
 
 <aside class="z-50 flex h-full flex-col items-center justify-between rounded-r-2xl bg-black">
 	<a href="/" class="p-6"> <img src={bookself} alt="Bookself Logo" /></a>
-	<div class="brder mb-5 mt-auto flex w-full flex-col items-center gap-5 border-b pb-10">
+	<div class="mb-5 mt-auto flex w-full flex-col items-center gap-5 border-b border-gray-200 pb-10">
 		<button>
 			<Icon src={icons.language} className="w-5 h-5 fill-white" />
 		</button>
