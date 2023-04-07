@@ -63,28 +63,29 @@ export const actions = {
 				}
 			});
 
-			// after 3 failed attempts, lock the account for 5 minutes
-			if (user.failedAttempts >= 3) {
-				const now = new Date();
-				const diff = user.lastFailedAttempt ? now.getTime() - user.lastFailedAttempt.getTime() : 0;
-				const minutes = Math.floor(diff / 60000);
+			fail(400, { form });
+		}
 
-				if (minutes < 5) {
-					form.errors.password = [`Account is locked for ${5 - minutes} minutes`];
-					return fail(400, { form });
-				} else {
-					// reset failed attempts
-					await prisma.user.update({
-						where: {
-							id: user.id
-						},
-						data: {
-							failedAttempts: 0
-						}
-					});
-				}
+		// after 5 failed attempts, lock the account for 5 minutes
+		if (user.failedAttempts >= 5) {
+			const now = new Date();
+			const diff = user.lastFailedAttempt ? now.getTime() - user.lastFailedAttempt.getTime() : 0;
+			const minutes = Math.floor(diff / 60000);
+
+			if (minutes < 5) {
+				form.errors.password = [`Account is locked for ${5 - minutes} minutes`];
+				return fail(400, { form });
+			} else {
+				// reset failed attempts
+				await prisma.user.update({
+					where: {
+						id: user.id
+					},
+					data: {
+						failedAttempts: 0
+					}
+				});
 			}
-			return fail(400, { form });
 		}
 
 		try {
