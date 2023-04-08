@@ -7,9 +7,10 @@
 	import Icon from 'svelte-icons-pack/Icon.svelte';
 </script>
 
-<aside class="z-50 flex h-full flex-col items-center justify-between rounded-r-2xl bg-black">
+<aside class="z-50 flex h-full flex-col items-center justify-between rounded-r-3xl bg-black">
 	<a href="/" class="p-6"> <img src={bookself} alt="Bookself Logo" /></a>
 	<div class="mb-5 mt-auto flex w-full flex-col items-center gap-5 border-b border-gray-200 pb-10">
+		<a href="/booking/1" class="text-white">1</a>
 		<button>
 			<Icon src={icons.language} className="w-5 h-5 fill-white" />
 		</button>
