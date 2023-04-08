@@ -1,5 +1,6 @@
 import { t } from '$lib/trpc/t';
 import { users } from '$lib/trpc/routers/users';
+import { bookings } from '$lib/trpc/routers/bookings';
 
 export const router = t.router({
 	greeting: t.procedure.query(async () => {
@@ -17,7 +18,8 @@ export const router = t.router({
 			console.log(req.input);
 			return true;
 		}),
-	users
+	users,
+	bookings
 });
 
 export type Router = typeof router;
