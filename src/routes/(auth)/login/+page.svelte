@@ -5,54 +5,37 @@
 	import Icon from 'svelte-icons-pack/Icon.svelte';
 	import { goto } from '$app/navigation';
 	import { superForm } from 'sveltekit-superforms/client';
-	import { z } from 'zod';
+	import { loginSchema } from '$lib/config/zodSchema.js';
+	import Spinner from '$lib/components/Spinner.svelte';
+	import { loading } from '$lib/stores/stores';
 
 	// Redirect if logged in
 	if ($page.data.session) goto('/');
-
-	const schema = z.object({
-		password: z.string().min(8),
-		email: z.string().email()
-	});
-
-	let loading = false;
 
 	export let data;
 
 	// Form
 	const { form, enhance, errors, constraints } = superForm(data.form, {
 		taintedMessage: 'Are you sure you want to leave?',
-		validators: schema
+		validators: loginSchema
 	});
 
 	const handleSignIn = async (provider: string) => {
 		try {
-			loading = true;
+			$loading = true;
 			await signIn(provider);
 
 			setTimeout(() => {
 				goto('/');
-				loading = false;
+				$loading = false;
 			}, 1500);
 		} catch (error) {
 			console.log(error);
 		}
 	};
-
-	// If there is an error, stop loading
-	$: if ($errors) loading = false;
 </script>
 
-{#if loading}
-	<div
-		class="fixed left-0 top-0 z-50 flex h-full w-full items-center justify-center bg-black bg-opacity-50"
-	>
-		<div class="flex items-center gap-5 rounded-md bg-white p-5">
-			<Icon src={icons.loading} className="h-5 w-5 animate-spin " />
-			<span class="text-xl font-medium">Pending...</span>
-		</div>
-	</div>
-{/if}
+<Spinner errors={$errors} />
 
 <main class="flex h-full w-full">
 	<div class="hidden w-1/2 bg-gradient-to-r from-cyan-500 to-blue-500 lg:block" />
@@ -90,7 +73,7 @@
 			class="flex w-full flex-col gap-7 md:w-2/3"
 			method="POST"
 			use:enhance
-			on:submit={() => (loading = true)}
+			on:submit={() => ($loading = true)}
 		>
 			<fieldset class="flex flex-col gap-2">
 				<label for="email">Email</label>

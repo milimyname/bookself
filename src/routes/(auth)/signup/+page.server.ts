@@ -1,17 +1,10 @@
 import { redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
-import { z } from 'zod';
 import { fail } from '@sveltejs/kit';
 import { superValidate } from 'sveltekit-superforms/server';
 import { prisma } from '$lib/db/prisma';
 import bcrypt from 'bcrypt';
-
-const schema = z.object({
-	password: z.string().min(8),
-	confirmPassword: z.string().min(8),
-	email: z.string().email(),
-	privacy: z.boolean()
-});
+import { signUpSchema } from '$lib/config/zodSchema';
 
 export const load = (async (event) => {
 	const session = await event.locals.getSession();
@@ -19,7 +12,7 @@ export const load = (async (event) => {
 	if (session?.user) throw redirect(302, '/');
 
 	// Validate form
-	const form = await superValidate(event, schema);
+	const form = await superValidate(event, signUpSchema);
 
 	return {
 		form
@@ -29,7 +22,7 @@ export const load = (async (event) => {
 export const actions = {
 	default: async (event) => {
 		// Same syntax as in the load function
-		const form = await superValidate(event, schema);
+		const form = await superValidate(event, signUpSchema);
 
 		// Convenient validation check:
 		if (!form.valid)
