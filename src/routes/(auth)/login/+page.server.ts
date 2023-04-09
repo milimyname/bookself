@@ -104,6 +104,8 @@ export const actions = {
 			event.cookies.set('next-auth.session-token', sessionToken, {
 				path: '/',
 				maxAge: 1000 * 60 * 60 * 24 * 30,
+				httpOnly: true,
+				sameSite: 'lax',
 				secure: true
 			});
 
