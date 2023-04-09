@@ -101,10 +101,12 @@ export const actions = {
 			});
 
 			// Set cookie session token
-			event.cookies.set('next-auth.session-token', sessionToken, {
+			event.cookies.set('__Secure-next-auth.session-token', sessionToken, {
 				path: '/',
 				maxAge: 1000 * 60 * 60 * 24 * 30,
-				secure: true
+				secure: true,
+				httpOnly: true,
+				sameSite: 'lax'
 			});
 
 			// Redirect to home page
