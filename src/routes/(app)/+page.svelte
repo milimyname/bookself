@@ -19,6 +19,10 @@
 
 	$: drawerSlide = $springValue;
 
+	// Get length of bookings
+	let amountOfBookings = 0;
+	$: amountOfBookings = data.bookings.bookings.length;
+
 	// Close the drawer if the user clicks outside of it except for the button
 	function clickOutside(e: MouseEvent) {
 		const drawer = document.querySelector('.drawer');
@@ -53,7 +57,7 @@
 	<header class="flex w-full items-center justify-between gap-5 px-4 md:px-10 xl:w-7/12 xl:px-0">
 		<div>
 			<h1 class="mb-2 text-4xl font-bold">Bookings</h1>
-			<p>There are 8 total bookings</p>
+			<p>There are {amountOfBookings} total bookings</p>
 		</div>
 		<div>
 			<button
@@ -72,9 +76,11 @@
 			</button>
 		</div>
 	</header>
-	<section class="flex w-full flex-col gap-2 px-4 md:px-10 xl:w-7/12 xl:px-0">
+	<section
+		class="flex w-full flex-col gap-2 overflow-auto scroll-smooth px-4 md:px-10 xl:w-7/12 xl:px-0"
+	>
 		{#await data.bookings}
-			<!-- <Spinner errors={data} /> -->
+			<Spinner errors={data.bookings} />
 		{:then data}
 			{#each data.bookings as booking}
 				<Booking

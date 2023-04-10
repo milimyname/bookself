@@ -45,8 +45,6 @@
 			day: 'numeric'
 		});
 	};
-
-	console.log(status);
 </script>
 
 <a

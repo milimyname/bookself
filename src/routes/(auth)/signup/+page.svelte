@@ -26,7 +26,7 @@
 <main class="flex h-full w-full">
 	<div class="hidden w-1/2 bg-gradient-to-r from-cyan-500 to-blue-500 lg:block" />
 	<section
-		class="flex w-full flex-col items-center justify-center gap-7 px-10 md:gap-10 lg:w-1/2 lg:px-0"
+		class="flex w-full flex-col items-center justify-center gap-7 px-5 md:gap-10 md:px-10 lg:w-1/2 lg:px-0"
 	>
 		<div class="flex w-full flex-col gap-5 md:w-2/3 lg:gap-10">
 			<div class="flex items-center gap-5">

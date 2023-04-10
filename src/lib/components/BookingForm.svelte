@@ -14,7 +14,8 @@
 	// Super Form
 	const { form, enhance, errors, constraints } = superForm(data.form, {
 		taintedMessage: 'Are you sure you want to leave?',
-		validators: bookingSchema
+		validators: bookingSchema,
+		clearOnSubmit: 'none'
 	});
 
 	// Set default values
@@ -26,12 +27,12 @@
 
 <form
 	id="booking-form"
-	class={`drawer absolute z-40 h-full w-11/12 overflow-auto overflow-x-hidden scroll-smooth rounded-r-3xl bg-white md:w-2/3`}
+	class="drawer absolute z-40 h-fit w-11/12 overflow-auto overflow-x-hidden scroll-smooth rounded-r-3xl bg-white md:h-full md:w-2/3"
 	style="transform: translateX({-drawerSlide}%)"
 	method="POST"
 	on:submit={() => ($isDrawerOpen = false)}
 >
-	<h2 class="mb-5 px-5 pt-24 text-3xl md:pl-28 md:pt-20">New Booking</h2>
+	<h2 class="mb-5 px-5 pt-28 text-3xl md:pl-28 md:pt-20">New Booking</h2>
 	<div class="">
 		<div class="relative flex flex-col gap-5 px-5 pr-10 md:pl-28">
 			<fieldset class="flex flex-col gap-2">
@@ -105,7 +106,10 @@
 				{/if}
 			</fieldset>
 			{#if $form.visaType}
-				<fieldset class="flex flex-col gap-2">
+				<fieldset
+					class="flex flex-col gap-2"
+					transition:slide={{ duration: 500, easing: quintOut, axis: 'y' }}
+				>
 					<label for="visa" class="font-medium">Visas</label>
 					<select
 						name="visa"
