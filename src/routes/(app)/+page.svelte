@@ -48,9 +48,9 @@
 <main
 	class={`${
 		$isDrawerOpen ? 'blur' : 'blur-0'
-	} flex  flex-1 flex-col items-center gap-10 py-20 transition-all`}
+	} flex  flex-1 flex-col items-center gap-10 py-8 transition-all md:py-20`}
 >
-	<header class="flex w-full items-center justify-between gap-5 px-10 xl:w-7/12 xl:px-0">
+	<header class="flex w-full items-center justify-between gap-5 px-4 md:px-10 xl:w-7/12 xl:px-0">
 		<div>
 			<h1 class="mb-2 text-4xl font-bold">Bookings</h1>
 			<p>There are 8 total bookings</p>
@@ -72,13 +72,12 @@
 			</button>
 		</div>
 	</header>
-	<section class="flex w-full flex-col gap-2 px-10 xl:w-7/12 xl:px-0">
+	<section class="flex w-full flex-col gap-2 px-4 md:px-10 xl:w-7/12 xl:px-0">
 		{#await data.bookings}
 			<!-- <Spinner errors={data} /> -->
 		{:then data}
 			{#each data.bookings as booking}
 				<Booking
-					visaType={booking.visaType}
 					bookingId={booking.id}
 					status={booking.status}
 					lastName={booking.lastName}
@@ -87,50 +86,5 @@
 				/>
 			{/each}
 		{/await}
-
-		<!-- <a
-			href="/booking/2"
-			class={`grid  grid-cols-[20px_minmax(100px,_1fr)_minmax(100px,_1fr)_minmax(100px,_1fr)_minmax(100px,_1fr)] items-center justify-items-end  rounded-lg border bg-white py-5 pl-8 pr-4 drop-shadow-sm transition-colors duration-300 hover:border-[#ff9100] ${
-				$isDrawerOpen && 'pointer-events-none'
-			}`}
-		>
-			<h2 class="font-semibold">#1</h2>
-			<h3 class="text-sm font-medium text-slate-500">Studium/Ausbildung</h3>
-			<h3 class="text-sm text-slate-500">Jessica Nomann</h3>
-			<h3 class="text-sm text-slate-500">14 Oct 2023</h3>
-			<div class="flex items-center justify-end gap-2">
-				<div
-					class="flex w-28 items-center justify-center gap-2 rounded-md bg-[#ff91000f] px-4 py-2"
-				>
-					<div class="relative flex h-3 w-3 items-center">
-						<span class="absolute inline-flex h-2 w-2 animate-ping rounded-full bg-[#ff9100]" />
-						<span class="relative inline-flex h-2 w-2 rounded-full bg-[#ff9100]" />
-					</div>
-					<span class="font-medium text-[#ff9100]">Pending</span>
-				</div>
-				<Icon src={icons.chevronRight} className="w-5 h-5 fill-[#1A120B]" />
-			</div>
-		</a>
-
-		<a
-			href="/booking/2"
-			class={`grid  grid-cols-[20px_minmax(100px,_1fr)_minmax(100px,_1fr)_minmax(100px,_1fr)_minmax(100px,_1fr)] items-center justify-items-end  rounded-lg border bg-white py-5 pl-8 pr-4 drop-shadow-sm transition-colors duration-300 hover:border-green-400 ${
-				$isDrawerOpen && 'pointer-events-none'
-			}`}
-		>
-			<h2 class="font-semibold">#1</h2>
-			<h3 class="text-sm font-medium text-slate-500">Studium/Ausbildung</h3>
-			<h3 class="text-sm text-slate-500">Jessica Nomann</h3>
-			<h3 class="text-sm text-slate-500">14 Oct 2023</h3>
-			<div class="flex items-center justify-end gap-2">
-				<div
-					class="flex w-28 items-center justify-center gap-2 rounded-md bg-[#ff91000f] px-4 py-2"
-				>
-					<span class="relative inline-flex h-2 w-2 rounded-full bg-green-400" />
-					<span class="font-medium text-green-400">Done</span>
-				</div>
-				<Icon src={icons.chevronRight} className="w-5 h-5 fill-[#1A120B]" />
-			</div>
-		</a> -->
 	</section>
 </main>

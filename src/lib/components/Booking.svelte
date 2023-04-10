@@ -51,14 +51,14 @@
 
 <a
 	href={`/booking/${bookingId}`}
-	class="grid grid-cols-[20px_minmax(100px,_1fr)_minmax(100px,_1fr)_minmax(100px,_1fr)_minmax(100px,_1fr)]
-		items-center justify-items-end rounded-lg border bg-white py-5 pl-8 pr-4 drop-shadow-sm transition-colors duration-300
+	class="flex items-center justify-between justify-items-end
+		rounded-lg border bg-white py-5 pl-8 pr-4 drop-shadow-sm transition-colors duration-300 md:grid md:grid-cols-[20px_repeat(4,minmax(100px,_1fr))]
 		{colors.borderColor} {$isDrawerOpen && 'pointer-events-none'}"
 >
-	<h2 class="font-semibold">#1</h2>
-	<h3 class="justify-end text-sm font-medium text-slate-500">Studium</h3>
+	<h2 class="hidden font-semibold md:block">#1</h2>
+	<h3 class="hidden justify-end text-sm font-medium text-slate-500 md:block">Studium</h3>
 	<h3 class="text-sm text-slate-500">{firstName} {lastName}</h3>
-	<h3 class="text-sm text-slate-500">{formatDate(createdAt)}</h3>
+	<h3 class="hidden text-sm text-slate-500 md:block">{formatDate(createdAt)}</h3>
 	<div class="flex items-center justify-end gap-2">
 		<div
 			class="flex w-28 items-center justify-center gap-2 rounded-md px-4 py-2 {colors.bgLightColor}"

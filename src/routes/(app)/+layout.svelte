@@ -7,10 +7,13 @@
 	import Icon from 'svelte-icons-pack/Icon.svelte';
 </script>
 
-<aside class="z-50 flex h-full flex-col items-center justify-between rounded-r-3xl bg-black">
+<aside
+	class="z-50 flex items-center justify-between gap-5 bg-black md:h-full md:flex-col md:rounded-r-3xl"
+>
 	<a href="/" class="p-6"> <img src={bookself} alt="Bookself Logo" /></a>
-	<div class="mb-5 mt-auto flex w-full flex-col items-center gap-5 border-b border-gray-200 pb-10">
-		<a href="/booking/1" class="text-white">1</a>
+	<div
+		class="flex w-full justify-end gap-5 md:mb-5 md:mt-auto md:flex-col md:items-center md:border-b md:border-gray-200 md:pb-10"
+	>
 		<button>
 			<Icon src={icons.language} className="w-5 h-5 fill-white" />
 		</button>
@@ -19,11 +22,11 @@
 		</button>
 	</div>
 	{#if $page.data.session}
-		<button on:click={() => signOut()}>
+		<button on:click={() => signOut()} class="p-6 md:p-0">
 			<img
 				src={$page.data.session.user?.image ? $page.data.session.user?.image : logo}
 				alt={$page.data.session.user?.name}
-				class="mb-5 h-10 w-10 cursor-pointer rounded-full transition-transform hover:scale-125"
+				class="h-10 w-10 cursor-pointer rounded-full transition-transform hover:scale-125 md:mb-5"
 			/>
 		</button>
 	{/if}

@@ -26,14 +26,14 @@
 
 <form
 	id="booking-form"
-	class={`drawer absolute z-40 h-full w-2/3 overflow-auto overflow-x-hidden scroll-smooth rounded-r-3xl bg-white`}
+	class={`drawer absolute z-40 h-full w-11/12 overflow-auto overflow-x-hidden scroll-smooth rounded-r-3xl bg-white md:w-2/3`}
 	style="transform: translateX({-drawerSlide}%)"
 	method="POST"
 	on:submit={() => ($isDrawerOpen = false)}
 >
-	<h2 class="mb-5 pl-28 pt-20 text-3xl">New Booking</h2>
+	<h2 class="mb-5 px-5 pt-24 text-3xl md:pl-28 md:pt-20">New Booking</h2>
 	<div class="">
-		<div class="  py-20relative flex flex-col gap-5 pl-28 pr-10">
+		<div class="relative flex flex-col gap-5 px-5 pr-10 md:pl-28">
 			<fieldset class="flex flex-col gap-2">
 				<label for="citizenship" class="font-medium">Citizenship</label>
 				<select
@@ -97,7 +97,7 @@
 					{...$constraints.visaType}
 				>
 					{#each config.de.visaType as visaType}
-						<option value={visaType}>{visaType}</option>
+						<option value={visaType}>{visaType.slice(0, -2)}</option>
 					{/each}
 				</select>
 				{#if $errors.visaType}
@@ -119,7 +119,7 @@
 								{@const key = Object.keys(service)}
 								<optgroup label={key[0]}>
 									{#each service[key[0]] as option}
-										<option value={option}>{option}</option>
+										<option value={option}>{option.slice(0, -1)}</option>
 									{/each}
 								</optgroup>
 							{/each}
@@ -248,7 +248,7 @@
 			{/if}
 		</div>
 		<div
-			class=" sticky bottom-0 z-20 mt-10 flex w-full justify-between rounded-tr-3xl bg-white py-8 pl-28 pr-10 shadow-negative-lg"
+			class=" sticky bottom-0 z-20 mt-10 flex w-full justify-between rounded-tr-3xl bg-white px-5 py-8 shadow-negative-lg md:pl-28 md:pr-10"
 		>
 			<button
 				type="button"

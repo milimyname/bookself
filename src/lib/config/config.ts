@@ -202,152 +202,127 @@ export const config = {
 			'acht Personen'
 		],
 		visaType: [
-			'Aufenthaltstitel - beantragen',
-			'Aufenthaltstitel - verlängern',
-			'Aufenthaltstitel in einen neuen Pass eintragen lassen',
-			'Niederlassungserlaubnis beantragen'
-			// 'Reiseausweis - Neuausstellung'
+			'Aufenthaltstitel - beantragen 1',
+			'Aufenthaltstitel - verlängern 2',
+			'Aufenthaltstitel in einen neuen Pass eintragen lassen 3',
+			'Niederlassungserlaubnis beantragen 4'
+			// 'Reiseausweis - Neuausstellung 5'
 		],
 		visas: [
 			{
-				'Aufenthaltstitel - beantragen': [
+				'Aufenthaltstitel - beantragen 1': [
 					{
 						'Studium oder Ausbildung': [
-							'Aufenthaltserlaubnis für eine Berufsausbildung (§ 16a)',
-							'Aufenthaltserlaubnis für eine betriebliche Weiterbildung (§ 16a)',
-							'Aufenthaltserlaubnis zum Besuch eines Sprachkurses (§ 16f Abs. 1)',
-							'Aufenthaltserlaubnis zum Schulbesuch oder zur Teilnahme an einem Schüleraustausch (§ 16f)',
-							'Aufenthaltserlaubnis zum Studium (§ 16b)',
-							'Aufenthaltserlaubnis zur Anerkennung einer ausländischen Berufs-Qualifikation im Rahmen einer Qualifizierungsmaßnahme (§ 16d Abs. 1)',
-							'Aufenthaltserlaubnis zur Anerkennung einer ausländischen Berufs-Qualifikation in einem nicht reglementierten Beruf (§ 16d Abs. 3)',
-							'Aufenthaltserlaubnis zur Aufnahme eines Praktikums (§ 19c Abs. 1)',
-							'Aufenthaltserlaubnis zur Studienvorbereitung (§ 16b Abs. 1)'
+							'Aufenthaltserlaubnis für eine Berufsausbildung (§ 16a)3',
+							'Aufenthaltserlaubnis für eine betriebliche Weiterbildung (§ 16a)3',
+							'Aufenthaltserlaubnis zum Besuch eines Sprachkurses (§ 16f Abs. 1)3',
+							'Aufenthaltserlaubnis zum Schulbesuch oder zur Teilnahme an einem Schüleraustausch (§ 16f)3',
+							'Aufenthaltserlaubnis zum Studium (§ 16b)3',
+							'Aufenthaltserlaubnis zur Anerkennung einer ausländischen Berufs-Qualifikation im Rahmen einer Qualifizierungsmaßnahme (§ 16d Abs. 1)3',
+							'Aufenthaltserlaubnis zur Anerkennung einer ausländischen Berufs-Qualifikation in einem nicht reglementierten Beruf (§ 16d Abs. 3)3',
+							'Aufenthaltserlaubnis zur Aufnahme eines Praktikums (§ 19c Abs. 1)3',
+							'Aufenthaltserlaubnis zur Studienvorbereitung (§ 16b Abs. 1)3'
 						]
 					},
 					{
 						Erwerbstätigkeit: [
-							'Aufenthaltserlaubnis für Fachkräfte mit akademischer Ausbildung (§ 18b Abs. 1)',
-							'Aufenthaltserlaubnis für Fachkräfte mit Berufsausbildung (§ 18a)',
-							'Aufenthaltserlaubnis für Fachkräfte zur Arbeitsplatzsuche - Erteilung (§ 20)',
-							'Aufenthaltserlaubnis für in anderen EU-Staaten langfristig Aufenthaltsberechtigte (§ 38a)',
-							'Aufenthaltserlaubnis für wissenschaftliche Mitarbeiter und Forscher (§ 18d)',
-							'Aufenthaltserlaubnis zur Aufnahme eines Praktikums (§ 19c Abs. 1)',
-							'Aufenthaltserlaubnis zur freiberuflichen Tätigkeit - Erteilung (§ 21 Abs. 5)',
-							'Aufenthaltserlaubnis zur selbstständigen Tätigkeit - Erteilung (§ 21)',
-							'Blaue Karte EU (§ 18b Abs. 2)'
+							'Aufenthaltserlaubnis für die Teilnahme an einem Freiwilligendienst (§§ 19c oder 19e)1',
+							'Aufenthaltserlaubnis für Fachkräfte mit akademischer Ausbildung (§ 18b Abs. 1)1',
+							'Aufenthaltserlaubnis für Fachkräfte mit Berufsausbildung (§ 18a)1',
+							'Aufenthaltserlaubnis für Fachkräfte zur Arbeitsplatzsuche - Erteilung (§ 20)1',
+							'Aufenthaltserlaubnis für in anderen EU-Staaten langfristig Aufenthaltsberechtigte (§ 38a)1',
+							'Aufenthaltserlaubnis für wissenschaftliche Mitarbeiter und Forscher (§ 18d)1',
+							'Aufenthaltserlaubnis zur Aufnahme eines Praktikums (§ 19c Abs. 1)1',
+							'Aufenthaltserlaubnis zur freiberuflichen Tätigkeit - Erteilung (§ 21 Abs. 5)1',
+							'Aufenthaltserlaubnis zur selbstständigen Tätigkeit - Erteilung (§ 21)1',
+							'Blaue Karte EU (§ 18b Abs. 2)1'
 						]
 					},
 					{
 						'Familiäre Gründe': [
-							'Aufenthaltserlaubnis für ein neugeborenes Kind - Erteilung (§ 33)',
-							'Aufenthaltserlaubnis für Ehepartner und Kinder von Fachkräften, Studierenden, Auszubildenden, Wissenschaftlern und Lehrkräften (§§ 29-32)',
-							'Aufenthaltserlaubnis für Ehepartner und Kinder von Inhabern einer Blauen Karte EU (§§ 29-32)',
-							'Aufenthaltserlaubnis für Ehepartner, Eltern und Kinder von ausländischen Familienangehörigen (§§ 29-34)',
-							'Aufenthaltserlaubnis für Ehepartner, Eltern und Kinder von deutschen Familienangehörigen (§ 28)',
-							'Aufenthaltserlaubnis für Ehepartner, Eltern und Kinder von subsidiär Schutzberechtigten (§ 36a)'
+							'Aufenthaltserlaubnis für ein neugeborenes Kind - Erteilung (§ 33)4',
+							'Aufenthaltserlaubnis für Ehepartner und Kinder von Fachkräften, Studierenden, Auszubildenden, Wissenschaftlern und Lehrkräften (§§ 29-32)4',
+							'Aufenthaltserlaubnis für Ehepartner und Kinder von Inhabern einer Blauen Karte EU (§§ 29-32)4',
+							'Aufenthaltserlaubnis für Ehepartner, Eltern und Kinder von ausländischen Familienangehörigen (§§ 29-34)4',
+							'Aufenthaltserlaubnis für Ehepartner, Eltern und Kinder von deutschen Familienangehörigen (§ 28)4',
+							'Aufenthaltserlaubnis für Ehepartner, Eltern und Kinder von subsidiär Schutzberechtigten (§ 36a)4'
 						]
 					},
 					{
 						'Besondere Aufenthaltsrechte': [
-							'Aufenthaltserlaubnis für in anderen EU-Staaten langfristig Aufenthaltsberechtigte (§ 38a)'
+							'Aufenthaltserlaubnis für in anderen EU-Staaten langfristig Aufenthaltsberechtigte (§ 38a)5'
 						]
 					}
 				],
-				'Aufenthaltstitel - verlängern': [
+				'Aufenthaltstitel - verlängern 2': [
 					{
 						'Studium oder Ausbildung': [
-							'Aufenthaltserlaubnis für eine Berufsausbildung (§ 16a)',
-							'Aufenthaltserlaubnis für eine betriebliche Weiterbildung (§ 16a)',
-							'Aufenthaltserlaubnis zum Besuch eines Sprachkurses (§ 16f Abs. 1)',
-							'Aufenthaltserlaubnis zum Schulbesuch oder zur Teilnahme an einem Schüleraustausch (§ 16f)',
-							'Aufenthaltserlaubnis zum Studium (§ 16b)',
-							'Aufenthaltserlaubnis zur Anerkennung einer ausländischen Berufs-Qualifikation im Rahmen einer Qualifizierungsmaßnahme (§ 16d Abs. 1)',
-							'Aufenthaltserlaubnis zur Anerkennung einer ausländischen Berufs-Qualifikation in einem nicht reglementierten Beruf (§ 16d Abs. 3)',
-							'Aufenthaltserlaubnis zur Aufnahme eines Praktikums (§ 19c Abs. 1)',
-							'Aufenthaltserlaubnis zur Studienvorbereitung (§ 16b Abs. 1)'
+							'Aufenthaltserlaubnis für eine Berufsausbildung (§ 16a)3',
+							'Aufenthaltserlaubnis für eine betriebliche Weiterbildung (§ 16a)3',
+							'Aufenthaltserlaubnis zum Besuch eines Sprachkurses (§ 16f Abs. 1)3',
+							'Aufenthaltserlaubnis zum Schulbesuch oder zur Teilnahme an einem Schüleraustausch (§ 16f)3',
+							'Aufenthaltserlaubnis zum Studium (§ 16b)3',
+							'Aufenthaltserlaubnis zur Anerkennung einer ausländischen Berufs-Qualifikation im Rahmen einer Qualifizierungsmaßnahme (§ 16d Abs. 1)3',
+							'Aufenthaltserlaubnis zur Anerkennung einer ausländischen Berufs-Qualifikation in einem nicht reglementierten Beruf (§ 16d Abs. 3)3',
+							'Aufenthaltserlaubnis zur Aufnahme eines Praktikums (§ 19c Abs. 1)3',
+							'Aufenthaltserlaubnis zur Studienvorbereitung (§ 16b Abs. 1)3'
 						]
 					},
 					{
 						Erwerbstätigkeit: [
-							'Aufenthaltserlaubnis für Fachkräfte mit akademischer Ausbildung (§ 18b Abs. 1)',
-							'Aufenthaltserlaubnis für Fachkräfte mit Berufsausbildung (§ 18a)',
-							'Aufenthaltserlaubnis für Fachkräfte zur Arbeitsplatzsuche - Erteilung (§ 20)',
-							'Aufenthaltserlaubnis für in anderen EU-Staaten langfristig Aufenthaltsberechtigte (§ 38a)',
-							'Aufenthaltserlaubnis für wissenschaftliche Mitarbeiter und Forscher (§ 18d)',
-							'Aufenthaltserlaubnis zur Aufnahme eines Praktikums (§ 19c Abs. 1)',
-							'Aufenthaltserlaubnis zur selbstständigen oder freiberuflichen Tätigkeit - Verlängerung (§ 21)',
-							'Blaue Karte EU (§ 18b Abs. 2)'
+							'Aufenthaltserlaubnis für Fachkräfte mit akademischer Ausbildung (§ 18b Abs. 1)1',
+							'Aufenthaltserlaubnis für Fachkräfte mit Berufsausbildung (§ 18a)1',
+							'Aufenthaltserlaubnis für Fachkräfte zur Arbeitsplatzsuche - Erteilung (§ 20)1',
+							'Aufenthaltserlaubnis für in anderen EU-Staaten langfristig Aufenthaltsberechtigte (§ 38a)1',
+							'Aufenthaltserlaubnis für wissenschaftliche Mitarbeiter und Forscher (§ 18d)1',
+							'Aufenthaltserlaubnis zur Aufnahme eines Praktikums (§ 19c Abs. 1)1',
+							'Aufenthaltserlaubnis zur selbstständigen oder freiberuflichen Tätigkeit - Verlängerung (§ 21)1',
+							'Blaue Karte EU (§ 18b Abs. 2)1'
 						]
 					},
 					{
 						'Familiäre Gründe': [
-							'Aufenthaltserlaubnis für Ehepartner und Kinder von Fachkräften, Studierenden, Auszubildenden, Wissenschaftlern und Lehrkräften (§§ 29-32)',
-							'Aufenthaltserlaubnis für Ehepartner und Kinder von Inhabern einer Blauen Karte EU (§§ 29-32)',
-							'Aufenthaltserlaubnis für Ehepartner, Eltern und Kinder von ausländischen Familienangehörigen (§§ 29-34)',
-							'Aufenthaltserlaubnis für Ehepartner, Eltern und Kinder von deutschen Familienangehörigen (§ 28)',
-							'Aufenthaltserlaubnis für Ehepartner, Eltern und Kinder von subsidiär Schutzberechtigten (§ 36a)'
+							'Aufenthaltserlaubnis für Ehepartner und Kinder von Fachkräften, Studierenden, Auszubildenden, Wissenschaftlern und Lehrkräften (§§ 29-32)4',
+							'Aufenthaltserlaubnis für Ehepartner und Kinder von Inhabern einer Blauen Karte EU (§§ 29-32)4',
+							'Aufenthaltserlaubnis für Ehepartner, Eltern und Kinder von ausländischen Familienangehörigen (§§ 29-34)4',
+							'Aufenthaltserlaubnis für Ehepartner, Eltern und Kinder von deutschen Familienangehörigen (§ 28)4',
+							'Aufenthaltserlaubnis für Ehepartner, Eltern und Kinder von subsidiär Schutzberechtigten (§ 36a)4'
 						]
 					},
 					{
 						'Humanitäre Gründe': [
-							'Aufenthaltserlaubnis aus humanitären Gründen - Verlängerung (§§ 22 - 25)',
-							'Aufenthaltserlaubnis in Härtefällen - Verlängerung (§ 23a)'
+							'Aufenthaltserlaubnis aus humanitären Gründen - Verlängerung (§§ 22 - 25)5',
+							'Aufenthaltserlaubnis in Härtefällen - Verlängerung (§ 23a)5'
 						]
 					},
 					{
 						'Besondere Aufenthaltsrechte': [
-							'Aufenthaltserlaubnis für in anderen EU-Staaten langfristig Aufenthaltsberechtigte (§ 38a)'
+							'Aufenthaltserlaubnis für in anderen EU-Staaten langfristig Aufenthaltsberechtigte (§ 38a)6'
 						]
 					}
 				],
-				'Aufenthaltstitel in einen neuen Pass eintragen lassen': [
+				'Aufenthaltstitel in einen neuen Pass eintragen lassen 3': [
 					{
 						'Besondere Aufenthaltsrechte': [
-							'Übertragen einer Aufenthaltserlaubnis auf einen neuen Pass',
-							'Übertragen einer Blauen Karte EU auf einen neuen Pass',
-							'Übertragen einer Niederlassungserlaubnis oder Erlaubnis zum Daueraufenthalt-EU auf einen neuen Pass',
-							'Übertragen eines Aufenthaltsdokument-GB auf einen neuen Pass'
+							'Übertragen einer Aufenthaltserlaubnis auf einen neuen Pass1',
+							'Übertragen einer Blauen Karte EU auf einen neuen Pass1',
+							'Übertragen einer Niederlassungserlaubnis oder Erlaubnis zum Daueraufenthalt-EU auf einen neuen Pass1',
+							'Übertragen eines Aufenthaltsdokument-GB auf einen neuen Pass1'
 						]
 					}
 				],
-				'Niederlassungserlaubnis beantragen': [
+				'Niederlassungserlaubnis beantragen 4': [
 					{
 						'Familiäre Gründe': [
-							'Niederlassungserlaubnis für Familienangehörige von Deutschen (§ 28 Abs. 2)',
-							'Niederlassungserlaubnis für Kinder - Erteilung (§ 35)'
+							'Niederlassungserlaubnis für Familienangehörige von Deutschen (§ 28 Abs. 2)1',
+							'Niederlassungserlaubnis für Kinder - Erteilung (§ 35)1'
 						]
 					}
 				]
-				// 'Reiseausweis - Neuausstellung': [
-				// 	'Reiseausweis - Neuausstellung',
+				// 'Reiseausweis - Neuausstellung 5': [
+				// 	'Reiseausweis - Neuausstellung1',
 				// ]
 			}
 		]
 	}
 };
-
-// familyReasons: [
-// 	'Aufenthaltserlaubnis für ein neugeborenes Kind - Erteilung (§ 33)',
-// 	'Aufenthaltserlaubnis für Ehepartner und Kinder von Fachkräften, Studierenden, Auszubildenden, Wissenschaftlern und Lehrkräften (§§ 29-32)',
-// 	'Aufenthaltserlaubnis für Ehepartner und Kinder von Inhabern einer Blauen Karte EU (§§ 29-32)',
-// 	'Aufenthaltserlaubnis für Ehepartner, Eltern und Kinder von ausländischen Familienangehörigen (§§ 29-34)',
-// 	'Aufenthaltserlaubnis für Ehepartner, Eltern und Kinder von deutschen Familienangehörigen (§ 28)',
-// 	'Aufenthaltserlaubnis für Ehepartner, Eltern und Kinder von subsidiär Schutzberechtigten (§ 36a)'
-// ],
-// other:
-// 	'Aufenthaltserlaubnis für in anderen EU-Staaten langfristig Aufenthaltsberechtigte (§ 38a)',
-// humanitarianReasons: [
-// 	'Aufenthaltserlaubnis aus humanitären Gründen - Verlängerung (§§ 22 - 25)',
-// 	'Aufenthaltserlaubnis in Härtefällen - Verlängerung (§ 23a)'
-// ],
-// newPass: [
-// 	'Übertragen einer Aufenthaltserlaubnis auf einen neuen Pass',
-// 	'Übertragen einer Blauen Karte EU auf einen neuen Pass',
-// 	'Übertragen einer Niederlassungserlaubnis oder Erlaubnis zum Daueraufenthalt-EU auf einen neuen Pass',
-// 	'Übertragen eines Aufenthaltsdokument-GB auf einen neuen Pass'
-// ],
-// permanenetResidence: [
-// 	'Niederlassungserlaubnis für Familienangehörige von Deutschen (§ 28 Abs. 2)',
-// 	'Niederlassungserlaubnis für Kinder - Erteilung (§ 35)'
-// ],
-// travel: 'Reiseausweis - Neuausstellung'
