@@ -57,7 +57,7 @@
 			}}
 		>
 			<img
-				src={$page.data.session.user?.image ? $page.data.session.user?.image : imagePlaceholder}
+				src={$page.data.session.user?.image || imagePlaceholder}
 				alt={$page.data.session.user?.name}
 				class=" w-14 cursor-pointer rounded-full transition-transform hover:scale-125 md:mb-5"
 			/>

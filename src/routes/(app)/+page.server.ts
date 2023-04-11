@@ -63,7 +63,22 @@ export const actions = {
 
 		if (!form.valid) return fail(400, { form });
 
-		console.log(form.data.image);
+		// Update user in db
+		const session = await event.locals.getSession();
+
+		// If there is no image url, return
+		if (!form.data.name && !form.data.email) return;
+
+		await prisma.user.update({
+			where: {
+				email: session?.user?.email as string
+			},
+			data: {
+				name: form.data.name,
+				email: form.data.email
+			}
+		});
+
 		return { form };
 	}
 } satisfies Actions;

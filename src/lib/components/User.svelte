@@ -1,4 +1,5 @@
 <script lang="ts">
+	import type { PageData } from './$types';
 	import { superForm } from 'sveltekit-superforms/client';
 	import { userSchema } from '$lib/config/zodSchema.js';
 	import Spinner from './Spinner.svelte';
@@ -6,8 +7,9 @@
 	import { supabase } from '$lib/supabase/supabase';
 	import { trpc } from '$lib/trpc/client';
 	import { page } from '$app/stores';
+	import { signOut } from '@auth/sveltekit/client';
 
-	export let data;
+	export let data: PageData;
 
 	// Super Form
 	const { form, errors, enhance, constraints } = superForm(data.form, {
@@ -28,18 +30,26 @@
 			const formData = new FormData(e.target);
 			const image = formData.get('image');
 
-			// Get email from form
-			const email = formData.get('email');
+			// If there is no image, return
+			if (!image) return;
+
+			// If there is an existing image, delete it
+			const { data: existingImage } = await supabase.storage
+				.from('mili-bookself')
+				.list(`public/${currentEmail}`);
+
+			if (existingImage?.length > 0)
+				await supabase.storage.from('mili-bookself').remove([`public/${currentEmail}`]);
 
 			// Upload image to supabase storage
 			const { error } = await supabase.storage
 				.from('mili-bookself')
-				.upload(`public/user-${email}`, image);
+				.upload(`public/${currentEmail}`, image);
 
 			// Get the image url
 			const { data: imageUrl } = await supabase.storage
 				.from('mili-bookself')
-				.getPublicUrl(`public/user-${email}`);
+				.getPublicUrl(`public/${currentEmail}`);
 
 			await trpc($page).users.uploadImage.mutate({
 				imageUrl: imageUrl.publicUrl
@@ -47,9 +57,7 @@
 
 			if (error) throw error;
 		} catch (error) {
-			if (error instanceof Error) {
-				alert(error.message);
-			}
+			if (error instanceof Error) console.log(error.message);
 		}
 	};
 </script>
@@ -63,9 +71,12 @@
 	on:submit={handleUserSubmit}
 	use:enhance
 >
-	<h2 class="mb-5 px-5 pt-28 text-3xl md:pl-28 md:pt-20">{currentName}</h2>
+	<header class="flex justify-between px-5 pt-28 md:pl-28 md:pr-10 md:pt-20">
+		<h2 class="mb-5 text-3xl">{currentName}</h2>
+		<button class="" on:click={() => signOut()}> Sign out </button>
+	</header>
 
-	<div class="relative mb-auto flex flex-col gap-5 px-5 pr-10 md:pl-28">
+	<div class="relative mb-auto flex flex-col gap-5 px-5 md:pl-28 md:pr-10">
 		<div class="h-[1px] w-full bg-neutral-200" />
 		<fieldset class="flex flex-col gap-2">
 			<label for="name" class="font-medium">Full Name</label>
@@ -74,7 +85,7 @@
 				name="name"
 				id="name"
 				class="rounded-md"
-				bind:value={$form.name}
+				bind:value={currentName}
 				{...$constraints.name}
 			/>
 			{#if $errors.name}

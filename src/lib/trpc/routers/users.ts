@@ -20,7 +20,10 @@ export const users = t.router({
 		// Uploading a file to Cloud storage
 		const { imageUrl } = req.input;
 
-		const user = await prisma.user.update({
+		// If there is no image url, return
+		if (!imageUrl) return;
+
+		await prisma.user.update({
 			where: {
 				email: req.ctx.session?.user?.email
 			},
@@ -28,6 +31,5 @@ export const users = t.router({
 				image: imageUrl
 			}
 		});
-		return {};
 	})
 });

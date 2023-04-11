@@ -1,90 +1,45 @@
-<script lang="ts">
-	import { supabase } from '$lib/supabase/supabase';
-	import { createEventDispatcher } from 'svelte';
+<script>
+	import { onDestroy, onMount } from 'svelte';
 
-	export let size = 10;
-	export let url: string;
+	let borderColor = 'red'; // Initial border color
+	let intervalId; // Stores the ID of the interval for animating the border color
 
-	let avatarUrl: string | null = null;
-	let uploading = false;
-	let files: FileList;
+	// Define an array of border colors to cycle through
+	const borderColors = ['red', 'blue', 'green', 'yellow'];
 
-	const dispatch = createEventDispatcher();
-
-	const downloadImage = async (path: string) => {
-		try {
-			const { data, error } = await supabase.storage.from('users').download(path);
-
-			if (error) {
-				throw error;
-			}
-
-			const url = URL.createObjectURL(data);
-			avatarUrl = url;
-		} catch (error) {
-			if (error instanceof Error) {
-				console.log('Error downloading image: ', error.message);
-			}
-		}
+	// Function to update the border color
+	const updateBorderColor = () => {
+		borderColor = borderColors[Math.floor(Math.random() * borderColors.length)];
 	};
 
-	const uploadAvatar = async () => {
-		try {
-			uploading = true;
+	// Trigger the border color animation on component mount
+	onMount(() => {
+		intervalId = setInterval(updateBorderColor, 1000); // Update border color every 1 second
+	});
 
-			if (!files || files.length === 0) {
-				throw new Error('You must select an image to upload.');
-			}
-
-			const file = files[0];
-			console.log(file);
-			const fileExt = file.name.split('.').pop();
-			url = `${Math.random()}.${fileExt}`;
-
-			let { error } = await supabase.storage.from('users').upload(url, file);
-
-			if (error) {
-				throw error;
-			}
-
-			dispatch('upload');
-		} catch (error) {
-			if (error instanceof Error) {
-				alert(error.message);
-			}
-		} finally {
-			uploading = false;
-		}
-	};
-
-	$: if (url) downloadImage(url);
+	// Clean up the interval on component unmount
+	onDestroy(() => {
+		clearInterval(intervalId);
+	});
 </script>
 
-<div>
-	{#if avatarUrl}
-		<img
-			src={avatarUrl}
-			alt={avatarUrl ? 'Avatar' : 'No image'}
-			class="avatar image"
-			style="height: {size}em; width: {size}em;"
-		/>
-	{:else}
-		<div class="avatar no-image" style="height: {size}em; width: {size}em;" />
-	{/if}
-	<input type="hidden" name="avatarUrl" value={url} />
-
-	<div style="width: {size}em;">
-		<label class="button primary block" for="single">
-			{uploading ? 'Uploading ...' : 'Upload'}
-		</label>
-		<input
-			style="visibility: hidden; position:absolute;"
-			type="file"
-			id="single"
-			accept="image/*"
-			bind:files
-			on:change={uploadAvatar}
-			disabled={uploading}
-		/>
-	</div>
+<div class="box">
+	<!-- Box content goes here -->
 </div>
+
+<style>
+  .box {
+    width: 100px;
+    height: 100px;
+    border: 2px solid;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    font-weight: bold;
+    /* Use the reactive border color */
+    border-color: {borderColor};
+    /* Use a transition to animate the border color change */
+    transition: border-color 0.5s ease-in-out;
+  }
+</style>
