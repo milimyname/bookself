@@ -27,3 +27,9 @@ export const bookingSchema = z.object({
 	currentVisa: z.string().optional(),
 	numberOfCurrentVisa: z.string().optional()
 });
+
+export const userSchema = z.object({
+	name: z.string(),
+	email: z.string().email(),
+	image: z.string().optional()
+});

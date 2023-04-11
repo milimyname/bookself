@@ -2,10 +2,32 @@
 	import bookself from '$lib/assets/white-bookself.svg';
 	import logo from '$lib/assets/favicon.png';
 	import { page } from '$app/stores';
+	import { spring } from 'svelte/motion';
 	import { icons } from '$lib/assets/icons';
-	import { signOut } from '@auth/sveltekit/client';
 	import Icon from 'svelte-icons-pack/Icon.svelte';
+	import { isUserFormOpen, userDrawerSlide } from '$lib/stores/stores';
+
+	let springValue = spring(100, { stiffness: 0.03, damping: 0.4 });
+
+	$: $userDrawerSlide = $springValue;
+
+	// Close the drawer if the user clicks outside of it except for the button
+	function clickOutside(e: MouseEvent) {
+		const drawer = document.querySelector('.userDrawer');
+		const button = document.querySelector('.userButton');
+		const aside = document.querySelector('aside');
+		if (aside && aside.contains(<Node>e!.target)) return;
+		if (button && button.contains(<Node>e!.target)) return;
+		if (drawer && !drawer.contains(<Node>e!.target)) {
+			$isUserFormOpen = false;
+			springValue.set(100, { soft: true });
+		}
+	}
+
+	$: if (!$isUserFormOpen) springValue.set(100, { soft: true });
 </script>
+
+<svelte:window on:click={clickOutside} />
 
 <aside
 	class="z-50 flex items-center justify-between gap-5 bg-black p-4 md:h-full md:flex-col md:rounded-r-3xl md:p-0"
@@ -22,7 +44,18 @@
 		</button>
 	</div>
 	{#if $page.data.session}
-		<button on:click={() => signOut()} >
+		<button
+			class="userButton"
+			on:click={() => {
+				if ($isUserFormOpen) {
+					$isUserFormOpen = false;
+					springValue.set(100, { soft: true });
+					return;
+				}
+				$isUserFormOpen = true;
+				springValue.set($isUserFormOpen ? 0 : 100, { soft: true });
+			}}
+		>
 			<img
 				src={$page.data.session.user?.image ? $page.data.session.user?.image : logo}
 				alt={$page.data.session.user?.name}
@@ -31,4 +64,5 @@
 		</button>
 	{/if}
 </aside>
+
 <slot />

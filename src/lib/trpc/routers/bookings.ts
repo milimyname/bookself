@@ -1,5 +1,4 @@
 import { t } from '$lib/trpc/t';
-import z from 'zod';
 import { auth } from '$lib/trpc/middlewares/auth';
 import { prisma } from '$lib/db/prisma';
 import { TRPCError } from '@trpc/server';

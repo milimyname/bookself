@@ -3,7 +3,7 @@ import type { Actions, PageServerData } from './$types';
 import { fail } from '@sveltejs/kit';
 import { superValidate } from 'sveltekit-superforms/server';
 import { prisma } from '$lib/db/prisma';
-import { bookingSchema } from '$lib/config/zodSchema';
+import { bookingSchema, userSchema } from '$lib/config/zodSchema';
 import { createContext } from '$lib/trpc/context';
 import { router } from '$lib/trpc/router';
 
@@ -56,6 +56,13 @@ export const actions = {
 		});
 
 		// Yep, return { form } here too
+		return { form };
+	},
+	updateUser: async (event) => {
+		const form = await superValidate(event, userSchema);
+
+		if (!form.valid) return fail(400, { form });
+
 		return { form };
 	}
 } satisfies Actions;

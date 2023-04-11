@@ -6,11 +6,6 @@ import { prisma } from '$lib/db/prisma';
 const userProcedure = t.procedure.input(z.object({ userId: z.string() }));
 
 export const users = t.router({
-	getUser: userProcedure.query(async ({ input }) => {
-		return {
-			id: input.userId
-		};
-	}),
 	updateUser: userProcedure
 		.use(auth)
 		.input(z.object({ name: z.string() }))
@@ -20,5 +15,23 @@ export const users = t.router({
 				id: req.input.userId,
 				name: req.input.name
 			};
-		})
+		}),
+	updateProfile: t.procedure.mutation(async (req) => {
+
+		// Uploading a file to Cloud storage
+		const file = await req.ctx.file();
+
+
+
+		const user = await prisma.user.update({
+			where: {
+				email: req.ctx.session?.user?.email
+			},
+			data: {
+				name: req.input.name
+			}
+		});
+
+		return user;
+	})
 });

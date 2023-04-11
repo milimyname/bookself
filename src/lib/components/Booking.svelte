@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { isDrawerOpen } from '$lib/stores/stores';
+	import { isBookingFormOpen } from '$lib/stores/stores';
 	import { icons } from '$lib/assets/icons';
 	import Icon from 'svelte-icons-pack/Icon.svelte';
 
@@ -51,7 +51,7 @@
 	href={`/booking/${bookingId}`}
 	class="flex items-center justify-between justify-items-end
 		rounded-lg border bg-white py-5 pl-8 pr-4 drop-shadow-sm transition-colors duration-300 md:grid md:grid-cols-[20px_repeat(4,minmax(100px,_1fr))]
-		{colors.borderColor} {$isDrawerOpen && 'pointer-events-none'}"
+		{colors.borderColor} {$isBookingFormOpen && 'pointer-events-none'}"
 >
 	<h2 class="hidden font-semibold md:block">#1</h2>
 	<h3 class="hidden justify-end text-sm font-medium text-slate-500 md:block">Studium</h3>

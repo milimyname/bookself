@@ -3,7 +3,7 @@ import cron from 'node-cron';
 import playwright from 'playwright';
 
 //*/30 * * * * *
-export const cronJob = cron.schedule('* * * * *', async () => {
+export const cronJob = cron.schedule('*/30 * * * * *', async () => {
 	try {
 		// Get all pending bookings from the database
 		const pendingBookings = await prisma.booking.findMany({
@@ -31,7 +31,7 @@ export const cronJob = cron.schedule('* * * * *', async () => {
 		// Find a button called "Weiter" and click it
 		await page.getByRole('button', { name: 'Weiter' }).click();
 
-		// Wait for 3000ms
+		// Wait for 2000ms
 		await page.waitForTimeout(2000);
 
 		// For each pending booking
@@ -125,6 +125,16 @@ export const cronJob = cron.schedule('* * * * *', async () => {
 			await page.getByRole('button', { name: 'Weiter' }).click();
 			await page.waitForTimeout(3000);
 			await page.getByRole('button', { name: 'Termin buchen' }).click();
+
+			// Update the status of the booking to "booked"
+			await prisma.booking.update({
+				where: {
+					id: pendingBooking.id
+				},
+				data: {
+					status: 'done'
+				}
+			});
 		}
 	} catch (error) {
 		console.log(error);

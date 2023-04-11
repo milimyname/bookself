@@ -3,8 +3,8 @@ import type { PageServerLoad } from './$types';
 
 export const load = (async () => {
 	// Start
-	// const start = false;
-	const start = true;
+	const start = false;
+	// const start = true;
 
 	if (!start) return;
 	// Open a browser

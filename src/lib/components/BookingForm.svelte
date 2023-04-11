@@ -5,9 +5,7 @@
 	import { superForm } from 'sveltekit-superforms/client';
 	import { bookingSchema } from '$lib/config/zodSchema.js';
 	import Spinner from './Spinner.svelte';
-	import { isDrawerOpen } from '$lib/stores/stores';
-
-	export let drawerSlide: number;
+	import { isBookingFormOpen, bookingDrawerSlide } from '$lib/stores/stores';
 
 	export let data;
 
@@ -23,14 +21,12 @@
 	$form.applicants = 'eine Person';
 </script>
 
-<Spinner errors={$errors} />
-
 <form
 	id="booking-form"
-	class="drawer absolute z-40 h-fit w-11/12 overflow-auto overflow-x-hidden scroll-smooth rounded-r-3xl bg-white md:h-full md:w-2/3"
-	style="transform: translateX({-drawerSlide}%)"
+	class="bookingDrawer absolute z-40 h-fit w-11/12 overflow-auto overflow-x-hidden scroll-smooth rounded-r-3xl bg-white md:h-full md:w-2/3"
+	style="transform: translateX({-$bookingDrawerSlide}%)"
 	method="POST"
-	on:submit={() => ($isDrawerOpen = false)}
+	on:submit={() => ($isBookingFormOpen = false)}
 >
 	<h2 class="mb-5 px-5 pt-28 text-3xl md:pl-28 md:pt-20">New Booking</h2>
 	<div class="">
@@ -257,7 +253,7 @@
 			<button
 				type="button"
 				class="rounded-full border px-8 py-2 transition-colors hover:bg-gray-100"
-				on:click={() => ($isDrawerOpen = false)}>Cancel</button
+				on:click={() => ($isBookingFormOpen = false)}>Cancel</button
 			>
 			<button
 				form="booking-form"
@@ -268,3 +264,5 @@
 		</div>
 	</div>
 </form>
+
+<Spinner errors={$errors} />
