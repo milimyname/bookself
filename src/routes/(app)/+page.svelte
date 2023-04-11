@@ -70,7 +70,7 @@
 		</div>
 		<div>
 			<button
-				class={` newBookingButton flex cursor-pointer items-center gap-2 rounded-full bg-black py-2 pl-2 pr-4 text-white transition-colors hover:bg-slate-800 ${
+				class={` newBookingButton flex cursor-pointer items-center gap-2 rounded-xl bg-black px-2 py-2 text-white transition-colors hover:bg-slate-800 md:rounded-full md:pl-2 md:pr-4 ${
 					$isBookingFormOpen && 'pointer-events-none'
 				}`}
 				on:click={() => {
@@ -81,13 +81,11 @@
 				<div class="rounded-full bg-white p-2">
 					<Icon src={icons.plus} className="w-5 h-5" />
 				</div>
-				<span class="font-medium">New Booking</span>
+				<span class="hidden font-medium md:block">New Booking</span>
 			</button>
 		</div>
 	</header>
-	<section
-		class="flex w-full flex-col gap-2 overflow-auto scroll-smooth px-4 md:px-10 xl:w-7/12 xl:px-0"
-	>
+	<section class="flex w-full flex-col gap-2 px-4 md:px-10 xl:w-7/12 xl:px-0">
 		{#await data.bookings}
 			<Spinner errors={data.bookings} />
 		{:then data}

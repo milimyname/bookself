@@ -1,10 +1,90 @@
 <script lang="ts">
-	import type { PageServerData } from './$types';
+	import { supabase } from '$lib/supabase/supabase';
+	import { createEventDispatcher } from 'svelte';
 
-	export let data: PageServerData;
+	export let size = 10;
+	export let url: string;
 
-	console.log(data);
+	let avatarUrl: string | null = null;
+	let uploading = false;
+	let files: FileList;
+
+	const dispatch = createEventDispatcher();
+
+	const downloadImage = async (path: string) => {
+		try {
+			const { data, error } = await supabase.storage.from('users').download(path);
+
+			if (error) {
+				throw error;
+			}
+
+			const url = URL.createObjectURL(data);
+			avatarUrl = url;
+		} catch (error) {
+			if (error instanceof Error) {
+				console.log('Error downloading image: ', error.message);
+			}
+		}
+	};
+
+	const uploadAvatar = async () => {
+		try {
+			uploading = true;
+
+			if (!files || files.length === 0) {
+				throw new Error('You must select an image to upload.');
+			}
+
+			const file = files[0];
+			console.log(file);
+			const fileExt = file.name.split('.').pop();
+			url = `${Math.random()}.${fileExt}`;
+
+			let { error } = await supabase.storage.from('users').upload(url, file);
+
+			if (error) {
+				throw error;
+			}
+
+			dispatch('upload');
+		} catch (error) {
+			if (error instanceof Error) {
+				alert(error.message);
+			}
+		} finally {
+			uploading = false;
+		}
+	};
+
+	$: if (url) downloadImage(url);
 </script>
 
-<h6>Data loaded in<br /><code>+page.ts</code></h6>
-<p>{data.user}</p>
+<div>
+	{#if avatarUrl}
+		<img
+			src={avatarUrl}
+			alt={avatarUrl ? 'Avatar' : 'No image'}
+			class="avatar image"
+			style="height: {size}em; width: {size}em;"
+		/>
+	{:else}
+		<div class="avatar no-image" style="height: {size}em; width: {size}em;" />
+	{/if}
+	<input type="hidden" name="avatarUrl" value={url} />
+
+	<div style="width: {size}em;">
+		<label class="button primary block" for="single">
+			{uploading ? 'Uploading ...' : 'Upload'}
+		</label>
+		<input
+			style="visibility: hidden; position:absolute;"
+			type="file"
+			id="single"
+			accept="image/*"
+			bind:files
+			on:change={uploadAvatar}
+			disabled={uploading}
+		/>
+	</div>
+</div>

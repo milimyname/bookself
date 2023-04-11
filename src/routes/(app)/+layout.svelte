@@ -1,6 +1,6 @@
 <script lang="ts">
 	import bookself from '$lib/assets/white-bookself.svg';
-	import logo from '$lib/assets/favicon.png';
+	import imagePlaceholder from '$lib/assets/placeholder.png';
 	import { page } from '$app/stores';
 	import { spring } from 'svelte/motion';
 	import { icons } from '$lib/assets/icons';
@@ -57,9 +57,9 @@
 			}}
 		>
 			<img
-				src={$page.data.session.user?.image ? $page.data.session.user?.image : logo}
+				src={$page.data.session.user?.image ? $page.data.session.user?.image : imagePlaceholder}
 				alt={$page.data.session.user?.name}
-				class="h-10 w-10 cursor-pointer rounded-full transition-transform hover:scale-125 md:mb-5"
+				class=" w-14 cursor-pointer rounded-full transition-transform hover:scale-125 md:mb-5"
 			/>
 		</button>
 	{/if}

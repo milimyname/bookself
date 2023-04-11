@@ -25,7 +25,7 @@ export const load = (async (event) => {
 }) satisfies PageServerData;
 
 export const actions = {
-	default: async (event) => {
+	addBooking: async (event) => {
 		// Same syntax as in the load function
 		const form = await superValidate(event, bookingSchema);
 
@@ -58,11 +58,12 @@ export const actions = {
 		// Yep, return { form } here too
 		return { form };
 	},
-	updateUser: async (event) => {
+	updateProfile: async (event) => {
 		const form = await superValidate(event, userSchema);
 
 		if (!form.valid) return fail(400, { form });
 
+		console.log(form.data.image);
 		return { form };
 	}
 } satisfies Actions;

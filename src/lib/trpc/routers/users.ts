@@ -16,22 +16,18 @@ export const users = t.router({
 				name: req.input.name
 			};
 		}),
-	updateProfile: t.procedure.mutation(async (req) => {
-
+	uploadImage: t.procedure.input(z.object({ imageUrl: z.string() })).mutation(async (req) => {
 		// Uploading a file to Cloud storage
-		const file = await req.ctx.file();
-
-
+		const { imageUrl } = req.input;
 
 		const user = await prisma.user.update({
 			where: {
 				email: req.ctx.session?.user?.email
 			},
 			data: {
-				name: req.input.name
+				image: imageUrl
 			}
 		});
-
-		return user;
+		return {};
 	})
 });

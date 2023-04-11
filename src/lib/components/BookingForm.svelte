@@ -26,7 +26,8 @@
 	class="bookingDrawer absolute z-40 h-fit w-11/12 overflow-auto overflow-x-hidden scroll-smooth rounded-r-3xl bg-white md:h-full md:w-2/3"
 	style="transform: translateX({-$bookingDrawerSlide}%)"
 	method="POST"
-	on:submit={() => ($isBookingFormOpen = false)}
+	action="?/addBooking"
+	on:submit|preventDefault={() => ($isBookingFormOpen = false)}
 >
 	<h2 class="mb-5 px-5 pt-28 text-3xl md:pl-28 md:pt-20">New Booking</h2>
 	<div class="">

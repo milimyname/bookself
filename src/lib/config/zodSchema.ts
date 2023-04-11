@@ -29,7 +29,7 @@ export const bookingSchema = z.object({
 });
 
 export const userSchema = z.object({
-	name: z.string(),
+	name: z.string().optional(),
 	email: z.string().email(),
-	image: z.string().optional()
+	image: z.any()
 });
