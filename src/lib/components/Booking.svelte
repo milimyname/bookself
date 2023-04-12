@@ -2,20 +2,23 @@
 	import { isBookingFormOpen } from '$lib/stores/stores';
 	import { icons } from '$lib/assets/icons';
 	import Icon from 'svelte-icons-pack/Icon.svelte';
+	import { formatDate } from '$lib/hooks/formatDate';
 
 	export let bookingId: string;
 	export let status: string;
 	export let firstName: string;
 	export let lastName: string;
 	export let createdAt: Date;
+	export let visaType: Date;
 
-	// Get color from status
 	const colors = {
 		bgLightColor: 'bg-light-draft',
 		bgColor: 'draft',
 		borderColor: 'draft',
 		textColor: 'draft'
 	};
+
+	// Get color from status
 	$: switch (status) {
 		case 'draft':
 			colors.bgLightColor = 'bg-light-draft';
@@ -36,26 +39,16 @@
 			colors.borderColor = 'hover:border-done';
 			break;
 	}
-
-	// Format Date
-	const formatDate = (date: Date) => {
-		return new Date(date).toLocaleDateString('de-DE', {
-			year: 'numeric',
-			month: 'short',
-			day: 'numeric'
-		});
-	};
 </script>
 
 <a
 	href={`/booking/${bookingId}`}
 	class="flex items-center justify-between justify-items-end
-		rounded-lg border bg-white py-5 pl-8 pr-4 drop-shadow-sm transition-colors duration-300 md:grid md:grid-cols-[20px_repeat(4,minmax(100px,_1fr))]
+		rounded-lg border border-gray-100 bg-white py-5 pl-8 pr-4 shadow-custom-lg transition-colors duration-300 md:grid md:grid-cols-[150px_minmax(100px,_1fr)_150px_minmax(100px,_1fr)]
 		{colors.borderColor} {$isBookingFormOpen && 'pointer-events-none'}"
 >
-	<h2 class="hidden font-semibold md:block">#1</h2>
-	<h3 class="hidden justify-end text-sm font-medium text-slate-500 md:block">Studium</h3>
-	<h3 class="text-sm text-slate-500">{firstName} {lastName}</h3>
+	<h3 class="justify-self-start text-sm text-slate-500">{firstName} {lastName}</h3>
+	<h3 class="hidden justify-end text-sm font-medium text-slate-500 md:block">{visaType}</h3>
 	<h3 class="hidden text-sm text-slate-500 md:block">{formatDate(createdAt)}</h3>
 	<div class="flex items-center justify-end gap-2">
 		<div
@@ -67,8 +60,7 @@
 				{/if}
 				<span class="relative inline-flex h-2 w-2 rounded-full {colors.bgColor}" />
 			</div>
-			<span class="font-medium text-{colors.textColor}"
-				>{status[0].toUpperCase() + status.slice(1)}</span
+			<span class="font-medium {colors.textColor}">{status[0].toUpperCase() + status.slice(1)}</span
 			>
 		</div>
 		<Icon src={icons.chevronRight} className="w-5 h-5 fill-[#1A120B]" />

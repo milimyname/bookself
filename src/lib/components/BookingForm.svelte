@@ -6,6 +6,7 @@
 	import { bookingSchema } from '$lib/config/zodSchema.js';
 	import Spinner from './Spinner.svelte';
 	import { isBookingFormOpen, bookingDrawerSlide } from '$lib/stores/stores';
+	import toast, { Toaster } from 'svelte-french-toast';
 
 	export let data;
 
@@ -21,13 +22,19 @@
 	$form.applicants = 'eine Person';
 </script>
 
+<Spinner errors={$errors} />
+<Toaster />
+
 <form
 	id="booking-form"
 	class="bookingDrawer absolute z-40 h-fit w-11/12 overflow-auto overflow-x-hidden scroll-smooth rounded-r-3xl bg-white md:h-full md:w-2/3"
 	style="transform: translateX({-$bookingDrawerSlide}%)"
 	method="POST"
 	action="?/addBooking"
-	on:submit|preventDefault={() => ($isBookingFormOpen = false)}
+	on:submit={() => {
+		$isBookingFormOpen = false;
+		toast.success('Booked!');
+	}}
 >
 	<h2 class="mb-5 px-5 pt-28 text-3xl md:pl-28 md:pt-20">New Booking</h2>
 	<div class="">
@@ -265,5 +272,3 @@
 		</div>
 	</div>
 </form>
-
-<Spinner errors={$errors} />

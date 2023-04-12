@@ -326,3 +326,10 @@ export const config = {
 		]
 	}
 };
+
+export const colors = {
+	bgLightColor: 'bg-light-draft',
+	bgColor: 'draft',
+	borderColor: 'draft',
+	textColor: 'draft'
+};

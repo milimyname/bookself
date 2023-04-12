@@ -54,6 +54,7 @@
 		"bcrypt": "^5.1.0",
 		"node-cron": "^3.0.2",
 		"playwright": "^1.32.2",
+		"svelte-french-toast": "1.0.4-beta.0",
 		"svelte-icons-pack": "^2.1.0",
 		"trpc-sveltekit": "^3.5.4"
 	}

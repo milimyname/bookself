@@ -85,7 +85,7 @@
 			</button>
 		</div>
 	</header>
-	<section class="flex w-full flex-col gap-2 px-4 md:px-10 xl:w-7/12 xl:px-0">
+	<section class="flex w-full flex-col gap-2 scroll-auto px-4 md:px-10 xl:w-7/12 xl:px-0">
 		{#await data.bookings}
 			<Spinner errors={data.bookings} />
 		{:then data}
@@ -96,6 +96,7 @@
 					lastName={booking.lastName}
 					firstName={booking.firstName}
 					createdAt={booking.createdAt}
+					visaType={booking.visaType}
 				/>
 			{/each}
 		{/await}

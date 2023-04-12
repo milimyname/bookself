@@ -8,6 +8,7 @@
 	import { trpc } from '$lib/trpc/client';
 	import { page } from '$app/stores';
 	import { signOut } from '@auth/sveltekit/client';
+	import toast, { Toaster } from 'svelte-french-toast';
 
 	export let data: PageData;
 
@@ -30,46 +31,48 @@
 			const formData = new FormData(e.target);
 			const image = formData.get('image');
 
-			// If there is no image, return
-			if (!image) return;
+			// If there is image, upload it to supabase storage
+			if (image.size > 0) {
+				// If there is an existing image, delete it
+				const { data: existingImage } = await supabase.storage
+					.from('mili-bookself')
+					.list(`public/${currentEmail}`);
 
-			// If there is an existing image, delete it
-			const { data: existingImage } = await supabase.storage
-				.from('mili-bookself')
-				.list(`public/${currentEmail}`);
+				if (existingImage?.length > 0)
+					await supabase.storage.from('mili-bookself').remove([`public/${currentEmail}`]);
 
-			if (existingImage?.length > 0)
-				await supabase.storage.from('mili-bookself').remove([`public/${currentEmail}`]);
+				// Upload image to supabase storage
+				const { error } = await supabase.storage
+					.from('mili-bookself')
+					.upload(`public/${currentEmail}`, image);
 
-			// Upload image to supabase storage
-			const { error } = await supabase.storage
-				.from('mili-bookself')
-				.upload(`public/${currentEmail}`, image);
+				// Get the image url
+				const { data: imageUrl } = await supabase.storage
+					.from('mili-bookself')
+					.getPublicUrl(`public/${currentEmail}`);
 
-			// Get the image url
-			const { data: imageUrl } = await supabase.storage
-				.from('mili-bookself')
-				.getPublicUrl(`public/${currentEmail}`);
+				await trpc($page).users.uploadImage.mutate({
+					imageUrl: imageUrl.publicUrl
+				});
 
-			await trpc($page).users.uploadImage.mutate({
-				imageUrl: imageUrl.publicUrl
-			});
+				if (error) throw error;
+			}
 
-			if (error) throw error;
+			// Toaster message
+			toast.success('Updated your profile!');
 		} catch (error) {
 			if (error instanceof Error) console.log(error.message);
 		}
 	};
 </script>
 
-<Spinner {errors} />
+<Toaster />
 <form
 	class="userDrawer absolute z-40 flex h-full w-11/12 flex-col overflow-auto overflow-x-hidden scroll-smooth rounded-r-3xl bg-white md:w-2/3"
 	style="transform: translateX({-$userDrawerSlide}%)"
 	method="POST"
 	action="?/updateProfile"
 	on:submit={handleUserSubmit}
-	use:enhance
 >
 	<header class="flex justify-between px-5 pt-28 md:pl-28 md:pr-10 md:pt-20">
 		<h2 class="mb-5 text-3xl">{currentName}</h2>
