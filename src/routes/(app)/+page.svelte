@@ -7,6 +7,7 @@
 	import BookingForm from '$lib/components/BookingForm.svelte';
 	import { isBookingFormOpen, isUserFormOpen, bookingDrawerSlide } from '$lib/stores/stores';
 	import Booking from '$lib/components/Booking.svelte';
+
 	import Spinner from '$lib/components/Spinner.svelte';
 	import User from '$lib/components/User.svelte';
 
@@ -44,6 +45,7 @@
 			$isBookingFormOpen = false;
 			springValue.set(100, { soft: true });
 		}
+		document.body.style.overflow = 'auto';
 	}
 
 	$: if (!$isBookingFormOpen) springValue.set(100, { soft: true });

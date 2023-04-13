@@ -22,6 +22,8 @@
 			$isUserFormOpen = false;
 			springValue.set(100, { soft: true });
 		}
+
+		document.body.style.overflow = 'auto';
 	}
 
 	$: if (!$isUserFormOpen) springValue.set(100, { soft: true });
@@ -30,7 +32,7 @@
 <svelte:window on:click={clickOutside} />
 
 <aside
-	class="z-50 flex items-center justify-between gap-5 bg-black p-4 md:h-full md:flex-col md:rounded-r-3xl md:p-0"
+	class="sticky top-0 z-50 flex items-center justify-between gap-5 bg-black p-4 md:h-screen md:flex-col md:rounded-r-3xl md:p-0"
 >
 	<a href="/" class="md:p-6"> <img src={bookself} class="h-12 w-12" alt="Bookself Logo" /></a>
 	<div
@@ -47,6 +49,7 @@
 		<button
 			class="userButton"
 			on:click={() => {
+				document.body.style.overflow = 'hidden';
 				if ($isUserFormOpen) {
 					$isUserFormOpen = false;
 					springValue.set(100, { soft: true });

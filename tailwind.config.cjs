@@ -12,8 +12,8 @@ module.exports = {
 				'light-pending': '#ff91000f',
 				draft: '#7e7e7e',
 				'light-draft': '#9d9d9d1a',
-				done: 'green-400',
-				'light-done': '#373b53',
+				done: '#03C988',
+				'light-done': '#DDF7E3',
 				delete: '#EA5455'
 			}
 		}

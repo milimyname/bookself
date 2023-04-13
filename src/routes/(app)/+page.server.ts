@@ -18,8 +18,16 @@ export const load = (async (event) => {
 	// Get bookings from router
 	const bookings = router.createCaller(await createContext(event)).bookings.getBookings();
 
+	// Get user from db
+	const user = await prisma.user.findUnique({
+		where: {
+			email: session?.user?.email as string
+		}
+	});
+
 	return {
 		form,
+		user,
 		bookings
 	};
 }) satisfies PageServerData;
@@ -46,6 +54,9 @@ export const actions = {
 
 		// Set status to draft
 		form.data.status = 'draft';
+
+		// Check if user has verified email
+		if (!user?.emailVerified) throw new Error('Email not verified');
 
 		// Create a booking in db
 		await prisma.booking.create({

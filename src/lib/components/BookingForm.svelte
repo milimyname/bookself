@@ -20,6 +20,9 @@
 	// Set default values
 	$form.familyMember = 'no';
 	$form.applicants = 'eine Person';
+
+	// Show a toast error if the user ain't verified his email yet
+	if (!data.user.emailVerified) toast.error('Please verify your email first');
 </script>
 
 <Spinner errors={$errors} />
@@ -32,8 +35,23 @@
 	method="POST"
 	action="?/addBooking"
 	on:submit={() => {
+		if ($errors) return;
+
 		$isBookingFormOpen = false;
 		toast.success('Booked!');
+
+		// Clear form
+		$form.citizenship = '';
+		$form.applicants = '';
+		$form.familyMember = '';
+		$form.cizitenshipOfFamilyMember = '';
+		$form.visaType = '';
+		$form.visa = '';
+		$form.firstName = '';
+		$form.lastName = '';
+		$form.email = '';
+		$form.currentVisa = '';
+		$form.numberOfCurrentVisa = '';
 	}}
 >
 	<h2 class="mb-5 px-5 pt-28 text-3xl md:pl-28 md:pt-20">New Booking</h2>
@@ -92,6 +110,30 @@
 					<p class="text-sm text-red-500">{$errors.familyMember}</p>
 				{/if}
 			</fieldset>
+			{#if $form.familyMember === 'yes'}
+				<fieldset
+					class="flex flex-col gap-2"
+					transition:slide={{ duration: 500, easing: quintOut, axis: 'y' }}
+				>
+					<label for="cizitenshipOfFamilyMember" class="font-medium"
+						>Citizenship of the family member?</label
+					>
+					<select
+						name="cizitenshipOfFamilyMember"
+						id="cizitenshipOfFamilyMember"
+						class="w-full rounded-md"
+						bind:value={$form.cizitenshipOfFamilyMember}
+						{...$constraints.cizitenshipOfFamilyMember}
+					>
+						{#each config.de.citizenship as citizenship}
+							<option value={citizenship}>{citizenship}</option>
+						{/each}
+					</select>
+					{#if $errors.cizitenshipOfFamilyMember}
+						<p class="text-sm text-red-500">{$errors.cizitenshipOfFamilyMember}</p>
+					{/if}
+				</fieldset>
+			{/if}
 			<fieldset class="mb-auto flex flex-col gap-2">
 				<label for="visaType" class="font-medium">Visa Type</label>
 				<select
@@ -136,30 +178,6 @@
 							<p class="text-sm text-red-500">{$errors.visa}</p>
 						{/if}
 					</select>
-				</fieldset>
-			{/if}
-			{#if $form.familyMember === 'yes'}
-				<fieldset
-					class="flex flex-col gap-2"
-					transition:slide={{ duration: 500, easing: quintOut, axis: 'y' }}
-				>
-					<label for="cizitenshipOfFamilyMember" class="font-medium"
-						>Citizenship of the family member?</label
-					>
-					<select
-						name="cizitenshipOfFamilyMember"
-						id="cizitenshipOfFamilyMember"
-						class="w-full rounded-md"
-						bind:value={$form.cizitenshipOfFamilyMember}
-						{...$constraints.cizitenshipOfFamilyMember}
-					>
-						{#each config.de.citizenship as citizenship}
-							<option value={citizenship}>{citizenship}</option>
-						{/each}
-					</select>
-					{#if $errors.cizitenshipOfFamilyMember}
-						<p class="text-sm text-red-500">{$errors.cizitenshipOfFamilyMember}</p>
-					{/if}
 				</fieldset>
 			{/if}
 			<div class="h-[1px] w-full bg-neutral-200" />

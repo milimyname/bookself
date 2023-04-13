@@ -24,4 +24,6 @@ export function clickOutside(
 		$isBookingFormOpen = false;
 		springValue.set(100, { soft: true });
 	}
+
+	document.body.style.overflow = 'auto';
 }

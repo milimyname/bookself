@@ -2,7 +2,6 @@
 	import type { PageData } from './$types';
 	import { superForm } from 'sveltekit-superforms/client';
 	import { userSchema } from '$lib/config/zodSchema.js';
-	import Spinner from './Spinner.svelte';
 	import { isUserFormOpen, userDrawerSlide } from '$lib/stores/stores';
 	import { supabase } from '$lib/supabase/supabase';
 	import { trpc } from '$lib/trpc/client';
@@ -24,6 +23,8 @@
 
 	const handleUserSubmit = async (e: any) => {
 		try {
+			e.preventDefault();
+			if ($errors) return;
 			// Close the user drawer
 			$isUserFormOpen = false;
 
@@ -56,6 +57,8 @@
 				});
 
 				if (error) throw error;
+
+				document.body.style.overflow = 'auto';
 			}
 
 			// Toaster message
@@ -68,7 +71,7 @@
 
 <Toaster />
 <form
-	class="userDrawer absolute z-40 flex h-full w-11/12 flex-col overflow-auto overflow-x-hidden scroll-smooth rounded-r-3xl bg-white md:w-2/3"
+	class="userDrawer absolute z-40 flex h-full w-11/12 flex-col overflow-x-hidden scroll-smooth rounded-r-3xl bg-white md:w-2/3"
 	style="transform: translateX({-$userDrawerSlide}%)"
 	method="POST"
 	action="?/updateProfile"
@@ -138,7 +141,10 @@
 		<button
 			type="button"
 			class="rounded-full border px-8 py-2 transition-colors hover:bg-gray-100"
-			on:click={() => ($isUserFormOpen = false)}>Cancel</button
+			on:click={() => {
+				$isUserFormOpen = false;
+				document.body.style.overflow = 'auto';
+			}}>Cancel</button
 		>
 		<button
 			type="submit"

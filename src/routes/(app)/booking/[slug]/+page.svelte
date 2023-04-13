@@ -6,7 +6,7 @@
 	import Icon from 'svelte-icons-pack/Icon.svelte';
 	import { isBookingFormOpen, isUserFormOpen, bookingDrawerSlide } from '$lib/stores/stores';
 	import User from '$lib/components/User.svelte';
-	import { clickOutside } from '$lib/hooks/clickOutside.js';
+	import { clickOutside } from '$lib/hooks/clickOutside';
 	import toast, { Toaster } from 'svelte-french-toast';
 
 	// If the user is not signed in, redirect to the login page
@@ -124,7 +124,7 @@
 		</div>
 		<div>
 			<h4 class="text-gray-500">Citizenship</h4>
-			<span class="font-medium">{data.booking?.citizenship}</span>
+			<span class="break-all font-medium">{data.booking?.citizenship}</span>
 		</div>
 		<div>
 			<h4 class="text-gray-500">Applicants</h4>
@@ -132,11 +132,11 @@
 		</div>
 		<div>
 			<h4 class="text-gray-500">Visa Type</h4>
-			<span class="font-medium">{data.booking?.visaType}</span>
+			<span class="break-all font-medium">{data.booking?.visaType}</span>
 		</div>
 		<div>
 			<h4 class="text-gray-500">Visa</h4>
-			<span class="font-medium">{data.booking?.visa}</span>
+			<span class="break-all font-medium">{data.booking?.visa}</span>
 		</div>
 		<div>
 			<h4 class="text-gray-500">Family Member</h4>
