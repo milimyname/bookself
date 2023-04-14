@@ -16,7 +16,7 @@
 
 	// Form
 	const { form, enhance, errors, constraints } = superForm(data.form, {
-		taintedMessage: 'Are you sure you want to leave?',
+		taintedMessage: null,
 		validators: signUpSchema
 	});
 </script>

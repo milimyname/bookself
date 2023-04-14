@@ -56,7 +56,7 @@ export const actions = {
 		form.data.status = 'draft';
 
 		// Check if user has verified email
-		if (!user?.emailVerified) throw new Error('Email not verified');
+		if (!user?.emailVerified) throw redirect(302, '/');
 
 		// Create a booking in db
 		await prisma.booking.create({

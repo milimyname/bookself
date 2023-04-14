@@ -1,15 +1,16 @@
 import { redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
+import { userSchema } from '$lib/config/zodSchema';
 import { fail } from '@sveltejs/kit';
 import { superValidate } from 'sveltekit-superforms/server';
 import { prisma } from '$lib/db/prisma';
-import { userSchema } from '$lib/config/zodSchema';
-import { transporter } from '$lib/emails/nodemailer';
 import { render } from 'svelte-email';
-import Hello from '$lib/emails/Hello.svelte';
+import { transporter } from '$lib/emails/nodemailer';
 import { ZOHO_SENT_FROM } from '$env/static/private';
+import Reset from '$lib/emails/Reset.svelte';
 
 export const load = (async (event) => {
+	// Validate user
 	const session = await event.locals.getSession();
 
 	if (session?.user) throw redirect(302, '/');
@@ -32,62 +33,43 @@ export const actions = {
 			// Again, always return { form } and things will just work.
 			return fail(400, { form });
 
-		try {
-			// Find user in db
-			const user = await prisma.user.findUnique({
-				where: {
-					email: form.data.email
-				}
-			});
+		// Find user in db
+		const user = await prisma.user.findUnique({
+			where: {
+				email: form.data.email
+			}
+		});
 
-			// If user is not found, throw error
-			if (!user)
-				return fail(400, {
-					form: {
-						...form,
-						errors: {
-							...form.errors,
-							email: 'Email not found'
-						}
-					}
-				});
-
-			// If user is found, check if user got password
-			if (!user.password)
-				return fail(400, {
-					form: {
-						...form,
-						errors: {
-							...form.errors,
-							email: 'You logged in with Google or Github in the past. Please use those to login. '
-						}
-					}
-				});
-
-			// Send email
-			const emailHtml = render({
-				template: Hello,
-				props: {
-					id: user.id
-				}
-			});
-
-			const options = {
-				from: ZOHO_SENT_FROM,
-				to: form.data.email,
-				subject: 'Welcome to Bookself || Verification Email',
-				html: emailHtml
-			};
-
-			await transporter.sendMail(options);
-
-			// Redirect to home page
-			throw redirect(302, '/');
-		} catch (err) {
-			console.log(err);
+		if (!user) {
+			form.errors.email = ['Email is not found'];
+			return fail(400, { form });
 		}
 
-		// Yep, return { form } here too
-		return { form };
+		// Check if there is a password
+		if (!user.password) {
+			form.errors.email = ['You used a google/github login to sign up.'];
+			return fail(400, { form });
+		}
+
+		// Send email
+		const emailHtml = render({
+			template: Reset,
+			props: {
+				id: user.id
+			}
+		});
+
+		const options = {
+			from: ZOHO_SENT_FROM,
+			to: form.data.email,
+			subject: 'Reset password',
+			html: emailHtml
+		};
+
+		await transporter.sendMail(options);
+
+		return {
+			form
+		};
 	}
 } satisfies Actions;

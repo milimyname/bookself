@@ -16,7 +16,7 @@
 
 	// Form
 	const { form, enhance, errors, constraints } = superForm(data.form, {
-		taintedMessage: 'Are you sure you want to leave?',
+		taintedMessage: null,
 		validators: loginSchema
 	});
 
@@ -106,7 +106,7 @@
 					Don't have an account yet? <a href="/signup" class="font-semibold underline">Sing up</a
 					></span
 				>
-				<a href="/forgot-password" class="underline">Forgot password?</a>
+				<a href="/reset" class="underline">Forgot password?</a>
 			</fieldset>
 			<button type="submit" class="w-full rounded-md bg-black p-4 text-white"> Log in</button>
 		</form>
