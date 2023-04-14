@@ -58,9 +58,9 @@
 				if (error) throw error;
 
 				document.body.style.overflow = 'auto';
+				// Toaster message
+				toast.success('Updated your profile!');
 			}
-			// Toaster message
-			toast.success('Updated your profile!');
 		} catch (error) {
 			if (error instanceof Error) console.log(error.message);
 		}

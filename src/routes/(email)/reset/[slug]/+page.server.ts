@@ -1,22 +1,18 @@
 import { redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
+import { resetSchema } from '$lib/config/zodSchema';
 import { fail } from '@sveltejs/kit';
 import { superValidate } from 'sveltekit-superforms/server';
 import { prisma } from '$lib/db/prisma';
 import bcrypt from 'bcrypt';
-import { signUpSchema } from '$lib/config/zodSchema';
-import { transporter } from '$lib/emails/nodemailer';
-import { render } from 'svelte-email';
-import Hello from '$lib/emails/Hello.svelte';
-import { ZOHO_SENT_FROM } from '$env/static/private';
 
 export const load = (async (event) => {
+	// Validate user
 	const session = await event.locals.getSession();
-
 	if (session?.user) throw redirect(302, '/');
 
 	// Validate form
-	const form = await superValidate(event, signUpSchema);
+	const form = await superValidate(event, resetSchema);
 
 	return {
 		form
@@ -26,7 +22,7 @@ export const load = (async (event) => {
 export const actions = {
 	default: async (event) => {
 		// Same syntax as in the load function
-		const form = await superValidate(event, signUpSchema);
+		const form = await superValidate(event, resetSchema);
 
 		// Convenient validation check:
 		if (!form.valid)
@@ -39,23 +35,25 @@ export const actions = {
 			return fail(400, { form });
 		}
 
-		// Check if email is already in use
+		// Check if password is the same as the old one
 		const user = await prisma.user.findUnique({
 			where: {
-				email: form.data.email
+				id: event.params.slug
 			}
 		});
 
-		if (user) {
-			form.errors.email = ['Email exists'];
+		if (await bcrypt.compare(form.data.password, user.password)) {
+			form.errors.password = ['Password is the same as the old one'];
 			return fail(400, { form });
 		}
 
 		try {
-			// Create user in db
-			const user = await prisma.user.create({
+			// Update user in db
+			const updatedUser = await prisma.user.update({
+				where: {
+					id: event.params.slug
+				},
 				data: {
-					email: form.data.email,
 					password: await bcrypt.hash(form.data.password, 10)
 				}
 			});
@@ -69,7 +67,7 @@ export const actions = {
 					expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
 					user: {
 						connect: {
-							email: form.data.email
+							email: updatedUser.email
 						}
 					}
 				}
@@ -83,23 +81,6 @@ export const actions = {
 				httpOnly: true,
 				sameSite: 'lax'
 			});
-
-			// Send email
-			const emailHtml = render({
-				template: Hello,
-				props: {
-					id: user.id
-				}
-			});
-
-			const options = {
-				from: ZOHO_SENT_FROM,
-				to: form.data.email,
-				subject: 'Welcome to Bookself || Verification Email',
-				html: emailHtml
-			};
-
-			await transporter.sendMail(options);
 
 			// Redirect to home page
 			throw redirect(302, '/');

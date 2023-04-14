@@ -33,3 +33,8 @@ export const userSchema = z.object({
 	email: z.string().email(),
 	image: z.any().optional()
 });
+
+export const resetSchema = z.object({
+	password: z.string().min(8),
+	confirmPassword: z.string().min(8)
+});
