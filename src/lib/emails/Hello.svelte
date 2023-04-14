@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { dev } from '$app/environment';
+	import { env } from '$env/dynamic/public';
 	import { Button, Container, Head, Hr, Html, Img, Preview, Section, Text } from 'svelte-email';
 
 	export let id: string;
@@ -23,7 +25,8 @@
 					padding: '1rem 2rem 1rem 2rem',
 					backgroundColor: 'black'
 				}}
-				href="https://localhost:5050/confirm/{id}">Confirm your email</Button
+				href={dev ? `${env.PUBLIC_PROD}/confirm/${id}` : `${env.PUBLIC_DEV}/confirm/${id}`}
+				>Confirm your email</Button
 			>
 			<Hr />
 			<Text>Best Regards</Text>

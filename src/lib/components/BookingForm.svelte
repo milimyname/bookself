@@ -12,14 +12,29 @@
 
 	// Super Form
 	const { form, enhance, errors, constraints } = superForm(data.form, {
-		taintedMessage: 'Are you sure you want to leave?',
+		taintedMessage: null,
 		validators: bookingSchema,
-		clearOnSubmit: 'none'
+		onSubmit: () => {
+			if ($errors._errors) return;
+			// Close the user drawer
+			$isBookingFormOpen = false;
+			// Toaster success
+			toast.success('Booking created successfully');
+			// Clear the form
+			$form.applicants = '';
+			$form.citizenship = '';
+			$form.birthDate = '';
+			$form.cizitenshipOfFamilyMember = '';
+			$form.familyMember = '';
+			$form.lastName = '';
+			$form.firstName = '';
+			$form.status = '';
+			$form.visa = '';
+			$form.visaType = '';
+			$form.numberOfCurrentVisa = '';
+			$form.currentVisa = '';
+		}
 	});
-
-	// Set default values
-	$form.familyMember = 'no';
-	$form.applicants = 'eine Person';
 
 	// Show a toast error if the user ain't verified his email yet
 	if (!data.user.emailVerified) toast.error('Please verify your email first');
@@ -34,25 +49,7 @@
 	style="transform: translateX({-$bookingDrawerSlide}%)"
 	method="POST"
 	action="?/addBooking"
-	on:submit={() => {
-		if ($errors) return;
-
-		$isBookingFormOpen = false;
-		toast.success('Booked!');
-
-		// Clear form
-		$form.citizenship = '';
-		$form.applicants = '';
-		$form.familyMember = '';
-		$form.cizitenshipOfFamilyMember = '';
-		$form.visaType = '';
-		$form.visa = '';
-		$form.firstName = '';
-		$form.lastName = '';
-		$form.email = '';
-		$form.currentVisa = '';
-		$form.numberOfCurrentVisa = '';
-	}}
+	use:enhance
 >
 	<h2 class="mb-5 px-5 pt-28 text-3xl md:pl-28 md:pt-20">New Booking</h2>
 	<div class="">

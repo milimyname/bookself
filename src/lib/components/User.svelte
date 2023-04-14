@@ -13,18 +13,14 @@
 
 	// Super Form
 	const { form, errors, enhance, constraints } = superForm(data.form, {
-		taintedMessage: 'Are you sure you want to leave?',
-		validators: userSchema,
-		clearOnSubmit: 'none'
+		taintedMessage: null,
+		validators: userSchema
 	});
-
-	let currentEmail = data.session.user.email ? data.session.user.email : $form.email;
-	let currentName = data.session.user.name ? data.session.user.name : 'User Profile';
 
 	const handleUserSubmit = async (e: any) => {
 		try {
+			// Don't reload the page
 			e.preventDefault();
-			if ($errors) return;
 			// Close the user drawer
 			$isUserFormOpen = false;
 
@@ -37,10 +33,13 @@
 				// If there is an existing image, delete it
 				const { data: existingImage } = await supabase.storage
 					.from('mili-bookself')
-					.list(`public/${currentEmail}`);
+					.list('public', {
+						filter: (file) => file.name === currentEmail
+					});
 
-				if (existingImage?.length > 0)
+				if (existingImage?.length > 1) {
 					await supabase.storage.from('mili-bookself').remove([`public/${currentEmail}`]);
+				}
 
 				// Upload image to supabase storage
 				const { error } = await supabase.storage
@@ -60,13 +59,15 @@
 
 				document.body.style.overflow = 'auto';
 			}
-
 			// Toaster message
 			toast.success('Updated your profile!');
 		} catch (error) {
 			if (error instanceof Error) console.log(error.message);
 		}
 	};
+
+	let currentEmail = data.session.user.email ? data.session.user.email : $form.email;
+	let currentName = data.session.user.name ? data.session.user.name : 'User Profile';
 </script>
 
 <Toaster />
