@@ -48,13 +48,13 @@
 				<p class="text-gray-500">Log in to access your account</p>
 			</div>
 			<div class="flex flex-col justify-between gap-5 md:flex-row">
-				<!-- <button
-					on:click={() => signIn('google')}
+				<button
+					on:click={() => handleSignIn('google')}
 					class=" group flex flex-1 justify-center gap-2 rounded-md border p-4 transition-all duration-500 hover:border-white hover:bg-black"
 				>
 					<Icon src={icons.google} className="h-7 w-7 group-hover:fill-white" />
 					<span class="group-hover:text-white"> Continue with Google </span></button
-				> -->
+				>
 				<button
 					on:click={() => handleSignIn('github')}
 					class=" group flex flex-1 justify-center gap-2 rounded-md border p-4 transition-all duration-500 hover:border-white hover:bg-black"
