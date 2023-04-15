@@ -37,10 +37,10 @@
 
 <Spinner errors={$errors} />
 
-<main class="flex w-full py-10 lg:h-screen lg:overflow-hidden lg:py-0">
+<main class="flex w-full lg:h-screen lg:overflow-hidden">
 	<div class="hidden w-1/2 bg-gradient-to-r from-cyan-500 to-blue-500 lg:block" />
 	<section
-		class="flex w-full flex-col items-center justify-center gap-7 px-5 md:gap-10 md:px-10 lg:w-1/2 lg:px-0"
+		class="flex h-screen w-full flex-col items-center justify-center gap-7 px-5 md:gap-10 md:px-10 lg:h-full lg:w-1/2 lg:px-0"
 	>
 		<div class="flex w-full flex-col gap-5 md:w-2/3 lg:gap-10">
 			<div class="flex flex-col gap-2 text-left">
