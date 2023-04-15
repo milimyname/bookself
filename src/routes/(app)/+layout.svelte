@@ -23,7 +23,7 @@
 			springValue.set(100, { soft: true });
 		}
 
-		document.body.style.overflow = 'auto';
+		// document.body.style.overflow = 'auto';
 	}
 
 	$: if (!$isUserFormOpen) springValue.set(100, { soft: true });
@@ -49,7 +49,7 @@
 		<button
 			class="userButton"
 			on:click={() => {
-				document.body.style.overflow = 'hidden';
+				// document.body.style.overflow = 'hidden';
 				if ($isUserFormOpen) {
 					$isUserFormOpen = false;
 					springValue.set(100, { soft: true });
@@ -60,7 +60,7 @@
 			}}
 		>
 			<img
-				src={$page.data.session.user?.image || imagePlaceholder}
+				src={$page.data.session.user?.image ? $page.data.session.user?.image : imagePlaceholder}
 				alt={$page.data.session.user?.name}
 				class=" w-14 cursor-pointer rounded-full transition-transform hover:scale-125 md:mb-5"
 			/>

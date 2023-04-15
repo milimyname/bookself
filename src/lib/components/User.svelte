@@ -1,7 +1,5 @@
 <script lang="ts">
-	import type { PageData } from './$types';
 	import { superForm } from 'sveltekit-superforms/client';
-	import { userSchema } from '$lib/config/zodSchema.js';
 	import { isUserFormOpen, userDrawerSlide } from '$lib/stores/stores';
 	import { supabase } from '$lib/supabase/supabase';
 	import { trpc } from '$lib/trpc/client';
@@ -9,65 +7,67 @@
 	import { signOut } from '@auth/sveltekit/client';
 	import toast, { Toaster } from 'svelte-french-toast';
 
-	export let data: PageData;
+	export let form2;
+	export let session;
 
 	// Super Form
-	const { form, errors, enhance, constraints } = superForm(data.form, {
+	const {
+		form: userForm,
+		errors: userFormErrors,
+		enhance: userFormEnhance,
+		constraints: userFormConstraints
+	} = superForm(form2, {
 		taintedMessage: null,
-		validators: userSchema
-	});
+		onSubmit: async ({ form }) => {
+			try {
+				// Close the user drawer
+				$isUserFormOpen = false;
 
-	const handleUserSubmit = async (e: any) => {
-		try {
-			// Don't reload the page
-			e.preventDefault();
-			// Close the user drawer
-			$isUserFormOpen = false;
+				// Get form data by name image
+				const formData = new FormData(form);
+				const image = formData.get('image');
 
-			// Get form data by name image
-			const formData = new FormData(e.target);
-			const image = formData.get('image');
+				// If there is image, upload it to supabase storage
+				if (image.size > 0) {
+					// If there is an existing image, delete it
+					const { data: existingImage } = await supabase.storage
+						.from('mili-bookself')
+						.list('public', {
+							filter: (file) => file.name === currentEmail
+						});
 
-			// If there is image, upload it to supabase storage
-			if (image.size > 0) {
-				// If there is an existing image, delete it
-				const { data: existingImage } = await supabase.storage
-					.from('mili-bookself')
-					.list('public', {
-						filter: (file) => file.name === currentEmail
+					if (existingImage?.length > 1) {
+						await supabase.storage.from('mili-bookself').remove([`public/${currentEmail}`]);
+					}
+
+					// Upload image to supabase storage
+					const { error } = await supabase.storage
+						.from('mili-bookself')
+						.upload(`public/${currentEmail}`, image);
+
+					// Get the image url
+					const { data: imageUrl } = await supabase.storage
+						.from('mili-bookself')
+						.getPublicUrl(`public/${currentEmail}`);
+
+					await trpc($page).users.uploadImage.mutate({
+						imageUrl: imageUrl.publicUrl
 					});
 
-				if (existingImage?.length > 1) {
-					await supabase.storage.from('mili-bookself').remove([`public/${currentEmail}`]);
+					if (error) throw error;
+
+					// document.body.style.overflow = 'auto';
+					// Toaster message
+					toast.success('Updated your profile!');
 				}
-
-				// Upload image to supabase storage
-				const { error } = await supabase.storage
-					.from('mili-bookself')
-					.upload(`public/${currentEmail}`, image);
-
-				// Get the image url
-				const { data: imageUrl } = await supabase.storage
-					.from('mili-bookself')
-					.getPublicUrl(`public/${currentEmail}`);
-
-				await trpc($page).users.uploadImage.mutate({
-					imageUrl: imageUrl.publicUrl
-				});
-
-				if (error) throw error;
-
-				document.body.style.overflow = 'auto';
-				// Toaster message
-				toast.success('Updated your profile!');
+			} catch (error) {
+				if (error instanceof Error) console.log(error.message);
 			}
-		} catch (error) {
-			if (error instanceof Error) console.log(error.message);
 		}
-	};
+	});
 
-	let currentEmail = data.session.user.email ? data.session.user.email : $form.email;
-	let currentName = data.session.user.name ? data.session.user.name : 'User Profile';
+	let currentEmail = session.user.email ? session.user.email : $userForm.email;
+	let currentName = session.user.name ? session.user.name : 'User Profile';
 </script>
 
 <Toaster />
@@ -75,12 +75,12 @@
 	class="userDrawer absolute z-40 flex h-full w-11/12 flex-col overflow-x-hidden scroll-smooth rounded-r-3xl bg-white md:w-2/3"
 	style="transform: translateX({-$userDrawerSlide}%)"
 	method="POST"
-	action="?/updateProfile"
-	on:submit={handleUserSubmit}
+	action="?/updateUser"
+	use:userFormEnhance
 >
 	<header class="flex justify-between px-5 pt-28 md:pl-28 md:pr-10 md:pt-20">
 		<h2 class="mb-5 text-3xl">{currentName}</h2>
-		<button class="" on:click={() => signOut()}> Sign out </button>
+		<button on:click={() => signOut()}> Sign out </button>
 	</header>
 
 	<div class="relative mb-auto flex flex-col gap-5 px-5 md:pl-28 md:pr-10">
@@ -93,10 +93,10 @@
 				id="name"
 				class="rounded-md"
 				bind:value={currentName}
-				{...$constraints.name}
+				{...$userFormConstraints.name}
 			/>
-			{#if $errors.name}
-				<p class="text-sm text-red-500">{$errors.name}</p>
+			{#if $userFormErrors.name}
+				<p class="text-sm text-red-500">{$userFormErrors.name}</p>
 			{/if}
 		</fieldset>
 		<fieldset class="flex flex-col gap-2">
@@ -107,10 +107,10 @@
 				id="email"
 				class="rounded-md"
 				bind:value={currentEmail}
-				{...$constraints.email}
+				{...$userFormConstraints.email}
 			/>
-			{#if $errors.name}
-				<p class="text-sm text-red-500">{$errors.email}</p>
+			{#if $userFormErrors.name}
+				<p class="text-sm text-red-500">{$userFormErrors.email}</p>
 			{/if}
 		</fieldset>
 		<fieldset class="flex flex-col gap-2">
@@ -127,12 +127,12 @@
       hover:file:bg-gray-100
     "
 				accept="image/*"
-				bind:value={$form.image}
-				{...$constraints.image}
+				bind:value={$userForm.image}
+				{...$userFormConstraints.image}
 			/>
 
-			{#if $errors.image}
-				<p class="text-sm text-red-500">{$errors.image}</p>
+			{#if $userFormErrors.image}
+				<p class="text-sm text-red-500">{$userFormErrors.image}</p>
 			{/if}
 		</fieldset>
 	</div>
@@ -144,7 +144,7 @@
 			class="rounded-full border px-8 py-2 transition-colors hover:bg-gray-100"
 			on:click={() => {
 				$isUserFormOpen = false;
-				document.body.style.overflow = 'auto';
+				// document.body.style.overflow = 'auto';
 			}}>Cancel</button
 		>
 		<button

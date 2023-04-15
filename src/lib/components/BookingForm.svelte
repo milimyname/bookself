@@ -4,14 +4,14 @@
 	import { config } from '$lib/config/config';
 	import { superForm } from 'sveltekit-superforms/client';
 	import { bookingSchema } from '$lib/config/zodSchema.js';
-	import Spinner from './Spinner.svelte';
 	import { isBookingFormOpen, bookingDrawerSlide } from '$lib/stores/stores';
 	import toast, { Toaster } from 'svelte-french-toast';
 
-	export let data;
+	export let form1;
+	export let user;
 
 	// Super Form
-	const { form, enhance, errors, constraints } = superForm(data.form, {
+	const { form, enhance, errors, constraints } = superForm(form1, {
 		taintedMessage: null,
 		validators: bookingSchema,
 		onSubmit: () => {
@@ -37,14 +37,12 @@
 	});
 
 	// Show a toast error if the user ain't verified his email yet
-	if (!data.user.emailVerified) toast.error('Please verify your email first');
+	if (!user.emailVerified) toast.error('Please verify your email first');
 </script>
 
-<Spinner errors={$errors} />
 <Toaster />
 
 <form
-	id="booking-form"
 	class="bookingDrawer absolute z-40 h-fit w-11/12 overflow-auto overflow-x-hidden scroll-smooth rounded-r-3xl bg-white md:h-full md:w-2/3"
 	style="transform: translateX({-$bookingDrawerSlide}%)"
 	method="POST"
@@ -279,7 +277,6 @@
 				on:click={() => ($isBookingFormOpen = false)}>Cancel</button
 			>
 			<button
-				form="booking-form"
 				type="submit"
 				class="rounded-full bg-black px-8 py-2 text-white transition-colors hover:bg-gray-900"
 				>Submit</button

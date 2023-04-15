@@ -1,10 +1,15 @@
-<script>
-	import { onMount } from 'svelte';
-	import toast, { Toaster } from 'svelte-french-toast';
+<script lang="ts">
+	import type { PageData } from './$types';
+	import Form1 from '$lib/components/Form1.svelte';
+	import Form2 from '$lib/components/Form2.svelte';
 
-	onMount(() => {
-		toast.success('It works!');
-	});
+	export let data: PageData;
 </script>
 
-<Toaster />
+<div class="flexcol flex h-screen w-full items-center justify-center gap-10 p-10">
+	<Form1 form1={data.loginForm} />
+
+	<hr />
+
+	<Form2 form2={data.registerForm} />
+</div>

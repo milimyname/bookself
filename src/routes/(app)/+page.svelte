@@ -44,7 +44,7 @@
 			$isBookingFormOpen = false;
 			springValue.set(100, { soft: true });
 		}
-		document.body.style.overflow = 'auto';
+		// document.body.style.overflow = 'auto';
 	}
 
 	$: if (!$isBookingFormOpen) springValue.set(100, { soft: true });
@@ -56,8 +56,8 @@
 	<div class="fixed z-20 h-full w-full bg-black opacity-50" />
 {/if}
 
-<BookingForm {data} />
-<User {data} />
+<BookingForm form1={data.bookingForm} user={data.user} />
+<User form2={data.userForm} session={data.session} />
 
 <main
 	class="{$isBookingFormOpen || $isUserFormOpen

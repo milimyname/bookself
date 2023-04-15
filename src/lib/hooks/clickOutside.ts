@@ -25,5 +25,5 @@ export function clickOutside(
 		springValue.set(100, { soft: true });
 	}
 
-	document.body.style.overflow = 'auto';
+	// document.body.style.overflow = 'auto';
 }

@@ -13,7 +13,14 @@ export const load = (async (event) => {
 	if (!session?.user) throw redirect(302, '/');
 
 	// Validate form
-	const form = await superValidate(event, bookingSchema);
+	const bookingForm = await superValidate(event, bookingSchema, {
+		id: 'bookingForm'
+	});
+
+	// Validate form
+	const userForm = await superValidate(event, userSchema, {
+		id: 'userForm'
+	});
 
 	// Get bookings from router
 	const bookings = router.createCaller(await createContext(event)).bookings.getBookings();
@@ -26,24 +33,27 @@ export const load = (async (event) => {
 	});
 
 	return {
-		form,
+		bookingForm,
+		userForm,
 		user,
 		bookings
 	};
 }) satisfies PageServerData;
 
 export const actions = {
-	addBooking: async (event) => {
+	addBooking: async ({ request, locals }) => {
 		// Same syntax as in the load function
-		const form = await superValidate(event, bookingSchema);
+		const bookingForm = await superValidate(request, bookingSchema, {
+			id: 'bookingForm'
+		});
 
 		// Convenient validation check:
-		if (!form.valid)
-			// Again, always return { form } and things will just work.
-			return fail(400, { form });
+		if (!bookingForm.valid)
+			// Again, always return { bookingForm } and things will just work.
+			return fail(400, { bookingForm });
 
 		// Get user from session
-		const session = await event.locals.getSession();
+		const session = await locals.getSession();
 
 		// Find user in db
 		const user = await prisma.user.findUnique({
@@ -53,7 +63,7 @@ export const actions = {
 		});
 
 		// Set status to draft
-		form.data.status = 'draft';
+		bookingForm.data.status = 'draft';
 
 		// Check if user has verified email
 		if (!user?.emailVerified) throw redirect(302, '/');
@@ -62,34 +72,36 @@ export const actions = {
 		await prisma.booking.create({
 			data: {
 				userId: user?.id,
-				...form.data
+				...bookingForm.data
 			}
 		});
 
-		// Yep, return { form } here too
-		return { form };
+		// Yep, return { bookingForm } here too
+		return { bookingForm };
 	},
-	updateProfile: async (event) => {
-		const form = await superValidate(event, userSchema);
+	updateUser: async ({ locals, request }) => {
+		const userForm = await superValidate(request, userSchema, {
+			id: 'userForm'
+		});
 
-		if (!form.valid) return fail(400, { form });
+		if (!userForm.valid) return fail(400, { userForm });
 
 		// Update user in db
-		const session = await event.locals.getSession();
+		const session = await locals.getSession();
 
 		// If there is no image url, return
-		if (!form.data.name && !form.data.email) return;
+		if (!userForm.data.name && !userForm.data.email) return;
 
 		await prisma.user.update({
 			where: {
 				email: session?.user?.email as string
 			},
 			data: {
-				name: form.data.name,
-				email: form.data.email
+				name: userForm.data.name,
+				email: userForm.data.email
 			}
 		});
 
-		return { form };
+		return { userForm };
 	}
 } satisfies Actions;
