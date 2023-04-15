@@ -41,6 +41,7 @@
 			method="POST"
 			use:enhance
 			on:submit={() => {
+				if ($errors._errors) return;
 				toast.success('Sent email!');
 				$loading = true;
 			}}
