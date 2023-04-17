@@ -43,7 +43,7 @@
 <Toaster />
 
 <form
-	class="bookingDrawer absolute z-40 h-fit w-11/12 overflow-auto overflow-x-hidden scroll-smooth rounded-r-3xl bg-white md:h-full md:w-2/3"
+	class="bookingDrawer absolute z-40 h-fit w-11/12 overflow-auto overflow-x-hidden scroll-smooth rounded-r-3xl bg-white md:fixed md:h-full md:w-2/3"
 	style="transform: translateX({-$bookingDrawerSlide}%)"
 	method="POST"
 	action="?/addBooking"

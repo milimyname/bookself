@@ -6,6 +6,10 @@ import { prisma } from '$lib/db/prisma';
 import { bookingSchema, userSchema } from '$lib/config/zodSchema';
 import { createContext } from '$lib/trpc/context';
 import { router } from '$lib/trpc/router';
+import { transporter } from '$lib/emails/nodemailer';
+import { render } from 'svelte-email';
+import Hello from '$lib/emails/Hello.svelte';
+import { ZOHO_SENT_FROM } from '$env/static/private';
 
 export const load = (async (event) => {
 	const session = await event.locals.getSession();
@@ -31,6 +35,26 @@ export const load = (async (event) => {
 			email: session?.user?.email as string
 		}
 	});
+
+	// Check if user has verified email, if not send emailt
+	if (!user?.emailVerified && user?.id && user?.email) {
+		// Send email
+		const emailHtml = render({
+			template: Hello,
+			props: {
+				id: user.id
+			}
+		});
+
+		const options = {
+			from: ZOHO_SENT_FROM,
+			to: user.email,
+			subject: 'Welcome to Bookself || Verification Email',
+			html: emailHtml
+		};
+
+		await transporter.sendMail(options);
+	}
 
 	return {
 		bookingForm,
