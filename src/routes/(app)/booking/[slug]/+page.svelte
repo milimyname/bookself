@@ -92,12 +92,14 @@
 					>
 				</div>
 			</div>
-			<button
-				class="rounded-md bg-delete px-4 py-2 text-white transition-colors hover:bg-red-600"
-				on:click={() => toast.error("Can't delete yet!")}
-			>
-				Disabled
-			</button>
+			{#if data.booking?.status === 'draft'}
+				<button
+					class="rounded-md bg-delete px-4 py-2 text-white transition-colors hover:bg-red-600"
+					on:click={() => toast.error("Can't delete yet!")}
+				>
+					Delete
+				</button>
+			{/if}
 		</div>
 	</header>
 	<section

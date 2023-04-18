@@ -17,22 +17,10 @@
 		onSubmit: () => {
 			if ($errors._errors) return;
 			// Close the user drawer
+
 			$isBookingFormOpen = false;
 			// Toaster success
-			toast.success('Booking created successfully');
-			// Clear the form
-			$form.applicants = '';
-			$form.citizenship = '';
-			$form.birthDate = '';
-			$form.cizitenshipOfFamilyMember = '';
-			$form.familyMember = '';
-			$form.lastName = '';
-			$form.firstName = '';
-			$form.status = '';
-			$form.visa = '';
-			$form.visaType = '';
-			$form.numberOfCurrentVisa = '';
-			$form.currentVisa = '';
+			toast.loading('Sending your booking request...');
 		}
 	});
 
@@ -279,7 +267,7 @@
 			<button
 				type="submit"
 				class="rounded-full bg-black px-8 py-2 text-white transition-colors hover:bg-gray-900"
-				>Submit</button
+				>Book</button
 			>
 		</div>
 	</div>

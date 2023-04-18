@@ -10,6 +10,7 @@ import { transporter } from '$lib/emails/nodemailer';
 import { render } from 'svelte-email';
 import Hello from '$lib/emails/Hello.svelte';
 import { ZOHO_SENT_FROM } from '$env/static/private';
+import { stripe } from '$lib/stripe/stripe';
 
 export const load = (async (event) => {
 	const session = await event.locals.getSession();
@@ -36,7 +37,7 @@ export const load = (async (event) => {
 		}
 	});
 
-	// Check if user has verified email, if not send emailt
+	// Check if user has verified email, if not send email
 	if (!user?.emailVerified && user?.id && user?.email) {
 		// Send email
 		const emailHtml = render({
@@ -56,6 +57,25 @@ export const load = (async (event) => {
 		await transporter.sendMail(options);
 	}
 
+	// Get stripe checkout last session
+	const stripeCheckoutSession = await stripe.checkout.sessions.list({
+		limit: 1
+	});
+
+	// If it is paid, update status to pending
+	if (stripeCheckoutSession.data[0].payment_status === 'paid') {
+		// Update booking status to paid
+		await prisma.booking.updateMany({
+			where: {
+				id: stripeCheckoutSession.data[0].metadata.bookingId,
+				userId: stripeCheckoutSession.data[0].metadata.userId
+			},
+			data: {
+				status: 'pending'
+			}
+		});
+	}
+
 	return {
 		bookingForm,
 		userForm,
@@ -65,9 +85,9 @@ export const load = (async (event) => {
 }) satisfies PageServerData;
 
 export const actions = {
-	addBooking: async ({ request, locals }) => {
+	addBooking: async (event) => {
 		// Same syntax as in the load function
-		const bookingForm = await superValidate(request, bookingSchema, {
+		const bookingForm = await superValidate(event.request, bookingSchema, {
 			id: 'bookingForm'
 		});
 
@@ -77,7 +97,7 @@ export const actions = {
 			return fail(400, { bookingForm });
 
 		// Get user from session
-		const session = await locals.getSession();
+		const session = await event.locals.getSession();
 
 		// Find user in db
 		const user = await prisma.user.findUnique({
@@ -89,19 +109,23 @@ export const actions = {
 		// Set status to draft
 		bookingForm.data.status = 'draft';
 
-		// Check if user has verified email
-		if (!user?.emailVerified) throw redirect(302, '/');
+		// Check if user has verified email, don't let them book if not
+		if (!user?.emailVerified) return;
 
-		// Create a booking in db
-		await prisma.booking.create({
+		// Create booking in db
+		const booking = await prisma.booking.create({
 			data: {
 				userId: user?.id,
 				...bookingForm.data
 			}
 		});
 
-		// Yep, return { bookingForm } here too
-		return { bookingForm };
+		// Pay for booking
+		const checkout = await router.createCaller(await createContext(event)).bookings.payForBooking({
+			bookingId: booking.id
+		});
+
+		throw redirect(303, checkout.url);
 	},
 	updateUser: async ({ locals, request }) => {
 		const userForm = await superValidate(request, userSchema, {

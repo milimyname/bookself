@@ -2,6 +2,9 @@ import { t } from '$lib/trpc/t';
 import { auth } from '$lib/trpc/middlewares/auth';
 import { prisma } from '$lib/db/prisma';
 import { TRPCError } from '@trpc/server';
+import { stripe } from '$lib/stripe/stripe';
+import { PUBLIC_DEV, PUBLIC_PROD } from '$env/static/public';
+import { z } from 'zod';
 
 // const bookingProcedure = t.procedure.input(z.object({ userId: z.string() }));
 
@@ -34,5 +37,63 @@ export const bookings = t.router({
 		return {
 			bookings
 		};
-	})
+	}),
+	payForBooking: t.procedure
+		.use(auth)
+		.input(
+			z.object({
+				bookingId: z.string()
+			})
+		)
+		.query(async (req) => {
+			// Get booking id from input
+			const { bookingId } = req.input;
+
+			// Get the booking from the DB
+			const booking = await prisma.booking.findUnique({
+				where: {
+					id: bookingId
+				}
+			});
+
+			// Create coupons
+			const coupon = await stripe.coupons.create({
+				percent_off: 90,
+				duration: 'repeating',
+				duration_in_months: 5,
+				name: 'uzbekBerliner31#'
+			});
+
+			// Create stripe intent
+			const paymentIntent = await stripe.checkout.sessions.create({
+				payment_method_types: ['card'],
+				line_items: [
+					{
+						price_data: {
+							currency: 'eur',
+							product_data: {
+								name: 'Booking',
+								images: ['https://i.imgur.com/EHyR2nP.png']
+							},
+							unit_amount: 500
+						},
+						quantity: 1
+					}
+				],
+				discounts: [
+					{
+						coupon: coupon.id
+					}
+				],
+				mode: 'payment',
+				metadata: {
+					bookingId: booking?.id as string,
+					userId: booking?.userId as string
+				},
+				success_url: import.meta.env.DEV ? PUBLIC_DEV : PUBLIC_PROD,
+				cancel_url: import.meta.env.DEV ? PUBLIC_DEV : PUBLIC_PROD
+			});
+
+			return paymentIntent;
+		})
 });
