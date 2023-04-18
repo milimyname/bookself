@@ -3,7 +3,7 @@ import { auth } from '$lib/trpc/middlewares/auth';
 import { prisma } from '$lib/db/prisma';
 import { TRPCError } from '@trpc/server';
 import { stripe } from '$lib/stripe/stripe';
-import { PUBLIC_DEV, PUBLIC_PROD } from '$env/static/public';
+import { env } from '$env/dynamic/public';
 import { z } from 'zod';
 
 // const bookingProcedure = t.procedure.input(z.object({ userId: z.string() }));
@@ -90,8 +90,8 @@ export const bookings = t.router({
 					bookingId: booking?.id as string,
 					userId: booking?.userId as string
 				},
-				success_url: import.meta.env.DEV ? PUBLIC_DEV : PUBLIC_PROD,
-				cancel_url: import.meta.env.DEV ? PUBLIC_DEV : PUBLIC_PROD
+				success_url: import.meta.env.DEV ? env.PUBLIC_DEV : env.PUBLIC_PROD,
+				cancel_url: import.meta.env.DEV ? env.PUBLIC_DEV : env.PUBLIC_PROD
 			});
 
 			return paymentIntent;
