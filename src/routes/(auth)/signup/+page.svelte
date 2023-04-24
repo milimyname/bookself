@@ -95,7 +95,9 @@
 
 				<label for="password"
 					>I agree to the
-					<a href="/terms-privacy" class="underline"> Terms & Privacy </a>
+					<a href="https://glowing-brand-015819.framer.app/blog/terms-privacy" class="underline">
+						Terms & Privacy
+					</a>
 				</label>
 				{#if $errors.privacy}
 					<p class="text-sm text-red-500">{$errors.privacy}</p>
