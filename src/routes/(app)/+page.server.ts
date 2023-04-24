@@ -112,6 +112,10 @@ export const actions = {
 		// Format birth date of the form to dd-mm-yyyy from yyyy-mm-dd
 		bookingForm.data.birthDate = bookingForm.data.birthDate.split('-').reverse().join('.');
 
+		// Slice the last 2 letters from visa and visaType
+		bookingForm.data.visa = bookingForm.data.visa.slice(0, -1);
+		bookingForm.data.visaType = bookingForm.data.visaType.slice(0, -2);
+
 		// Check if user has verified email, don't let them book if not
 		if (!user?.emailVerified) return;
 
