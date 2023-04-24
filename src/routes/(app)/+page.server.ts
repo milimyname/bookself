@@ -109,6 +109,9 @@ export const actions = {
 		// Set status to draft
 		bookingForm.data.status = 'draft';
 
+		// Format birth date of the form to dd-mm-yyyy from yyyy-mm-dd
+		bookingForm.data.birthDate = bookingForm.data.birthDate.split('-').reverse().join('.');
+
 		// Check if user has verified email, don't let them book if not
 		if (!user?.emailVerified) return;
 

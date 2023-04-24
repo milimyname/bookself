@@ -134,11 +134,11 @@
 		</div>
 		<div>
 			<h4 class="text-gray-500">Visa Type</h4>
-			<span class="break-all font-medium">{data.booking?.visaType}</span>
+			<span class="break-all font-medium">{data.booking?.visaType.slice(0, -2)}</span>
 		</div>
 		<div>
 			<h4 class="text-gray-500">Visa</h4>
-			<span class="break-all font-medium">{data.booking?.visa}</span>
+			<span class="break-all font-medium">{data.booking?.visa.slice(0, -2)}</span>
 		</div>
 		<div>
 			<h4 class="text-gray-500">Family Member</h4>
