@@ -11,7 +11,7 @@
 		"test:unit": "vitest",
 		"lint": "prettier --plugin-search-dir . --check . && eslint .",
 		"format": "prettier --plugin-search-dir . --write .",
-		"git": "git add . && git commit -m 'update' && git push"
+		"git": "git add . && git commit -m 'update' && git push origin test"
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.32.3",
