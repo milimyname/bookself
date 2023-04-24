@@ -25,15 +25,9 @@ dependencies:
   bcrypt:
     specifier: ^5.1.0
     version: 5.1.0
-  node-cron:
-    specifier: ^3.0.2
-    version: 3.0.2
   nodemailer:
     specifier: ^6.9.1
     version: 6.9.1
-  playwright:
-    specifier: ^1.32.3
-    version: 1.32.3
   svelte-email:
     specifier: ^0.0.4
     version: 0.0.4
@@ -114,9 +108,6 @@ devDependencies:
   svelte-check:
     specifier: ^3.2.0
     version: 3.2.0(postcss@8.4.23)(svelte@3.58.0)
-  svelte-stripe:
-    specifier: ^0.0.22
-    version: 0.0.22
   sveltekit-superforms:
     specifier: ^0.6.18
     version: 0.6.18(@sveltejs/kit@1.15.7)(svelte@3.58.0)(zod@3.21.4)
@@ -153,7 +144,7 @@ packages:
       cookie: 0.5.0
       jose: 4.14.1
       nodemailer: 6.9.1
-      oauth4webapi: 2.2.3
+      oauth4webapi: 2.2.4
       preact: 10.11.3
       preact-render-to-string: 5.2.3(preact@10.11.3)
     dev: false
@@ -2650,13 +2641,6 @@ packages:
     resolution: {integrity: sha512-eh0GgfEkpnoWDq+VY8OyvYhFEzBk6jIYbRKdIlyTiAXIVJ8PyBaKb0rp7oDtoddbdoHWhq8wwr+XZ81F1rpNdA==}
     dev: false
 
-  /node-cron@3.0.2:
-    resolution: {integrity: sha512-iP8l0yGlNpE0e6q1o185yOApANRe47UPbLf4YxfbiNHt/RU5eBcGB/e0oudruheSf+LQeDMezqC5BVAb5wwRcQ==}
-    engines: {node: '>=6.0.0'}
-    dependencies:
-      uuid: 8.3.2
-    dev: false
-
   /node-fetch@2.6.7:
     resolution: {integrity: sha512-ZjMPFEfVx5j+y2yF35Kzx5sF7kDzxuDj6ziH4FFbOp87zKDZNx8yExJIb05OGF4Nlt9IHFIMBkRl41VdvcNdbQ==}
     engines: {node: 4.x || >=6.0.0}
@@ -2726,8 +2710,8 @@ packages:
       gauge: 3.0.2
       set-blocking: 2.0.0
 
-  /oauth4webapi@2.2.3:
-    resolution: {integrity: sha512-nukaBmXBkBIz46SGM6FPIlIBPm5D0ZfYVbVPi2U3J5aPEVwluE5SEh/wuxfJgOc0bmZXfVY5pMFwmpHeNw1TOg==}
+  /oauth4webapi@2.2.4:
+    resolution: {integrity: sha512-oKhiOHXX1iQCGtupvwTMKFAnLdX3tSAKCqtvr9faX9ycEz1lVgUU4ridYsh/cj/f7qeqmJFs/jVnA7c1fABRKw==}
     dev: false
 
   /oauth@0.9.15:
@@ -2862,15 +2846,7 @@ packages:
     resolution: {integrity: sha512-SB+cdrnu74ZIn5Ogh/8278ngEh9NEEV0vR4sJFmK04h2iZpybfbqBY0bX6+BLYWVdV12JLLI+JEFtSnYgR+mWg==}
     engines: {node: '>=14'}
     hasBin: true
-
-  /playwright@1.32.3:
-    resolution: {integrity: sha512-h/ylpgoj6l/EjkfUDyx8cdOlfzC96itPpPe8BXacFkqpw/YsuxkpPyVbzEq4jw+bAJh5FLgh31Ljg2cR6HV3uw==}
-    engines: {node: '>=14'}
-    hasBin: true
-    requiresBuild: true
-    dependencies:
-      playwright-core: 1.32.3
-    dev: false
+    dev: true
 
   /postcss-import@14.1.0(postcss@8.4.23):
     resolution: {integrity: sha512-flwI+Vgm4SElObFVPpTIT7SU7R3qk2L7PyduMcokiaVKuWv9d/U+Gm/QAd8NDLuykTWTkcrjOeD2Pp1rMeBTGw==}
@@ -3498,12 +3474,6 @@ packages:
       strip-indent: 3.0.0
       svelte: 3.58.0
       typescript: 5.0.4
-    dev: true
-
-  /svelte-stripe@0.0.22:
-    resolution: {integrity: sha512-ZLt55XNWrytsMfaMUUxEknLjphYWqhRkRNcHmmkp7gbENKSB8rp6o6hZP5zWEoUGwYNiPGqpM/DgbXy27BdVIQ==}
-    dependencies:
-      '@stripe/stripe-js': 1.52.1
     dev: true
 
   /svelte-writable-derived@3.0.1(svelte@3.58.0):
