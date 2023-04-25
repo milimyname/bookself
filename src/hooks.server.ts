@@ -9,13 +9,12 @@ import { createTRPCHandle } from 'trpc-sveltekit';
 import { sequence } from '@sveltejs/kit/hooks';
 import { prisma } from '$lib/db/prisma';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
-// import '$lib/cron/cronjob';
 
 // Protect all routes in the protectedPaths array
 const protectedPaths = ['/', '/account'];
 
 async function protect({ event, resolve }) {
-	if (event.url.pathname.startsWith('/terms-policy')) return resolve(event);
+	if (event.url.pathname.startsWith('/reminder')) return resolve(event);
 
 	if (!protectedPaths.includes(event.url.pathname)) return resolve(event);
 
