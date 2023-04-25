@@ -9,6 +9,7 @@ import { router } from '$lib/trpc/router';
 import { transporter } from '$lib/emails/nodemailer';
 import { render } from 'svelte-email';
 import Hello from '$lib/emails/Hello.svelte';
+import BookingConfirmation from '$lib/emails/BookingConfirmation.svelte';
 import { ZOHO_SENT_FROM } from '$env/static/private';
 import { stripe } from '$lib/stripe/stripe';
 
@@ -74,6 +75,23 @@ export const load = (async (event) => {
 				status: 'pending'
 			}
 		});
+
+		// Send email
+		const emailHtml = render({
+			template: BookingConfirmation,
+			props: {
+				id: stripeCheckoutSession.data[0].metadata.bookingId
+			}
+		});
+
+		const options = {
+			from: ZOHO_SENT_FROM,
+			to: user?.email,
+			subject: 'Booking Confirmation',
+			html: emailHtml
+		};
+
+		await transporter.sendMail(options);
 	}
 
 	return {
