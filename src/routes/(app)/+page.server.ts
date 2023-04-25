@@ -77,21 +77,21 @@ export const load = (async (event) => {
 		});
 
 		// Send email
-		const emailHtml = render({
-			template: BookingConfirmation,
-			props: {
-				id: stripeCheckoutSession.data[0].metadata.bookingId
-			}
-		});
+		// const emailHtml = render({
+		// 	template: BookingConfirmation,
+		// 	props: {
+		// 		id: stripeCheckoutSession.data[0].metadata.bookingId
+		// 	}
+		// });
 
-		const options = {
-			from: ZOHO_SENT_FROM,
-			to: user?.email,
-			subject: 'Booking Confirmation',
-			html: emailHtml
-		};
+		// const options = {
+		// 	from: ZOHO_SENT_FROM,
+		// 	to: user?.email,
+		// 	subject: 'Booking Confirmation',
+		// 	html: emailHtml
+		// };
 
-		await transporter.sendMail(options);
+		// await transporter.sendMail(options);
 	}
 
 	return {
