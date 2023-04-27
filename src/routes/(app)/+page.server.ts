@@ -63,8 +63,11 @@ export const load = (async (event) => {
 		limit: 1
 	});
 
-	// If it is paid, update status to pending
-	if (stripeCheckoutSession.data[0].payment_status === 'paid') {
+	// If it is paid and created timestamp is only 5 minutes older, update status to pending
+	if (
+		stripeCheckoutSession.data[0].payment_status === 'paid' &&
+		stripeCheckoutSession.data[0].created > Date.now() - 300000
+	) {
 		// Update booking status to paid
 		await prisma.booking.updateMany({
 			where: {
@@ -75,23 +78,28 @@ export const load = (async (event) => {
 				status: 'pending'
 			}
 		});
+	}
 
+	// Under development
+	// If it is paid and created timestamp is only 30 seconds older, send email confirmation
+	if (
+		stripeCheckoutSession.data[0].payment_status === 'paid' &&
+		stripeCheckoutSession.data[0].created > Date.now() - 30000
+	) {
 		// Send email
-		// const emailHtml = render({
-		// 	template: BookingConfirmation,
-		// 	props: {
-		// 		id: stripeCheckoutSession.data[0].metadata.bookingId
-		// 	}
-		// });
-
-		// const options = {
-		// 	from: ZOHO_SENT_FROM,
-		// 	to: user?.email,
-		// 	subject: 'Booking Confirmation',
-		// 	html: emailHtml
-		// };
-
-		// await transporter.sendMail(options);
+		const emailHtml = render({
+			template: BookingConfirmation,
+			props: {
+				id: stripeCheckoutSession.data[0].metadata.bookingId
+			}
+		});
+		const options = {
+			from: ZOHO_SENT_FROM,
+			to: user?.email,
+			subject: 'Booking Confirmation',
+			html: emailHtml
+		};
+		await transporter.sendMail(options);
 	}
 
 	return {

@@ -4,7 +4,7 @@
 	import { spring } from 'svelte/motion';
 	import { icons } from '$lib/assets/icons';
 	import Icon from 'svelte-icons-pack/Icon.svelte';
-	import { isBookingFormOpen, isUserFormOpen, bookingDrawerSlide } from '$lib/stores/stores';
+	import { isUserFormOpen, bookingDrawerSlide } from '$lib/stores/stores';
 	import User from '$lib/components/User.svelte';
 	import { clickOutside } from '$lib/hooks/clickOutside';
 	import toast, { Toaster } from 'svelte-french-toast';
@@ -48,7 +48,7 @@
 	}
 </script>
 
-<svelte:window on:click={(e) => clickOutside(e, springValue, $isBookingFormOpen)} />
+<svelte:window on:click={(e) => clickOutside(e, springValue)} />
 
 {#if $isUserFormOpen}
 	<div class="fixed z-20 h-full w-full bg-black opacity-50" />
