@@ -72,7 +72,7 @@
 
 <Toaster />
 <form
-	class="userDrawer fixed z-40 flex h-full w-11/12 flex-col overflow-x-hidden scroll-smooth rounded-r-3xl bg-white md:w-2/3"
+	class="userDrawer fixed z-40 flex h-full w-11/12 flex-col overflow-x-hidden scroll-smooth rounded-r-3xl bg-white dark:text-black md:w-2/3"
 	style="transform: translateX({-$userDrawerSlide}%)"
 	method="POST"
 	action="?/updateUser"

@@ -55,7 +55,7 @@
 			class="flex w-28 items-center justify-center gap-2 rounded-md px-4 py-2 {colors.bgLightColor}"
 		>
 			<div class="relative flex h-3 w-3 items-center">
-				{#if status === 'pending'}
+				{#if status === 'pending' || status === 'done'}
 					<span class="absolute inline-flex h-2 w-2 animate-ping rounded-full {colors.bgColor}" />
 				{/if}
 				<span class="relative inline-flex h-2 w-2 rounded-full {colors.bgColor}" />

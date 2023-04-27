@@ -60,15 +60,15 @@
 <main
 	class="{$isUserFormOpen
 		? 'blur'
-		: 'blur-0'} flex w-full flex-1 flex-col items-center gap-5 px-4 py-8 transition-all md:px-10 md:py-20 xl:w-7/12 xl:px-0"
+		: 'blur-0'} flex w-full flex-1 flex-col items-center gap-5 px-4 py-8 transition-all dark:text-black md:px-10 md:py-20 xl:w-7/12 xl:px-0"
 >
 	<header class="flex w-full flex-col justify-between gap-5 xl:w-7/12 xl:px-0">
 		<a class="group flex items-center gap-3" href="/">
 			<Icon
 				src={icons.chevronRight}
-				className="h-6 w-6 rotate-180 group-hover:-translate-x-1 transition-transform"
+				className="h-6 w-6 rotate-180 dark:fill-white  group-hover:-translate-x-1 transition-transform"
 			/>
-			<span class="text-sm font-semibold">Go Back</span>
+			<span class="text-sm font-semibold dark:text-white">Go Back</span>
 		</a>
 
 		<div
@@ -93,12 +93,13 @@
 				</div>
 			</div>
 			{#if data.booking?.status === 'draft'}
-				<button
-					class="rounded-md bg-delete px-4 py-2 text-white transition-colors hover:bg-red-600"
-					on:click={() => toast.error("Can't delete yet!")}
-				>
-					Delete
-				</button>
+				<form method="POST" action="?/deleteBooking">
+					<button
+						class="rounded-md bg-delete px-4 py-2 text-white transition-colors hover:bg-red-600"
+					>
+						Delete
+					</button>
+				</form>
 			{/if}
 		</div>
 	</header>

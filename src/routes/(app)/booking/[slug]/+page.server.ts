@@ -52,5 +52,19 @@ export const actions = {
 		});
 
 		return { userForm };
+	},
+	deleteBooking: async ({ params }) => {
+		const { slug } = params;
+
+		console.log(slug);
+
+		// Delete booking
+		await prisma.booking.delete({
+			where: {
+				id: slug
+			}
+		});
+
+		throw redirect(303, '/');
 	}
 } satisfies Actions;

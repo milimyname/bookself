@@ -5,20 +5,35 @@
 	import { spring } from 'svelte/motion';
 	import { icons } from '$lib/assets/icons';
 	import Icon from 'svelte-icons-pack/Icon.svelte';
-	import { isUserFormOpen, userDrawerSlide } from '$lib/stores/stores';
+	import { isUserFormOpen, userDrawerSlide, darkMode } from '$lib/stores/stores';
 	import { userClickOutside } from '$lib/hooks/clickOutside';
+	import { handleSwitchDarkMode } from '$lib/hooks/handleDarkMode';
+	import { browser } from '$app/environment';
+	import { slide } from 'svelte/transition';
+	import { quintOut } from 'svelte/easing';
 
 	let springValue = spring(100, { stiffness: 0.03, damping: 0.4 });
 
 	$: $userDrawerSlide = $springValue;
 
 	$: if (!$isUserFormOpen) springValue.set(100, { soft: true });
+
+	// Dark Mode
+	if (browser) {
+		if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+			document.documentElement.classList.add('dark');
+			$darkMode = true;
+		} else {
+			document.documentElement.classList.remove('dark');
+			$darkMode = false;
+		}
+	}
 </script>
 
 <svelte:window on:click={(e) => userClickOutside(e, springValue)} />
 
 <aside
-	class="sticky top-0 z-50 flex items-center justify-between gap-5 bg-black p-4 md:h-screen md:flex-col md:rounded-r-3xl md:p-0"
+	class="sticky top-0 z-50 flex items-center justify-between gap-5 bg-black p-4 transition-colors dark:bg-[#3F3351] md:h-screen md:flex-col md:rounded-r-3xl md:p-0"
 >
 	<a href="/" class="md:p-6"> <img src={bookself} class="h-12 w-12" alt="Bookself Logo" /></a>
 	<div
@@ -27,8 +42,22 @@
 		<button>
 			<Icon src={icons.language} className="w-5 h-5 fill-white" />
 		</button>
-		<button>
-			<Icon src={icons.sun} className="w-6 h-6 fill-white" />
+		<button on:click={handleSwitchDarkMode} class="transition-all">
+			{#if !$darkMode}
+				<div
+					class="transition-all"
+					transition:slide={{ delay: 0, duration: 500, easing: quintOut, axis: 'y' }}
+				>
+					<Icon src={icons.sun} className="w-6 h-6 fill-white" />
+				</div>
+			{:else}
+				<div
+					class="transition-all"
+					transition:slide={{ delay: 0, duration: 500, easing: quintOut, axis: 'y' }}
+				>
+					<Icon src={icons.moon} className="w-6 h-6 fill-white" />
+				</div>
+			{/if}
 		</button>
 	</div>
 	{#if $page.data.session}

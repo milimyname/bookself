@@ -48,7 +48,7 @@
 		</div>
 		<div>
 			<button
-				class={` newBookingButton flex cursor-pointer items-center gap-2 rounded-xl bg-black px-2 py-2 text-white transition-colors hover:bg-slate-800 md:rounded-full md:pl-2 md:pr-4 ${
+				class={` newBookingButton flex cursor-pointer items-center gap-2 rounded-xl bg-black px-2 py-2 text-white transition-colors hover:bg-slate-800 dark:bg-[#864879] md:rounded-full md:pl-2 md:pr-4 ${
 					$isBookingFormOpen && 'pointer-events-none'
 				}`}
 				on:click={() => {
