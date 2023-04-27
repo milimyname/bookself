@@ -9,6 +9,7 @@
 	import Booking from '$lib/components/Booking.svelte';
 	import Spinner from '$lib/components/Spinner.svelte';
 	import User from '$lib/components/User.svelte';
+	import { clickOutside } from '$lib/hooks/clickOutside';
 
 	// If the user is not signed in, redirect to the login page
 	if (!$page.data.session) goto('/login');
@@ -23,34 +24,10 @@
 	let amountOfBookings = 0;
 	$: amountOfBookings = data.bookings.bookings.length;
 
-	// Close the drawer if the user clicks outside of it except for the button
-	function clickOutside(e: MouseEvent) {
-		const drawer = document.querySelector('.bookingDrawer');
-		const button = document.querySelector('.newBookingButton');
-		const userButton = document.querySelector('.userButton');
-
-		// If user button is clickded, close the booking drawer
-		if (userButton && userButton.contains(<Node>e!.target)) {
-			$isBookingFormOpen = false;
-			springValue.set(100, { soft: true });
-		}
-
-		// If the user clicks on the aside, don't close the drawer
-		const aside = document.querySelector('aside');
-		if (aside && aside.contains(<Node>e!.target)) return;
-
-		if (button && button.contains(<Node>e!.target)) return;
-		if (drawer && !drawer.contains(<Node>e!.target)) {
-			$isBookingFormOpen = false;
-			springValue.set(100, { soft: true });
-		}
-		// document.body.style.overflow = 'auto';
-	}
-
 	$: if (!$isBookingFormOpen) springValue.set(100, { soft: true });
 </script>
 
-<svelte:window on:click={clickOutside} />
+<svelte:window on:click={(e) => clickOutside(e, springValue)} />
 
 {#if $isBookingFormOpen || $isUserFormOpen}
 	<div class="fixed z-20 h-full w-full bg-black opacity-50" />

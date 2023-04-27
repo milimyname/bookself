@@ -9,7 +9,7 @@ export async function GET() {
 	// Send a reminder email to the users who are waiting for an appointment
 	const bookingsToRemind = await prisma.booking.findMany({
 		where: {
-			status: 'pending'
+			status: 'pending',
 		}
 	});
 
@@ -21,6 +21,7 @@ export async function GET() {
 			}
 		});
 
+		// Send email
 		const emailHtml = render({
 			template: ReminderEmail,
 			props: {
