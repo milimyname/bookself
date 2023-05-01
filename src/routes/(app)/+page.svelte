@@ -10,6 +10,7 @@
 	import Spinner from '$lib/components/Spinner.svelte';
 	import User from '$lib/components/User.svelte';
 	import { clickOutside } from '$lib/hooks/clickOutside';
+	import { LL } from '$lib/i18n/i18n-svelte';
 
 	// If the user is not signed in, redirect to the login page
 	if (!$page.data.session) goto('/login');
@@ -33,7 +34,7 @@
 	<div class="fixed z-20 h-full w-full bg-black opacity-50" />
 {/if}
 
-<BookingForm form1={data.bookingForm} user={data.user} />
+<BookingForm form1={data.bookingForm} locale={data.locale} user={data.user} />
 <User form2={data.userForm} session={data.session} />
 
 <main
@@ -43,8 +44,8 @@
 >
 	<header class="flex w-full items-center justify-between gap-5 px-4 md:px-10 xl:w-7/12 xl:px-0">
 		<div>
-			<h1 class="mb-2 text-4xl font-bold">Bookings</h1>
-			<p>There are {amountOfBookings} total bookings</p>
+			<h1 class="mb-2 text-4xl font-bold">{$LL.bookings()}</h1>
+			<p>{$LL.amountOfBookings({ amountOfBookings })}</p>
 		</div>
 		<div>
 			<button
@@ -59,7 +60,7 @@
 				<div class="rounded-full bg-white p-2">
 					<Icon src={icons.plus} className="w-5 h-5" />
 				</div>
-				<span class="hidden font-medium md:block">New Booking</span>
+				<span class="hidden font-medium md:block">{$LL.newBooking()}</span>
 			</button>
 		</div>
 	</header>

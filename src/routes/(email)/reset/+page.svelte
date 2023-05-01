@@ -7,6 +7,7 @@
 	import { icons } from '$lib/assets/icons.js';
 	import { page } from '$app/stores';
 	import toast, { Toaster } from 'svelte-french-toast';
+	import { LL } from '$lib/i18n/i18n-svelte';
 
 	export let data;
 
@@ -42,7 +43,7 @@
 			use:enhance
 			on:submit={() => {
 				if ($errors._errors) return;
-				toast.success('Sent email!');
+				toast.success($LL.resetPassword());
 				$loading = true;
 			}}
 		>

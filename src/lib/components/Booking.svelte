@@ -3,19 +3,21 @@
 	import { icons } from '$lib/assets/icons';
 	import Icon from 'svelte-icons-pack/Icon.svelte';
 	import { formatDate } from '$lib/hooks/formatDate';
+	import { page } from '$app/stores';
 
 	export let bookingId: string;
 	export let status: string;
 	export let firstName: string;
 	export let lastName: string;
 	export let createdAt: Date;
-	export let visaType: Date;
+	export let visaType: string;
 
 	const colors = {
 		bgLightColor: 'bg-light-draft',
 		bgColor: 'draft',
 		borderColor: 'draft',
-		textColor: 'draft'
+		textColor: 'draft',
+		german: 'Entwurf'
 	};
 
 	// Get color from status
@@ -25,18 +27,21 @@
 			colors.bgColor = 'bg-draft';
 			colors.textColor = 'text-draft';
 			colors.borderColor = 'hover:border-draft';
+			colors.german = 'Entwurf';
 			break;
 		case 'pending':
 			colors.bgLightColor = 'bg-light-pending';
 			colors.bgColor = 'bg-pending';
 			colors.textColor = 'text-pending';
 			colors.borderColor = 'hover:border-pending';
+			colors.german = 'Ausstehend';
 			break;
 		case 'done':
 			colors.bgLightColor = 'bg-light-done';
 			colors.bgColor = 'bg-done';
 			colors.textColor = 'text-done';
 			colors.borderColor = 'hover:border-done';
+			colors.german = 'Erledigt';
 			break;
 	}
 </script>
@@ -48,7 +53,9 @@
 		{colors.borderColor} {$isBookingFormOpen && 'pointer-events-none'}"
 >
 	<h3 class="justify-self-start text-sm text-slate-500">{firstName} {lastName}</h3>
-	<h3 class="hidden justify-end text-sm font-medium text-slate-500 md:block">{visaType}</h3>
+	<h3 class="hidden justify-end text-sm font-medium text-slate-500 md:block">
+		{visaType.slice(0, -2)}
+	</h3>
 	<h3 class="hidden text-sm text-slate-500 md:block">{formatDate(createdAt)}</h3>
 	<div class="flex items-center justify-end gap-2">
 		<div
@@ -60,7 +67,10 @@
 				{/if}
 				<span class="relative inline-flex h-2 w-2 rounded-full {colors.bgColor}" />
 			</div>
-			<span class="font-medium {colors.textColor}">{status[0].toUpperCase() + status.slice(1)}</span
+			<span class="font-medium {colors.textColor}"
+				>{$page.data.locale === 'en'
+					? status[0].toUpperCase() + status.slice(1)
+					: colors.german}</span
 			>
 		</div>
 		<Icon src={icons.chevronRight} className="w-5 h-5 fill-[#1A120B]" />

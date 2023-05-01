@@ -7,6 +7,7 @@
 	import { icons } from '$lib/assets/icons.js';
 	import { page } from '$app/stores';
 	import toast, { Toaster } from 'svelte-french-toast';
+	import { LL } from '$lib/i18n/i18n-svelte';
 
 	// Redirect if logged in
 	if ($page.data.session) goto('/');
@@ -41,7 +42,7 @@
 			method="POST"
 			on:submit={() => {
 				if (Object.keys($errors).length === 0) return;
-				toast.success('Password reset successfully!');
+				toast.success($LL.resetPassword());
 				$loading = true;
 
 				setTimeout(() => {

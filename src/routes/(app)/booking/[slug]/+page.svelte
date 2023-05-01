@@ -8,6 +8,7 @@
 	import User from '$lib/components/User.svelte';
 	import { clickOutside } from '$lib/hooks/clickOutside';
 	import toast, { Toaster } from 'svelte-french-toast';
+	import { LL } from '$lib/i18n/i18n-svelte';
 
 	// If the user is not signed in, redirect to the login page
 	if (!$page.data.session) goto('/login');
@@ -22,28 +23,32 @@
 		bgLightColor: 'bg-light-draft',
 		bgColor: 'draft',
 		borderColor: 'draft',
-		textColor: 'draft'
+		textColor: 'draft',
+		german: 'Entwurf'
 	};
 
-	// Get color from status
+	// Get color from status and in de
 	$: switch (data.booking?.status) {
 		case 'draft':
 			colors.bgLightColor = 'bg-light-draft';
 			colors.bgColor = 'bg-draft';
 			colors.textColor = 'text-draft';
 			colors.borderColor = 'hover:border-draft';
+			colors.german = 'Entwurf';
 			break;
 		case 'pending':
 			colors.bgLightColor = 'bg-light-pending';
 			colors.bgColor = 'bg-pending';
 			colors.textColor = 'text-pending';
 			colors.borderColor = 'hover:border-pending';
+			colors.german = 'Ausstehend';
 			break;
 		case 'done':
 			colors.bgLightColor = 'bg-light-done';
 			colors.bgColor = 'bg-done';
 			colors.textColor = 'text-done';
 			colors.borderColor = 'hover:border-done';
+			colors.german = 'Erledigt';
 			break;
 	}
 </script>
@@ -68,7 +73,7 @@
 				src={icons.chevronRight}
 				className="h-6 w-6 rotate-180 dark:fill-white  group-hover:-translate-x-1 transition-transform"
 			/>
-			<span class="text-sm font-semibold dark:text-white">Go Back</span>
+			<span class="text-sm font-semibold dark:text-white">{$LL.goBack()}</span>
 		</a>
 
 		<div
@@ -88,7 +93,9 @@
 						<span class="relative inline-flex h-2 w-2 rounded-full {colors.bgColor}" />
 					</div>
 					<span class="font-medium {colors.textColor}"
-						>{data.booking?.status[0].toUpperCase() + data.booking?.status.slice(1)}</span
+						>{data.locale === 'en'
+							? data.booking?.status[0].toUpperCase() + data.booking?.status.slice(1)
+							: colors.german}</span
 					>
 				</div>
 			</div>
@@ -97,7 +104,7 @@
 					<button
 						class="rounded-md bg-delete px-4 py-2 text-white transition-colors hover:bg-red-600"
 					>
-						Delete
+						{$LL.delete()}
 					</button>
 				</form>
 			{/if}
@@ -110,54 +117,54 @@
 			<span class="text-xl font-semibold">#{data.booking?.id.slice(14, -1)}</span>
 		</h2>
 		<div>
-			<h4 class="text-gray-500">First Name</h4>
+			<h4 class="text-gray-500">{$LL.firstName()}</h4>
 			<span class="font-medium">{data.booking?.firstName}</span>
 		</div>
 		<div>
-			<h4 class="text-gray-500">Last Name</h4>
+			<h4 class="text-gray-500">{$LL.lastName()}</h4>
 			<span class="font-medium">{data.booking?.lastName}</span>
 		</div>
 		<div>
-			<h4 class="text-gray-500">Birth Date</h4>
+			<h4 class="text-gray-500">{$LL.birthDate()}</h4>
 			<span class="font-medium">{data.booking?.birthDate}</span>
 		</div>
 		<div>
-			<h4 class="text-gray-500">Email</h4>
+			<h4 class="text-gray-500">{$LL.email()}</h4>
 			<span class="break-all font-medium">{data.booking?.email}</span>
 		</div>
 		<div>
-			<h4 class="text-gray-500">Citizenship</h4>
+			<h4 class="text-gray-500">{$LL.citizenship()}</h4>
 			<span class="break-all font-medium">{data.booking?.citizenship}</span>
 		</div>
 		<div>
-			<h4 class="text-gray-500">Applicants</h4>
+			<h4 class="text-gray-500">{$LL.amountOfApplicants()}</h4>
 			<span class="font-medium">{data.booking?.applicants}</span>
 		</div>
 		<div>
-			<h4 class="text-gray-500">Visa Type</h4>
+			<h4 class="text-gray-500">{$LL.visaType()}</h4>
 			<span class="break-all font-medium">{data.booking?.visaType.slice(0, -2)}</span>
 		</div>
 		<div>
-			<h4 class="text-gray-500">Visa</h4>
-			<span class="break-all font-medium">{data.booking?.visa.slice(0, -2)}</span>
+			<h4 class="text-gray-500">{$LL.visas()}</h4>
+			<span class="break-all font-medium">{data.booking?.visa.slice(0, -1)}</span>
 		</div>
 		<div>
-			<h4 class="text-gray-500">Family Member</h4>
+			<h4 class="text-gray-500">{$LL.familyMember()}</h4>
 			<span class="font-medium">{data.booking?.familyMember}</span>
 		</div>
 		{#if data.booking?.cizitenshipOfFamilyMember}
 			<div>
-				<h4 class="text-gray-500">Citizenship of Family Member</h4>
+				<h4 class="text-gray-500">{$LL.citizenshipOfFamilyMember()}</h4>
 				<span class="font-medium">{data.booking?.cizitenshipOfFamilyMember}</span>
 			</div>
 		{/if}
 		<div>
-			<h4 class="text-gray-500">Current Visa</h4>
+			<h4 class="text-gray-500">{$LL.currentVisa()}</h4>
 			<span class="font-medium">{data.booking?.currentVisa}</span>
 		</div>
 		{#if data.booking?.numberOfCurrentVisa}
 			<div>
-				<h4 class="text-gray-500">Number of current visa</h4>
+				<h4 class="text-gray-500">{$LL.numberOfcurrentVisa()}</h4>
 				<span class="font-medium">{data.booking?.numberOfCurrentVisa}</span>
 			</div>
 		{/if}

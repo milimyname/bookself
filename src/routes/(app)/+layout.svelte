@@ -11,15 +11,19 @@
 	import { browser } from '$app/environment';
 	import { slide } from 'svelte/transition';
 	import { quintOut } from 'svelte/easing';
+	import { goto } from '$app/navigation';
+	import { invalidateAll } from '$app/navigation';
 
 	let springValue = spring(100, { stiffness: 0.03, damping: 0.4 });
 
 	$: $userDrawerSlide = $springValue;
 
+	export let data;
+
 	$: if (!$isUserFormOpen) springValue.set(100, { soft: true });
 
 	// Dark Mode
-	if (browser) {
+	$: if (browser) {
 		if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
 			document.documentElement.classList.add('dark');
 			$darkMode = true;
@@ -28,6 +32,14 @@
 			$darkMode = false;
 		}
 	}
+
+	// Language
+	const switchLanguage = () => {
+		// Get current url
+		const url = new URL(window.location.href);
+
+		data.locale === 'en' ? goto(`${url.pathname}?lang=de`) : goto(`${url.pathname}?lang=en`);
+	};
 </script>
 
 <svelte:window on:click={(e) => userClickOutside(e, springValue)} />
@@ -39,8 +51,8 @@
 	<div
 		class="flex w-full justify-end gap-5 md:mb-5 md:mt-auto md:flex-col md:items-center md:border-b md:border-gray-200 md:pb-10"
 	>
-		<button>
-			<Icon src={icons.language} className="w-5 h-5 fill-white" />
+		<button class="cursor-pointer font-bold text-white" on:click={switchLanguage}>
+			{data.locale}
 		</button>
 		<button on:click={handleSwitchDarkMode} class="transition-all">
 			{#if !$darkMode}

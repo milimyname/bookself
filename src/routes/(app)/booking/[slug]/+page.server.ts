@@ -56,8 +56,6 @@ export const actions = {
 	deleteBooking: async ({ params }) => {
 		const { slug } = params;
 
-		console.log(slug);
-
 		// Delete booking
 		await prisma.booking.delete({
 			where: {
