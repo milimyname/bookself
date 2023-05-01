@@ -184,5 +184,24 @@ export const actions = {
 		});
 
 		return { userForm };
+	},
+	deleteAcc: async ({ locals }) => {
+		const session = await locals.getSession();
+
+		// Delete all bookings
+		await prisma.booking.deleteMany({
+			where: {
+				email: session?.user?.email as string
+			}
+		});
+
+		// Delete user
+		await prisma.user.delete({
+			where: {
+				email: session?.user?.email as string
+			}
+		});
+
+		throw redirect(303, '/');
 	}
 } satisfies Actions;

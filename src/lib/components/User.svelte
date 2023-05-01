@@ -1,11 +1,13 @@
 <script lang="ts">
 	import { superForm } from 'sveltekit-superforms/client';
-	import { isUserFormOpen, userDrawerSlide } from '$lib/stores/stores';
+	import { isUserFormOpen, userDrawerSlide, isModalOpen } from '$lib/stores/stores';
 	import { supabase } from '$lib/supabase/supabase';
 	import { trpc } from '$lib/trpc/client';
 	import { page } from '$app/stores';
 	import { signOut } from '@auth/sveltekit/client';
 	import toast, { Toaster } from 'svelte-french-toast';
+	import { LL } from '$lib/i18n/i18n-svelte';
+	import Modal from '$lib/components/Modal.svelte';
 
 	export let form2;
 	export let session;
@@ -56,9 +58,8 @@
 
 					if (error) throw error;
 
-					// document.body.style.overflow = 'auto';
 					// Toaster message
-					toast.success('Updated your profile!');
+					toast.success($LL.updateProfile());
 				}
 			} catch (error) {
 				if (error instanceof Error) console.log(error.message);
@@ -71,6 +72,7 @@
 </script>
 
 <Toaster />
+<Modal />
 <form
 	class="userDrawer fixed z-40 flex h-full w-11/12 flex-col overflow-x-hidden scroll-smooth rounded-r-3xl bg-white dark:text-black md:w-2/3"
 	style="transform: translateX({-$userDrawerSlide}%)"
@@ -80,13 +82,13 @@
 >
 	<header class="flex justify-between px-5 pt-28 md:pl-28 md:pr-10 md:pt-20">
 		<h2 class="mb-5 text-3xl">{currentName}</h2>
-		<button on:click={() => signOut()}> Sign out </button>
+		<button on:click={() => signOut()}> {$LL.signOut()} </button>
 	</header>
 
-	<div class="relative mb-auto flex flex-col gap-5 px-5 md:pl-28 md:pr-10">
+	<div class="relative flex h-full flex-col gap-5 px-5 md:pl-28 md:pr-10">
 		<div class="h-[1px] w-full bg-neutral-200" />
 		<fieldset class="flex flex-col gap-2">
-			<label for="name" class="font-medium">Full Name</label>
+			<label for="name" class="font-medium">{$LL.fullName()}</label>
 			<input
 				type="text"
 				name="name"
@@ -100,7 +102,7 @@
 			{/if}
 		</fieldset>
 		<fieldset class="flex flex-col gap-2">
-			<label for="email" class="font-medium">Email</label>
+			<label for="email" class="font-medium">{$LL.email()}</label>
 			<input
 				type="text"
 				name="email"
@@ -114,7 +116,7 @@
 			{/if}
 		</fieldset>
 		<fieldset class="flex flex-col gap-2">
-			<label for="image" class="font-medium">Choose profile photo</label>
+			<label for="image" class="font-medium">Avatar</label>
 			<input
 				type="file"
 				name="image"
@@ -125,6 +127,7 @@
       file:py-2 file:text-sm
       file:font-semibold file:text-gray-700
       hover:file:bg-gray-100
+	  
     "
 				accept="image/*"
 				bind:value={$userForm.image}
@@ -135,6 +138,14 @@
 				<p class="text-sm text-red-500">{$userFormErrors.image}</p>
 			{/if}
 		</fieldset>
+		<button
+			type="button"
+			class="mt-auto rounded-md bg-delete px-4 py-2 text-white transition-colors hover:bg-red-600"
+			on:click={() => {
+				$isUserFormOpen = false;
+				$isModalOpen = true;
+			}}>{$LL.deleteAcc()}</button
+		>
 	</div>
 	<div
 		class=" sticky bottom-0 z-20 mt-10 flex w-full justify-between self-end rounded-tr-3xl bg-white px-5 py-8 shadow-negative-lg md:pl-28 md:pr-10"
@@ -142,15 +153,12 @@
 		<button
 			type="button"
 			class="rounded-full border px-8 py-2 transition-colors hover:bg-gray-100"
-			on:click={() => {
-				$isUserFormOpen = false;
-				// document.body.style.overflow = 'auto';
-			}}>Cancel</button
+			on:click={() => ($isUserFormOpen = false)}>{$LL.cancel()}</button
 		>
 		<button
 			type="submit"
 			class="rounded-full bg-black px-8 py-2 text-white transition-colors hover:bg-gray-900"
-			>Submit</button
+			>{$LL.submit()}</button
 		>
 	</div>
 </form>
