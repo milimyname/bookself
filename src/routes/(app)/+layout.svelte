@@ -12,7 +12,6 @@
 	import { slide } from 'svelte/transition';
 	import { quintOut } from 'svelte/easing';
 	import { goto } from '$app/navigation';
-	import { invalidateAll } from '$app/navigation';
 
 	let springValue = spring(100, { stiffness: 0.03, damping: 0.4 });
 
@@ -76,7 +75,6 @@
 		<button
 			class="userButton"
 			on:click={() => {
-				// document.body.style.overflow = 'hidden';
 				if ($isUserFormOpen) {
 					$isUserFormOpen = false;
 					springValue.set(100, { soft: true });

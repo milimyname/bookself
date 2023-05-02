@@ -12,6 +12,7 @@ import Hello from '$lib/emails/Hello.svelte';
 import BookingConfirmation from '$lib/emails/BookingConfirmation.svelte';
 import { ZOHO_SENT_FROM } from '$env/static/private';
 import { stripe } from '$lib/stripe/stripe';
+import { sentEmail } from '$lib/stores/stores';
 
 export const load = (async (event) => {
 	const session = await event.locals.getSession();
@@ -39,7 +40,9 @@ export const load = (async (event) => {
 	});
 
 	// Check if user has verified email, if not send email
-	if (!user?.emailVerified && user?.id && user?.email) {
+	let sentEmailStore;
+	sentEmail.subscribe((value) => (sentEmailStore = value));
+	if (!user?.emailVerified && user?.id && user?.email && !sentEmailStore) {
 		// Send email
 		const emailHtml = render({
 			template: Hello,
@@ -56,6 +59,9 @@ export const load = (async (event) => {
 		};
 
 		await transporter.sendMail(options);
+
+		// Update sentEmail store
+		sentEmail.set(true);
 	}
 
 	// Get stripe checkout last session
