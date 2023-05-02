@@ -5,10 +5,6 @@ import { superValidate } from 'sveltekit-superforms/server';
 import { prisma } from '$lib/db/prisma';
 import bcrypt from 'bcrypt';
 import { signUpSchema } from '$lib/config/zodSchema';
-import { transporter } from '$lib/emails/nodemailer';
-import { render } from 'svelte-email';
-import Hello from '$lib/emails/Hello.svelte';
-import { ZOHO_SENT_FROM } from '$env/static/private';
 
 export const load = (async (event) => {
 	const session = await event.locals.getSession();
@@ -53,7 +49,7 @@ export const actions = {
 
 		try {
 			// Create user in db
-			const user = await prisma.user.create({
+			await prisma.user.create({
 				data: {
 					email: form.data.email,
 					password: await bcrypt.hash(form.data.password, 10)
@@ -87,23 +83,6 @@ export const actions = {
 					sameSite: 'lax'
 				}
 			);
-
-			// Send email
-			const emailHtml = render({
-				template: Hello,
-				props: {
-					id: user.id
-				}
-			});
-
-			const options = {
-				from: ZOHO_SENT_FROM,
-				to: form.data.email,
-				subject: 'Welcome to Bookself || Verification Email',
-				html: emailHtml
-			};
-
-			await transporter.sendMail(options);
 
 			// Redirect to home page
 			throw redirect(302, '/');
