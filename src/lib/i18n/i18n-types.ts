@@ -151,6 +151,78 @@ type RootTranslation = {
 	 * A​r​e​ ​y​o​u​ ​s​u​r​e​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​d​e​l​e​t​e​ ​y​o​u​r​ ​a​c​c​o​u​n​t​?
 	 */
 	deleteAccModal: string
+	/**
+	 * U​s​e​r​ ​P​r​o​f​i​l​e
+	 */
+	userProfile: string
+	/**
+	 * H​o​w​ ​t​o​ ​p​a​y​ ​f​o​r​ ​a​ ​b​o​o​k​i​n​g​ ​?
+	 */
+	payForBooking: string
+	/**
+	 * A​s​ ​y​o​u​ ​m​a​y​ ​h​a​v​e​ ​g​u​e​s​s​e​d​,​ ​t​h​e​ ​a​n​s​w​e​r​ ​t​o​ ​t​h​i​s​ ​q​u​e​s​t​i​o​n​ ​d​e​p​e​n​d​s​ ​o​n​ ​t​h​e​ ​s​t​a​t​u​s​ ​o​f​ ​t​h​e​ ​a​p​p​.​ ​I​f​ ​i​t​ ​i​s​ ​i​n​ ​b​e​t​a​,​ ​p​l​e​a​s​e​ ​u​s​e​ ​t​h​e​ ​n​e​x​t​ ​c​r​e​d​e​n​t​i​a​l​s​ ​t​o​ ​p​a​y​ ​f​o​r​ ​a​ ​b​o​o​k​i​n​g​:
+	 */
+	payForBookingText1: string
+	/**
+	 * U​s​e​ ​t​h​e​ ​f​o​l​l​o​w​i​n​g​ ​c​r​e​d​i​t​ ​c​a​r​d​ ​n​u​m​b​e​r​:​ 
+	 */
+	creditCard: string
+	/**
+	 * I​t​'​l​l​ ​t​a​k​e​ ​a​ ​s​e​c​o​n​d​ ​a​n​d​ ​h​e​r​e​ ​y​o​u​ ​g​o​.​ ​I​t​'​l​l​ ​r​e​d​i​r​e​c​t​ ​b​a​c​k​ ​t​o​ ​t​h​e​ ​a​p​p​ ​a​n​d​ ​y​o​u​'​l​l​ ​s​e​e​ ​t​h​e​ ​b​o​o​k​i​n​g​.​ ​Y​o​u​ ​m​i​g​h​t​ ​r​e​f​r​e​s​h​ ​t​h​e​ ​p​a​g​e​ ​t​o​ ​s​e​e​ ​t​h​e​ ​b​o​o​k​i​n​g​ ​s​t​a​t​u​s​ ​a​s​ ​p​e​n​d​i​n​g​.
+	 */
+	payForBookingText3: string
+	/**
+	 * U​s​e​ ​a​n​y​ ​f​u​t​u​r​e​ ​e​x​p​i​r​e​ ​d​a​t​e
+	 */
+	expireDate: string
+	/**
+	 * U​s​e​ ​a​n​y​ ​3​ ​d​i​g​i​t​s
+	 */
+	cvv: string
+	/**
+	 * U​s​e​ ​a​n​y​ ​e​m​a​i​l
+	 */
+	anyEmail: string
+	/**
+	 * U​s​e​ ​a​n​y​ ​n​a​m​e
+	 */
+	anyName: string
+	/**
+	 * W​h​y​ ​d​o​ ​w​e​ ​c​h​a​r​g​e​?
+	 */
+	whyCharge: string
+	/**
+	 * A​s​ ​y​o​u​ ​m​i​g​h​t​ ​h​a​v​e​ ​n​o​t​i​c​e​d​,​ ​w​e​ ​c​h​a​r​g​e​ ​f​o​r​ ​t​h​e​ ​b​o​o​k​i​n​g​.​ ​W​e​ ​d​o​ ​i​t​ ​b​e​c​a​u​s​e​ ​w​e​ ​n​e​e​d​ ​t​o​ ​m​a​i​n​t​a​i​n​ ​a​n​d​ ​s​u​p​p​o​r​t​.​ ​W​e​ ​t​r​y​ ​t​o​ ​m​a​k​e​ ​t​h​e​ ​s​m​a​l​l​e​s​t​ ​f​e​e​ ​p​o​s​s​i​b​l​e​.​ ​W​e​ ​h​o​p​e​ ​y​o​u​ ​u​n​d​e​r​s​t​a​n​d​.
+	 */
+	whyChargeText1: string
+	/**
+	 * T​o​o​ ​l​o​n​g​?
+	 */
+	tooLong: string
+	/**
+	 * Y​e​a​h​h​.​.​.​ ​W​e​ ​w​i​s​h​ ​w​e​'​d​ ​g​e​t​ ​o​n​e​ ​w​i​t​h​o​u​t​ ​a​n​y​ ​i​s​s​u​e​s​ ​a​n​d​ ​e​v​e​n​ ​w​i​t​h​o​u​t​ ​o​u​r​ ​h​e​l​p​ ​b​u​t​ ​i​t​ ​a​i​n​'​t​ ​u​p​t​o​ ​u​s​ ​a​n​d​ ​w​e​ ​t​r​y​ ​t​o​ ​d​o​ ​o​u​r​ ​b​e​s​t​ ​t​o​ ​m​a​k​e​ ​i​t​ ​a​s​ ​q​u​i​c​k​ ​a​s​ ​p​o​s​s​i​b​l​e​.​ ​I​f​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​h​e​l​p​i​m​p​r​o​v​e​ ​o​u​r​ ​s​e​r​v​i​c​e​,​ ​p​l​e​a​s​e​ ​c​o​n​t​a​c​t​ ​u​s​ ​a​t​ 
+	 */
+	tooLongText1: string
+	/**
+	 * W​e​'​l​l​ ​b​e​ ​h​a​p​p​y​ ​t​o​ ​h​e​a​r​ ​f​r​o​m​ ​y​o​u​.
+	 */
+	tooLongText2: string
+	/**
+	 * O​t​h​e​r​w​i​s​e​,​ ​Y​o​u​ ​c​a​n​ ​t​r​y​ ​t​o​ ​r​e​a​c​h​ ​t​h​e​m​ ​b​y​ ​e​m​a​i​l​.​ ​F​o​r​ ​m​o​r​e​ ​i​n​f​o​,​ ​p​l​e​a​s​e​ ​h​a​v​e​ ​l​o​o​k​ ​a​t
+	 */
+	tooLongText3: string
+	/**
+	 * A​n​o​t​h​e​r​ ​B​o​o​k​i​n​g​ ​P​l​a​t​f​o​r​m​s​?
+	 */
+	anotherPlatform: string
+	/**
+	 * W​e​'​d​ ​n​o​t​ ​d​o​ ​i​t​ ​u​n​l​e​s​s​ ​o​t​h​e​r​ ​b​o​o​k​i​n​g​ ​p​l​a​t​f​o​r​m​s​ ​a​r​e​ ​w​o​r​k​i​n​g​.​ ​H​o​w​e​v​e​r​,​ ​w​e​ ​c​a​n​ ​c​o​m​e​ ​u​p​ ​w​i​t​h​ ​a​ ​s​o​l​u​t​i​o​n​ ​l​i​k​e​ ​w​i​t​h​ ​A​u​s​l​ä​n​d​e​r​b​e​h​ö​r​d​e​ ​B​e​r​l​i​n​ ​(​i​n​ ​b​e​t​a​)​.
+	 */
+	anotherPlatformText1: string
+	/**
+	 * W​e​'​r​e​ ​t​h​i​n​k​i​n​g​ ​o​f​ ​p​o​s​s​i​b​l​e​ ​t​o​ ​g​e​t​ ​a​n​ ​A​n​m​e​l​d​u​n​g​ ​a​p​p​o​i​n​t​m​e​n​t​ ​i​n​ ​B​e​r​l​i​n​.
+	 */
+	anotherPlatformText2: string
 }
 
 export type TranslationFunctions = {
@@ -290,6 +362,78 @@ export type TranslationFunctions = {
 	 * Are you sure you want to delete your account?
 	 */
 	deleteAccModal: () => LocalizedString
+	/**
+	 * User Profile
+	 */
+	userProfile: () => LocalizedString
+	/**
+	 * How to pay for a booking ?
+	 */
+	payForBooking: () => LocalizedString
+	/**
+	 * As you may have guessed, the answer to this question depends on the status of the app. If it is in beta, please use the next credentials to pay for a booking:
+	 */
+	payForBookingText1: () => LocalizedString
+	/**
+	 * Use the following credit card number: 
+	 */
+	creditCard: () => LocalizedString
+	/**
+	 * It'll take a second and here you go. It'll redirect back to the app and you'll see the booking. You might refresh the page to see the booking status as pending.
+	 */
+	payForBookingText3: () => LocalizedString
+	/**
+	 * Use any future expire date
+	 */
+	expireDate: () => LocalizedString
+	/**
+	 * Use any 3 digits
+	 */
+	cvv: () => LocalizedString
+	/**
+	 * Use any email
+	 */
+	anyEmail: () => LocalizedString
+	/**
+	 * Use any name
+	 */
+	anyName: () => LocalizedString
+	/**
+	 * Why do we charge?
+	 */
+	whyCharge: () => LocalizedString
+	/**
+	 * As you might have noticed, we charge for the booking. We do it because we need to maintain and support. We try to make the smallest fee possible. We hope you understand.
+	 */
+	whyChargeText1: () => LocalizedString
+	/**
+	 * Too long?
+	 */
+	tooLong: () => LocalizedString
+	/**
+	 * Yeahh... We wish we'd get one without any issues and even without our help but it ain't upto us and we try to do our best to make it as quick as possible. If you want to helpimprove our service, please contact us at 
+	 */
+	tooLongText1: () => LocalizedString
+	/**
+	 * We'll be happy to hear from you.
+	 */
+	tooLongText2: () => LocalizedString
+	/**
+	 * Otherwise, You can try to reach them by email. For more info, please have look at
+	 */
+	tooLongText3: () => LocalizedString
+	/**
+	 * Another Booking Platforms?
+	 */
+	anotherPlatform: () => LocalizedString
+	/**
+	 * We'd not do it unless other booking platforms are working. However, we can come up with a solution like with Ausländerbehörde Berlin (in beta).
+	 */
+	anotherPlatformText1: () => LocalizedString
+	/**
+	 * We're thinking of possible to get an Anmeldung appointment in Berlin.
+	 */
+	anotherPlatformText2: () => LocalizedString
 }
 
 export type Formatters = {}

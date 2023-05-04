@@ -5,12 +5,18 @@
 	import { icons } from '$lib/assets/icons';
 	import Icon from 'svelte-icons-pack/Icon.svelte';
 	import BookingForm from '$lib/components/BookingForm.svelte';
-	import { isBookingFormOpen, isUserFormOpen, bookingDrawerSlide } from '$lib/stores/stores';
+	import {
+		isBookingFormOpen,
+		isUserFormOpen,
+		bookingDrawerSlide,
+		anyQuestions
+	} from '$lib/stores/stores';
 	import Booking from '$lib/components/Booking.svelte';
 	import Spinner from '$lib/components/Spinner.svelte';
 	import User from '$lib/components/User.svelte';
 	import { clickOutside } from '$lib/hooks/clickOutside';
 	import { LL } from '$lib/i18n/i18n-svelte';
+	import Questions from '$lib/components/Questions.svelte';
 
 	// If the user is not signed in, redirect to the login page
 	if (!$page.data.session) goto('/login');
@@ -30,21 +36,28 @@
 
 <svelte:window on:click={(e) => clickOutside(e, springValue)} />
 
-{#if $isBookingFormOpen || $isUserFormOpen}
+{#if $isBookingFormOpen || $isUserFormOpen || $anyQuestions}
 	<div class="fixed z-20 h-full w-full bg-black opacity-50" />
 {/if}
 
 <BookingForm form1={data.bookingForm} locale={data.locale} user={data.user} />
 <User form2={data.userForm} session={data.session} />
+<Questions />
 
 <main
-	class="{$isBookingFormOpen || $isUserFormOpen
+	class="{$isBookingFormOpen || $isUserFormOpen || $anyQuestions
 		? 'blur'
 		: 'blur-0'} flex flex-1 flex-col items-center gap-10 py-8 transition-all md:py-20"
 >
 	<header class="flex w-full items-center justify-between gap-5 px-4 md:px-10 xl:w-7/12 xl:px-0">
 		<div>
-			<h1 class="mb-2 text-4xl font-bold">{$LL.bookings()}</h1>
+			<div class="flex items-center gap-4">
+				<h1 class="mb-2 text-4xl font-bold">{$LL.bookings()}</h1>
+				<span
+					class=" animate-wiggle select-none rounded-full bg-black px-4 py-1 font-bold text-white dark:bg-[#864879]"
+					>beta</span
+				>
+			</div>
 			<p>{$LL.amountOfBookings({ amountOfBookings })}</p>
 		</div>
 		<div>

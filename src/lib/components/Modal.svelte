@@ -16,7 +16,7 @@
 
 	<div
 		transition:fade={{ delay: 250, duration: 300 }}
-		class="absolute left-1/2 top-1/2 z-50 flex h-1/3 w-1/2 -translate-x-1/2 -translate-y-1/2 flex-col justify-between rounded-md bg-white p-5 py-10 text-black sm:h-1/4 md:gap-10 md:p-10"
+		class="absolute left-1/2 top-1/2 z-50 flex h-1/3 w-3/4 -translate-x-1/2 -translate-y-1/2 flex-col justify-between rounded-md bg-white p-5 py-10 text-black sm:h-1/4 sm:w-1/2 md:gap-10 md:p-10"
 	>
 		<h1 class="text-center text-lg font-bold sm:text-2xl">{$LL.deleteAccModal()}</h1>
 		<form

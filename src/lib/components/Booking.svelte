@@ -59,7 +59,7 @@
 	<h3 class="hidden text-sm text-slate-500 md:block">{formatDate(createdAt)}</h3>
 	<div class="flex items-center justify-end gap-2">
 		<div
-			class="flex w-28 items-center justify-center gap-2 rounded-md px-4 py-2 {colors.bgLightColor}"
+			class="flex w-32 items-center justify-center gap-2 rounded-md px-4 py-2 {colors.bgLightColor}"
 		>
 			<div class="relative flex h-3 w-3 items-center">
 				{#if status === 'pending' || status === 'done'}

@@ -8,9 +8,10 @@
 	import toast, { Toaster } from 'svelte-french-toast';
 	import { LL } from '$lib/i18n/i18n-svelte';
 	import Modal from '$lib/components/Modal.svelte';
+	import type { Session } from '@prisma/client';
 
 	export let form2;
-	export let session;
+	export let session: Session;
 
 	// Super Form
 	const {
@@ -68,7 +69,9 @@
 	});
 
 	let currentEmail = session.user.email ? session.user.email : $userForm.email;
-	let currentName = session.user.name ? session.user.name : 'User Profile';
+	let currentName: string;
+
+	$: currentName = session.user.name ? session.user.name : $LL.userProfile();
 </script>
 
 <Toaster />
@@ -127,7 +130,7 @@
       file:py-2 file:text-sm
       file:font-semibold file:text-gray-700
       hover:file:bg-gray-100
-	  
+
     "
 				accept="image/*"
 				bind:value={$userForm.image}
