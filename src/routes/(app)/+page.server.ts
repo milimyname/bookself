@@ -70,10 +70,7 @@ export const load = (async (event) => {
 	});
 
 	// If it is paid and created timestamp is only 5 minutes older, update status to pending
-	if (
-		stripeCheckoutSession.data[0].payment_status === 'paid' &&
-		stripeCheckoutSession.data[0].created > Date.now() - 300000
-	) {
+	if (stripeCheckoutSession.data[0].payment_status === 'paid') {
 		// Update booking status to paid
 		await prisma.booking.updateMany({
 			where: {
