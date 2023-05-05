@@ -4,11 +4,9 @@
 	import { spring } from 'svelte/motion';
 	import { icons } from '$lib/assets/icons';
 	import Icon from 'svelte-icons-pack/Icon.svelte';
-	import { isUserFormOpen, bookingDrawerSlide } from '$lib/stores/stores';
-	import User from '$lib/components/User.svelte';
-	import { clickOutside } from '$lib/hooks/clickOutside';
-	import toast, { Toaster } from 'svelte-french-toast';
+	import { isUserFormOpen, bookingDrawerSlide, anyQuestions } from '$lib/stores/stores';
 	import { LL } from '$lib/i18n/i18n-svelte';
+	import User from '$lib/components/User.svelte';
 
 	// If the user is not signed in, redirect to the login page
 	if (!$page.data.session) goto('/login');
@@ -53,17 +51,14 @@
 	}
 </script>
 
-<svelte:window on:click={(e) => clickOutside(e, springValue)} />
-
-{#if $isUserFormOpen}
+{#if $isUserFormOpen || $anyQuestions}
 	<div class="fixed z-20 h-full w-full bg-black opacity-50" />
 {/if}
 
 <User session={data.session} form2={data.userForm} />
-<Toaster />
 
 <main
-	class="{$isUserFormOpen
+	class="{$isUserFormOpen || $anyQuestions
 		? 'blur'
 		: 'blur-0'} flex w-full flex-1 flex-col items-center gap-5 px-4 py-8 transition-all dark:text-black md:px-10 md:py-20 xl:w-7/12 xl:px-0"
 >

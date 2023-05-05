@@ -42,7 +42,6 @@
 
 <BookingForm form1={data.bookingForm} locale={data.locale} user={data.user} />
 <User form2={data.userForm} session={data.session} />
-<Questions />
 
 <main
 	class="{$isBookingFormOpen || $isUserFormOpen || $anyQuestions

@@ -18,7 +18,7 @@
 	import { slide } from 'svelte/transition';
 	import { quintOut } from 'svelte/easing';
 	import { goto } from '$app/navigation';
-	import { onMount } from 'svelte';
+	import Questions from '$lib/components/Questions.svelte';
 
 	let springValue = spring(100, { stiffness: 0.03, damping: 0.4 });
 	let springValueQuestions = spring(100, { stiffness: 0.03, damping: 0.4 });
@@ -98,6 +98,8 @@
 	}}
 />
 
+<Questions />
+
 <aside
 	class="sticky top-0 z-50 flex items-center justify-between gap-5 bg-black p-4 transition-colors dark:bg-[#3F3351] md:h-screen md:flex-col md:rounded-r-3xl md:p-0"
 >
@@ -155,11 +157,13 @@
 <button
 	class="q-button fixed bottom-5 right-4 h-10 rounded-full bg-black px-3 text-lg font-bold text-white drop-shadow transition-all dark:bg-[#864879] md:right-10"
 	on:click={() => {
+		console.log('clicked');
 		if ($anyQuestions) {
 			$anyQuestions = false;
 			springValueQuestions.set(100, { soft: true });
 			return;
 		}
+
 		$anyQuestions = true;
 		springValueQuestions.set($anyQuestions ? 0 : 100, { soft: true });
 	}}

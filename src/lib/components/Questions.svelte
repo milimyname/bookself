@@ -24,7 +24,7 @@
 </script>
 
 <div
-	class="questionsDrawer fixed z-30 flex h-full w-11/12 flex-col overflow-x-hidden scroll-smooth rounded-r-3xl bg-white dark:text-black md:w-2/3"
+	class="questionsDrawer fixed z-40 flex h-full w-11/12 flex-col overflow-x-hidden scroll-smooth rounded-r-3xl bg-white dark:text-black md:w-2/3"
 	style="transform: translateX({-$anyQuestionsDrawerSlide}%)"
 >
 	<button
@@ -154,9 +154,9 @@
 				transition:slide={{ delay: 250, duration: 2000, easing: quintOut, axis: 'y' }}
 			>
 				<p>
-					{$LL.anotherPlatformText1()}.
+					{$LL.anotherPlatformText1()}
 				</p>
-				<p>{$LL.anotherPlatformText2()}.</p>
+				<p>{$LL.anotherPlatformText2()}</p>
 			</article>
 		{/if}
 	</button>

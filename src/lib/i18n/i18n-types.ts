@@ -216,7 +216,7 @@ type RootTranslation = {
 	 */
 	anotherPlatform: string
 	/**
-	 * W​e​'​d​ ​n​o​t​ ​d​o​ ​i​t​ ​u​n​l​e​s​s​ ​o​t​h​e​r​ ​b​o​o​k​i​n​g​ ​p​l​a​t​f​o​r​m​s​ ​a​r​e​ ​w​o​r​k​i​n​g​.​ ​H​o​w​e​v​e​r​,​ ​w​e​ ​c​a​n​ ​c​o​m​e​ ​u​p​ ​w​i​t​h​ ​a​ ​s​o​l​u​t​i​o​n​ ​l​i​k​e​ ​w​i​t​h​ ​A​u​s​l​ä​n​d​e​r​b​e​h​ö​r​d​e​ ​B​e​r​l​i​n​ ​(​i​n​ ​b​e​t​a​)​.
+	 * W​e​'​d​ ​n​o​t​ ​d​o​ ​i​t​ ​u​n​l​e​s​s​ ​o​t​h​e​r​ ​b​o​o​k​i​n​g​ ​p​l​a​t​f​o​r​m​s​ ​a​r​e​ ​w​o​r​k​i​n​g​ ​w​e​l​l​.​ ​H​o​w​e​v​e​r​,​ ​w​e​ ​c​a​n​ ​c​o​m​e​ ​u​p​ ​w​i​t​h​ ​a​ ​s​o​l​u​t​i​o​n​ ​l​i​k​e​ ​w​i​t​h​ ​A​u​s​l​ä​n​d​e​r​b​e​h​ö​r​d​e​ ​B​e​r​l​i​n​ ​(​i​n​ ​b​e​t​a​)​.
 	 */
 	anotherPlatformText1: string
 	/**
@@ -427,7 +427,7 @@ export type TranslationFunctions = {
 	 */
 	anotherPlatform: () => LocalizedString
 	/**
-	 * We'd not do it unless other booking platforms are working. However, we can come up with a solution like with Ausländerbehörde Berlin (in beta).
+	 * We'd not do it unless other booking platforms are working well. However, we can come up with a solution like with Ausländerbehörde Berlin (in beta).
 	 */
 	anotherPlatformText1: () => LocalizedString
 	/**

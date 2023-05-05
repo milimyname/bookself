@@ -60,7 +60,7 @@ const de = {
 		'Andernfalls können Sie versuchen, sie per E-Mail zu erreichen. Weitere Informationen finden Sie unter',
 	anotherPlatform: 'Andere Buchungsplattformen?',
 	anotherPlatformText1:
-		'Wir würden es nicht tun, wenn andere Buchungsplattformen nicht funktionieren. Wir können uns jedoch eine Lösung wie mit der Ausländerbehörde Berlin (in beta) einfallen lassen.',
+		'Wir würden es nicht tun, wenn andere Buchungsplattformen gut funktionieren. Wir können uns jedoch eine Lösung wie mit der Ausländerbehörde Berlin (in beta) einfallen lassen.',
 	anotherPlatformText2: 'Wir denken darüber nach, einen Anmeldetermin in Berlin zu bekommen.'
 } satisfies Translation;
 

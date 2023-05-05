@@ -57,7 +57,7 @@ const en = {
 	tooLongText3: 'Otherwise, You can try to reach them by email. For more info, please have look at',
 	anotherPlatform: 'Another Booking Platforms?',
 	anotherPlatformText1:
-		"We'd not do it unless other booking platforms are working. However, we can come up with a solution like with Ausländerbehörde Berlin (in beta).",
+		"We'd not do it unless other booking platforms are working well. However, we can come up with a solution like with Ausländerbehörde Berlin (in beta).",
 	anotherPlatformText2: "We're thinking of possible to get an Anmeldung appointment in Berlin."
 } satisfies BaseTranslation;
 
