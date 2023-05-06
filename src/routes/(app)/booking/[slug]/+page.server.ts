@@ -3,7 +3,7 @@ import type { Actions, PageServerLoad } from './$types';
 import { fail } from '@sveltejs/kit';
 import { superValidate } from 'sveltekit-superforms/server';
 import { prisma } from '$lib/db/prisma';
-import { userSchema } from '$lib/config/zodSchema';
+import { userSchema, bookingSchema } from '$lib/config/zodSchema';
 
 export const load = (async ({ params, request }) => {
 	const { slug } = params;
@@ -14,14 +14,20 @@ export const load = (async ({ params, request }) => {
 		}
 	});
 
+	if (!booking) throw error(404, 'Not found');
+
 	// Validate form
 	const userForm = await superValidate(request, userSchema, {
 		id: 'userForm'
 	});
 
-	if (!booking) throw error(404, 'Not found');
+	// Validate form
+	const bookingForm = await superValidate(request, bookingSchema, {
+		id: 'bookingForm'
+	});
 
 	return {
+		bookingForm,
 		userForm,
 		booking
 	};
@@ -64,5 +70,27 @@ export const actions = {
 		});
 
 		throw redirect(303, '/');
+	},
+	editBooking: async ({ params, request }) => {
+		const { slug } = params;
+
+		// Validate form
+		const bookingForm = await superValidate(request, bookingSchema, {
+			id: 'bookingForm'
+		});
+
+		if (!bookingForm.valid) return fail(400, { bookingForm });
+
+		// Update booking in db
+		await prisma.booking.update({
+			where: {
+				id: slug
+			},
+			data: {
+				...bookingForm.data
+			}
+		});
+
+		return { bookingForm };
 	}
 } satisfies Actions;

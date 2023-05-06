@@ -4,6 +4,7 @@ import { isBookingFormOpen, isUserFormOpen, anyQuestions } from '$lib/stores/sto
 export function clickOutside(e: MouseEvent, springValue: Spring<number>) {
 	const drawer = document.querySelector('.bookingDrawer');
 	const newBookingButton = document.querySelector('.newBookingButton');
+	const editButton = document.querySelector('.editButton');
 	const userButton = document.querySelector('.userButton');
 
 	// If user button is clickded, close the booking drawer
@@ -15,9 +16,11 @@ export function clickOutside(e: MouseEvent, springValue: Spring<number>) {
 	// If the user clicks on the aside, don't close the drawer
 	const aside = document.querySelector('aside');
 	if (aside && aside.contains(<Node>e!.target)) return;
-
 	// If the user clicks on the new booking button, don't close the drawer
 	if (newBookingButton && newBookingButton.contains(<Node>e!.target)) return;
+
+	// If the user clicks on the edit button, don't close the drawer.
+	if (editButton && editButton.contains(<Node>e!.target)) return;
 
 	// If the user clicks outside the drawer, close it
 	if (drawer && !drawer.contains(<Node>e!.target)) {

@@ -9,14 +9,15 @@
 		isBookingFormOpen,
 		isUserFormOpen,
 		bookingDrawerSlide,
-		anyQuestions
+		anyQuestions,
+		editBooking
 	} from '$lib/stores/stores';
 	import Booking from '$lib/components/Booking.svelte';
 	import Spinner from '$lib/components/Spinner.svelte';
 	import User from '$lib/components/User.svelte';
 	import { clickOutside } from '$lib/hooks/clickOutside';
 	import { LL } from '$lib/i18n/i18n-svelte';
-	import Questions from '$lib/components/Questions.svelte';
+	import toast from 'svelte-french-toast';
 
 	// If the user is not signed in, redirect to the login page
 	if (!$page.data.session) goto('/login');
@@ -32,6 +33,9 @@
 	$: amountOfBookings = data.bookings.bookings.length;
 
 	$: if (!$isBookingFormOpen) springValue.set(100, { soft: true });
+
+	// Show a toast error if the user ain't verified his email yet
+	if (!data.user.emailVerified) toast.error($LL.verifyEmail());
 </script>
 
 <svelte:window on:click={(e) => clickOutside(e, springValue)} />
@@ -40,7 +44,7 @@
 	<div class="fixed z-20 h-full w-full bg-black opacity-50" />
 {/if}
 
-<BookingForm form1={data.bookingForm} locale={data.locale} user={data.user} />
+<BookingForm form1={data.bookingForm} locale={data.locale} />
 <User form2={data.userForm} session={data.session} />
 
 <main
@@ -67,6 +71,7 @@
 				on:click={() => {
 					$isBookingFormOpen = true;
 					springValue.set($isBookingFormOpen ? 0 : 100, { soft: true });
+					$editBooking = false;
 				}}
 			>
 				<div class="rounded-full bg-white p-2">

@@ -9,6 +9,7 @@
 	import { LL } from '$lib/i18n/i18n-svelte';
 	import Modal from '$lib/components/Modal.svelte';
 	import type { Session } from '@prisma/client';
+	import { goto } from '$app/navigation';
 
 	export let form2;
 	export let session: Session;
@@ -58,20 +59,18 @@
 					});
 
 					if (error) throw error;
-
-					// Toaster message
-					toast.success($LL.updateProfile());
 				}
 			} catch (error) {
 				if (error instanceof Error) console.log(error.message);
 			}
+
+			// Toaster message
+			toast.success($LL.updateProfile());
 		}
 	});
 
 	let currentEmail = session.user.email ? session.user.email : $userForm.email;
-	let currentName: string;
-
-	$: currentName = session.user.name ? session.user.name : $LL.userProfile();
+	let currentName = session.user.name ? session.user.name : $LL.userProfile();
 </script>
 
 <Toaster />

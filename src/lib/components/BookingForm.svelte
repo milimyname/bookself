@@ -4,12 +4,11 @@
 	import { config } from '$lib/config/config';
 	import { superForm } from 'sveltekit-superforms/client';
 	import { bookingSchema } from '$lib/config/zodSchema.js';
-	import { isBookingFormOpen, bookingDrawerSlide } from '$lib/stores/stores';
+	import { isBookingFormOpen, bookingDrawerSlide, editBooking } from '$lib/stores/stores';
 	import toast, { Toaster } from 'svelte-french-toast';
 	import { LL } from '$lib/i18n/i18n-svelte';
 
 	export let form1;
-	export let user;
 	export let locale: string;
 
 	// Super Form
@@ -22,12 +21,10 @@
 
 			$isBookingFormOpen = false;
 			// Toaster success
-			toast.loading($LL.bookingRequest());
+			if (!$editBooking) toast.loading($LL.bookingRequest());
+			else toast.success($LL.editBookingRequest());
 		}
 	});
-
-	// Show a toast error if the user ain't verified his email yet
-	if (!user.emailVerified) toast.error($LL.verifyEmail());
 </script>
 
 <Toaster />
@@ -42,6 +39,19 @@
 	<h2 class="mb-5 px-5 pt-28 text-3xl md:pl-28 md:pt-20">{$LL.newBooking()}</h2>
 	<div class="">
 		<div class="relative flex flex-col gap-5 px-5 pr-10 md:pl-28">
+			{#if $editBooking}
+				<fieldset class="flex flex-col gap-2">
+					<label for="status" class="font-medium">Status</label>
+					<input
+						type="text"
+						name="status"
+						id="status"
+						class="rounded-md"
+						bind:value={$form.status}
+						readonly
+					/>
+				</fieldset>
+			{/if}
 			<fieldset class="flex flex-col gap-2">
 				<label for="citizenship" class="font-medium">{$LL.citizenship()}</label>
 				<select
@@ -283,11 +293,20 @@
 				class="rounded-full border px-8 py-2 transition-colors hover:bg-gray-100"
 				on:click={() => ($isBookingFormOpen = false)}>{$LL.cancel()}</button
 			>
-			<button
-				type="submit"
-				class="rounded-full bg-black px-8 py-2 text-white transition-colors hover:bg-gray-900"
-				>{$LL.book()}</button
-			>
+			{#if $editBooking}
+				<button
+					formaction="?/editBooking"
+					type="submit"
+					class="rounded-full bg-black px-8 py-2 text-white transition-colors hover:bg-gray-900"
+					>{$LL.edit()}</button
+				>
+			{:else}
+				<button
+					type="submit"
+					class="rounded-full bg-black px-8 py-2 text-white transition-colors hover:bg-gray-900"
+					>{$LL.book()}</button
+				>
+			{/if}
 		</div>
 	</div>
 </form>

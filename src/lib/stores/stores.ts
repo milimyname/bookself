@@ -15,3 +15,4 @@ export const darkMode = writable(false);
 export const isModalOpen = writable(false);
 export const deleteAcc = writable(false);
 export const sentEmail = writable(false);
+export const editBooking = writable(false);

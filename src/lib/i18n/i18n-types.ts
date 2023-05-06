@@ -104,6 +104,10 @@ type RootTranslation = {
 	 */
 	'delete': string
 	/**
+	 * E​d​i​t
+	 */
+	edit: string
+	/**
 	 * S​i​g​n​ ​O​u​t
 	 */
 	signOut: string
@@ -120,6 +124,10 @@ type RootTranslation = {
 	 */
 	submit: string
 	/**
+	 * P​a​y
+	 */
+	pay: string
+	/**
 	 * P​l​e​a​s​e​ ​v​e​r​i​f​y​ ​y​o​u​r​ ​e​m​a​i​l​ ​f​i​r​s​t
 	 */
 	verifyEmail: string
@@ -127,6 +135,10 @@ type RootTranslation = {
 	 * S​e​n​d​i​n​g​ ​y​o​u​r​ ​b​o​o​k​i​n​g​ ​r​e​q​u​e​s​t​.​.​.
 	 */
 	bookingRequest: string
+	/**
+	 * S​e​n​d​i​n​g​ ​y​o​u​r​ ​e​d​i​t​ ​b​o​o​k​i​n​g​ ​r​e​q​u​e​s​t​.​.​.
+	 */
+	editBookingRequest: string
 	/**
 	 * U​p​d​a​t​e​d​ ​y​o​u​r​ ​p​r​o​f​i​l​e​!
 	 */
@@ -315,6 +327,10 @@ export type TranslationFunctions = {
 	 */
 	'delete': () => LocalizedString
 	/**
+	 * Edit
+	 */
+	edit: () => LocalizedString
+	/**
 	 * Sign Out
 	 */
 	signOut: () => LocalizedString
@@ -331,6 +347,10 @@ export type TranslationFunctions = {
 	 */
 	submit: () => LocalizedString
 	/**
+	 * Pay
+	 */
+	pay: () => LocalizedString
+	/**
 	 * Please verify your email first
 	 */
 	verifyEmail: () => LocalizedString
@@ -338,6 +358,10 @@ export type TranslationFunctions = {
 	 * Sending your booking request...
 	 */
 	bookingRequest: () => LocalizedString
+	/**
+	 * Sending your edit booking request...
+	 */
+	editBookingRequest: () => LocalizedString
 	/**
 	 * Updated your profile!
 	 */

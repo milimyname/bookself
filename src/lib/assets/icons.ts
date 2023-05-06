@@ -6,6 +6,7 @@ import BiSun from 'svelte-icons-pack/bi/BiSun';
 import BiMoon from 'svelte-icons-pack/bi/BiMoon';
 import AiOutlinePlus from 'svelte-icons-pack/ai/AiOutlinePlus';
 import BiChevronRight from 'svelte-icons-pack/bi/BiChevronRight';
+import FiEdit from 'svelte-icons-pack/fi/FiEdit';
 
 export const icons = {
 	google: BiLogoGoogle,
@@ -15,5 +16,6 @@ export const icons = {
 	sun: BiSun,
 	moon: BiMoon,
 	plus: AiOutlinePlus,
-	chevronRight: BiChevronRight
+	chevronRight: BiChevronRight,
+	edit: FiEdit
 };

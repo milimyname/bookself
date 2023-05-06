@@ -4,9 +4,17 @@
 	import { spring } from 'svelte/motion';
 	import { icons } from '$lib/assets/icons';
 	import Icon from 'svelte-icons-pack/Icon.svelte';
-	import { isUserFormOpen, bookingDrawerSlide, anyQuestions } from '$lib/stores/stores';
+	import {
+		isUserFormOpen,
+		bookingDrawerSlide,
+		anyQuestions,
+		isBookingFormOpen,
+		editBooking
+	} from '$lib/stores/stores';
 	import { LL } from '$lib/i18n/i18n-svelte';
 	import User from '$lib/components/User.svelte';
+	import BookingForm from '$lib/components/BookingForm.svelte';
+	import { clickOutside } from '$lib/hooks/clickOutside';
 
 	// If the user is not signed in, redirect to the login page
 	if (!$page.data.session) goto('/login');
@@ -49,16 +57,39 @@
 			colors.german = 'Erledigt';
 			break;
 	}
+
+	$: if (!$isBookingFormOpen) springValue.set(100, { soft: true });
+
+	// Fill the form with the data of the booking
+	$: {
+		data.bookingForm.data.applicants = data.booking?.applicants;
+		data.bookingForm.data.firstName = data.booking?.firstName;
+		data.bookingForm.data.lastName = data.booking?.lastName;
+		// Format birth date of the form to yyyy-mm-dd  from dd.mm.yyyy
+		data.bookingForm.data.birthDate = data.booking?.birthDate.split('.').reverse().join('-');
+		data.bookingForm.data.email = data.booking?.email;
+		data.bookingForm.data.citizenship = data.booking?.citizenship;
+		data.bookingForm.data.visaType = data.booking?.visaType;
+		data.bookingForm.data.visa = data.booking?.visa;
+		data.bookingForm.data.familyMember = data.booking?.familyMember;
+		data.bookingForm.data.cizitenshipOfFamilyMember = data.booking?.cizitenshipOfFamilyMember || '';
+		data.bookingForm.data.currentVisa = data.booking?.currentVisa || '';
+		data.bookingForm.data.numberOfCurrentVisa = data.booking?.numberOfCurrentVisa || '';
+		data.bookingForm.data.status = data.booking?.status;
+	}
 </script>
 
-{#if $isUserFormOpen || $anyQuestions}
+<svelte:window on:click={(e) => clickOutside(e, springValue)} />
+
+{#if $isUserFormOpen || $anyQuestions || $isBookingFormOpen}
 	<div class="fixed z-20 h-full w-full bg-black opacity-50" />
 {/if}
 
+<BookingForm locale={data.locale} form1={data.bookingForm} />
 <User session={data.session} form2={data.userForm} />
 
 <main
-	class="{$isUserFormOpen || $anyQuestions
+	class="{$isUserFormOpen || $anyQuestions || $isBookingFormOpen
 		? 'blur'
 		: 'blur-0'} flex w-full flex-1 flex-col items-center gap-5 px-4 py-8 transition-all dark:text-black md:px-10 md:py-20 xl:w-7/12 xl:px-0"
 >
@@ -75,9 +106,9 @@
 			class="flex justify-between rounded-md border border-gray-100 bg-white p-5 shadow-custom-lg"
 		>
 			<div class="flex items-center gap-4">
-				<h4 class="text-gray-500">Status</h4>
+				<h4 class=" text-gray-500">Status</h4>
 				<div
-					class="flex w-28 items-center justify-center gap-2 rounded-md px-4 py-2 {colors.bgLightColor}"
+					class="flex w-32 items-center justify-center gap-2 rounded-md px-4 py-2 {colors.bgLightColor}"
 				>
 					<div class="relative flex h-3 w-3 items-center">
 						{#if data.booking?.status === 'pending'}
@@ -94,9 +125,22 @@
 					>
 				</div>
 			</div>
-			{#if data.booking?.status === 'draft'}
-				<form method="POST" action="?/deleteBooking">
+			{#if data.booking?.status !== 'done'}
+				<form method="POST" class="flex items-center gap-2">
 					<button
+						type="button"
+						on:click={() => {
+							$isBookingFormOpen = true;
+							springValue.set($isBookingFormOpen ? 0 : 100, { soft: true });
+							$editBooking = true;
+						}}
+						class="editButton rounded-md px-4 py-2 drop-shadow-sm"
+					>
+						<Icon src={icons.edit} className="h-6 w-6  transition-all hover:scale-110" />
+					</button>
+					<button
+						formaction="?/deleteBooking"
+						type="submit"
 						class="rounded-md bg-delete px-4 py-2 text-white transition-colors hover:bg-red-600"
 					>
 						{$LL.delete()}
