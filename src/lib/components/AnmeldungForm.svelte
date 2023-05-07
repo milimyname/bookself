@@ -30,6 +30,8 @@
 			// Toaster success
 			if (!$editBooking) toast.success($LL.bookingRequest());
 			else toast.success($LL.editBookingRequest());
+
+			location.reload();
 		}
 	});
 </script>
