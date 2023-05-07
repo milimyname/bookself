@@ -18,6 +18,7 @@
 	import { clickOutside } from '$lib/hooks/clickOutside';
 	import { LL } from '$lib/i18n/i18n-svelte';
 	import toast, { Toaster } from 'svelte-french-toast';
+	import AnmeldungForm from '$lib/components/AnmeldungForm.svelte';
 
 	// If the user is not signed in, redirect to the login page
 	if (!$page.data.session) goto('/login');
@@ -36,6 +37,8 @@
 
 	// Show a toast error if the user ain't verified his email yet
 	if (!data.user.emailVerified) toast.error($LL.verifyEmail());
+
+	$: console.log($springValue);
 </script>
 
 <svelte:window on:click={(e) => clickOutside(e, springValue)} />
@@ -45,7 +48,8 @@
 {/if}
 
 <Toaster />
-<BookingForm form1={data.bookingForm} locale={data.locale} />
+<BookingForm auslanderbehordeForm={data.bookingForm} locale={data.locale} />
+<AnmeldungForm anmeldungForm={data.anmeldungForm} />
 <User form2={data.userForm} session={data.session} />
 
 <main
@@ -83,7 +87,7 @@
 		</div>
 	</header>
 	<section class="flex w-full flex-col gap-2 scroll-auto px-4 md:px-10 xl:w-7/12 xl:px-0">
-		{#await data.bookings}
+		{#await data.bookings || data.anmeldungs}
 			<Spinner errors={data.bookings} />
 		{:then data}
 			{#each data.bookings as booking}
@@ -94,6 +98,21 @@
 					firstName={booking.firstName}
 					createdAt={booking.createdAt}
 					visaType={booking.visaType}
+				/>
+			{/each}
+		{/await}
+
+		{#await data.anmeldungs}
+			<Spinner errors={data.anmeldungs} />
+		{:then data}
+			{#each data.anmeldungs as booking}
+				<Booking
+					bookingId={booking.id}
+					status={booking.status}
+					lastName={booking.lastName}
+					firstName={booking.firstName}
+					createdAt={booking.createdAt}
+					visaType={booking.place}
 				/>
 			{/each}
 		{/await}

@@ -28,6 +28,14 @@ export const bookingSchema = z.object({
 	numberOfCurrentVisa: z.string()
 });
 
+export const anmeldungSchema = z.object({
+	status: z.string(),
+	firstName: z.string(),
+	lastName: z.string(),
+	email: z.string().email(),
+	place: z.string()
+});
+
 export const userSchema = z.object({
 	name: z.string().optional(),
 	email: z.string().email(),

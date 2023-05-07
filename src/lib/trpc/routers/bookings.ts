@@ -38,6 +38,35 @@ export const bookings = t.router({
 			bookings
 		};
 	}),
+	getAnmeldungs: t.procedure.use(auth).query(async (req) => {
+		// Get user id from auth middleware
+		const email = req.ctx.session.user?.email as string;
+
+		// Get user from DB
+		const user = await prisma.user.findUnique({
+			where: {
+				email
+			}
+		});
+
+		// If user doesn't exist, throw error
+		if (!user)
+			throw new TRPCError({
+				code: 'NOT_FOUND',
+				message: 'User does not exist'
+			});
+
+		// Get bookings from DB
+		const anmeldungs = await prisma.anmeldung.findMany({
+			where: {
+				userId: user.id
+			}
+		});
+
+		return {
+			anmeldungs
+		};
+	}),
 	payForBooking: t.procedure
 		.use(auth)
 		.input(

@@ -9,12 +9,13 @@
 		bookingDrawerSlide,
 		anyQuestions,
 		isBookingFormOpen,
-		editBooking
+		editBooking,
+		bookingType
 	} from '$lib/stores/stores';
 	import { LL } from '$lib/i18n/i18n-svelte';
 	import User from '$lib/components/User.svelte';
-	import BookingForm from '$lib/components/BookingForm.svelte';
 	import { clickOutside } from '$lib/hooks/clickOutside';
+	import AnmeldungForm from '$lib/components/AnmeldungForm.svelte';
 
 	// If the user is not signed in, redirect to the login page
 	if (!$page.data.session) goto('/login');
@@ -34,7 +35,7 @@
 	};
 
 	// Get color from status and in de
-	$: switch (data.booking?.status) {
+	$: switch (data.anmeldung?.status) {
 		case 'draft':
 			colors.bgLightColor = 'bg-light-draft';
 			colors.bgColor = 'bg-draft';
@@ -66,7 +67,7 @@
 {/if}
 
 <User session={data.session} form2={data.userForm} />
-<BookingForm locale={data.locale} auslanderbehordeForm={data.bookingForm} />
+<AnmeldungForm anmeldungForm={data.anmeldungForm} />
 
 <main
 	class="{$isUserFormOpen || $anyQuestions || $isBookingFormOpen
@@ -91,7 +92,7 @@
 					class="flex w-32 items-center justify-center gap-2 rounded-md px-4 py-2 {colors.bgLightColor}"
 				>
 					<div class="relative flex h-3 w-3 items-center">
-						{#if data.booking?.status === 'pending'}
+						{#if data.anmeldung?.status === 'pending'}
 							<span
 								class="absolute inline-flex h-2 w-2 animate-ping rounded-full {colors.bgColor}"
 							/>
@@ -100,18 +101,19 @@
 					</div>
 					<span class="font-medium {colors.textColor}"
 						>{data.locale === 'en'
-							? data.booking?.status[0].toUpperCase() + data.booking?.status.slice(1)
+							? data.anmeldung?.status[0].toUpperCase() + data.anmeldung?.status.slice(1)
 							: colors.german}</span
 					>
 				</div>
 			</div>
-			{#if data.booking?.status !== 'done'}
+			{#if data.anmeldung?.status !== 'done'}
 				<form method="POST" class="flex items-center gap-2">
 					<button
 						type="button"
 						on:click={() => {
 							$isBookingFormOpen = true;
 							springValue.set($isBookingFormOpen ? 0 : 100, { soft: true });
+							$bookingType = 'anmeldung';
 							$editBooking = true;
 						}}
 						class="editButton rounded-md px-4 py-2 drop-shadow-sm"
@@ -119,7 +121,7 @@
 						<Icon src={icons.edit} className="h-6 w-6  transition-all hover:scale-110" />
 					</button>
 					<button
-						formaction="?/deleteBooking"
+						formaction="?/deleteAnmeldung"
 						type="submit"
 						class="rounded-md bg-delete px-4 py-2 text-white transition-colors hover:bg-red-600"
 					>
@@ -133,59 +135,23 @@
 		class="grid w-full justify-between gap-5 rounded-md border border-gray-100 bg-white p-5 py-10 shadow-custom-lg drop-shadow-sm md:auto-cols-fr md:auto-rows-max md:px-14 md:py-10 xl:w-7/12"
 	>
 		<h2 class="col-span-2 md:col-span-3">
-			<span class="text-xl font-semibold">#{data.booking?.id.slice(14, -1)}</span>
+			<span class="text-xl font-semibold">#{data.anmeldung?.id.slice(14, -1)}</span>
 		</h2>
 		<div>
 			<h4 class="text-gray-500">{$LL.firstName()}</h4>
-			<span class="font-medium">{data.booking?.firstName}</span>
+			<span class="font-medium">{data.anmeldung?.firstName}</span>
 		</div>
 		<div>
 			<h4 class="text-gray-500">{$LL.lastName()}</h4>
-			<span class="font-medium">{data.booking?.lastName}</span>
-		</div>
-		<div>
-			<h4 class="text-gray-500">{$LL.birthDate()}</h4>
-			<span class="font-medium">{data.booking?.birthDate}</span>
+			<span class="font-medium">{data.anmeldung?.lastName}</span>
 		</div>
 		<div>
 			<h4 class="text-gray-500">{$LL.email()}</h4>
-			<span class="break-all font-medium">{data.booking?.email}</span>
+			<span class="break-all font-medium">{data.anmeldung?.email}</span>
 		</div>
 		<div>
-			<h4 class="text-gray-500">{$LL.citizenship()}</h4>
-			<span class="break-all font-medium">{data.booking?.citizenship}</span>
+			<h4 class="text-gray-500">{$LL.placeAnmeldung()}</h4>
+			<span class="font-medium">{data.anmeldung?.place}</span>
 		</div>
-		<div>
-			<h4 class="text-gray-500">{$LL.amountOfApplicants()}</h4>
-			<span class="font-medium">{data.booking?.applicants}</span>
-		</div>
-		<div>
-			<h4 class="text-gray-500">{$LL.visaType()}</h4>
-			<span class="break-all font-medium">{data.booking?.visaType.slice(0, -2)}</span>
-		</div>
-		<div>
-			<h4 class="text-gray-500">{$LL.visas()}</h4>
-			<span class="break-all font-medium">{data.booking?.visa.slice(0, -1)}</span>
-		</div>
-		<div>
-			<h4 class="text-gray-500">{$LL.familyMember()}</h4>
-			<span class="font-medium">{data.booking?.familyMember}</span>
-		</div>
-		{#if data.booking?.cizitenshipOfFamilyMember}
-			<div>
-				<h4 class="text-gray-500">{$LL.citizenshipOfFamilyMember()}</h4>
-				<span class="font-medium">{data.booking?.cizitenshipOfFamilyMember}</span>
-			</div>
-		{/if}
-		<div>
-			<h4 class="text-gray-500">{$LL.currentVisa()}</h4>
-			<span class="font-medium">{data.booking?.currentVisa}</span>
-		</div>
-		{#if data.booking?.numberOfCurrentVisa}
-			<div>
-				<h4 class="text-gray-500">{$LL.numberOfcurrentVisa()}</h4>
-				<span class="font-medium">{data.booking?.numberOfCurrentVisa}</span>
-			</div>
-		{/if}
 	</section>
 </main>

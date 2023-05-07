@@ -64,7 +64,11 @@ const de = {
 	anotherPlatform: 'Andere Buchungsplattformen?',
 	anotherPlatformText1:
 		'Wir würden es nicht tun, wenn andere Buchungsplattformen gut funktionieren. Wir können uns jedoch eine Lösung wie mit der Ausländerbehörde Berlin (in beta) einfallen lassen.',
-	anotherPlatformText2: 'Wir denken darüber nach, einen Anmeldetermin in Berlin zu bekommen.'
+	anotherPlatformText2: 'Wir denken darüber nach, einen Anmeldetermin in Berlin zu bekommen.',
+	anmeldung: 'Anmeldung einer Wohnung',
+	auslanderbehorde: 'Ausländerbehörde Berlin',
+	placeAnmeldung: 'Ort der Anmeldung',
+	bookingType: 'Buchungstyp'
 } satisfies Translation;
 
 export default de;

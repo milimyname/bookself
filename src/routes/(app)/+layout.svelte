@@ -21,15 +21,15 @@
 	import Questions from '$lib/components/Questions.svelte';
 	import Transition from '$lib/components/Transition.svelte';
 
-	let springValue = spring(100, { stiffness: 0.03, damping: 0.4 });
+	let springValueUser = spring(100, { stiffness: 0.03, damping: 0.4 });
 	let springValueQuestions = spring(100, { stiffness: 0.03, damping: 0.4 });
 
-	$: $userDrawerSlide = $springValue;
+	$: $userDrawerSlide = $springValueUser;
 	$: $anyQuestionsDrawerSlide = $springValueQuestions;
 
 	export let data;
 
-	$: if (!$isUserFormOpen) springValue.set(100, { soft: true });
+	$: if (!$isUserFormOpen) springValueUser.set(100, { soft: true });
 	$: if (!$anyQuestions) springValueQuestions.set(100, { soft: true });
 
 	// Dark Mode
@@ -94,7 +94,7 @@
 
 <svelte:window
 	on:click={(e) => {
-		userClickOutside(e, springValue);
+		userClickOutside(e, springValueUser);
 		questionsClickOutside(e, springValueQuestions);
 	}}
 />
@@ -137,11 +137,11 @@
 			on:click={() => {
 				if ($isUserFormOpen) {
 					$isUserFormOpen = false;
-					springValue.set(100, { soft: true });
+					springValueUser.set(100, { soft: true });
 					return;
 				}
 				$isUserFormOpen = true;
-				springValue.set($isUserFormOpen ? 0 : 100, { soft: true });
+				springValueUser.set($isUserFormOpen ? 0 : 100, { soft: true });
 			}}
 		>
 			<img

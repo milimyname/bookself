@@ -47,14 +47,14 @@
 </script>
 
 <a
-	href={`/booking/${bookingId}`}
+	href={visaType.includes('geramt') ? `/anmeldung/${bookingId}` : `/booking/${bookingId}`}
 	class="flex items-center justify-between justify-items-end
 		rounded-lg border border-gray-100 bg-white py-5 pl-8 pr-4 shadow-custom-lg transition-colors duration-300 md:grid md:grid-cols-[150px_minmax(100px,_1fr)_150px_minmax(100px,_1fr)]
 		{colors.borderColor} {$isBookingFormOpen && 'pointer-events-none'}"
 >
 	<h3 class="justify-self-start text-sm text-slate-500">{firstName} {lastName}</h3>
 	<h3 class="hidden justify-end text-sm font-medium text-slate-500 md:block">
-		{visaType.slice(0, -2)}
+		{visaType.includes('geramt') ? visaType : visaType.slice(0, -2)}
 	</h3>
 	<h3 class="hidden text-sm text-slate-500 md:block">{formatDate(createdAt)}</h3>
 	<div class="flex items-center justify-end gap-2">

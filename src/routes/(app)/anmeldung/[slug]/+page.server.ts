@@ -8,45 +8,38 @@ import { userSchema, bookingSchema, anmeldungSchema } from '$lib/config/zodSchem
 export const load = (async ({ params, request }) => {
 	const { slug } = params;
 
-	const booking = await prisma.booking.findUnique({
+	const anmeldung = await prisma.anmeldung.findUnique({
 		where: {
 			id: slug
 		}
 	});
 
-	if (!booking) throw error(404, 'Not found');
+	if (!anmeldung) throw error(404, 'Not found');
 
 	// Validate form
 	const userForm = await superValidate(request, userSchema, {
 		id: 'userForm'
 	});
 
-	// Validate form
-	const bookingForm = await superValidate(request, bookingSchema, {
-		id: 'bookingForm'
+	// Validate Anmeldung form
+	const anmeldungForm = await superValidate(request, anmeldungSchema, {
+		id: 'anmeldungForm'
 	});
 
 	// Booking form data is the booking data
-	bookingForm.data = {
-		applicants: booking.applicants,
-		firstName: booking.firstName,
-		lastName: booking.lastName,
-		birthDate: booking.birthDate.split('.').reverse().join('-'),
-		email: booking.email,
-		citizenship: booking.citizenship,
-		visaType: booking.visaType,
-		visa: booking.visa,
-		familyMember: booking.familyMember,
-		cizitenshipOfFamilyMember: booking.cizitenshipOfFamilyMember || '',
-		currentVisa: booking.currentVisa || '',
-		numberOfCurrentVisa: booking.numberOfCurrentVisa || '',
-		status: booking.status
+	anmeldungForm.data = {
+		firstName: anmeldung.firstName,
+		lastName: anmeldung.lastName,
+		place: anmeldung.place,
+		email: anmeldung.email,
+		status: anmeldung.status
 	};
 
 	return {
-		bookingForm,
+		anmeldungForm,
+
 		userForm,
-		booking
+		anmeldung
 	};
 }) satisfies PageServerLoad;
 
@@ -76,11 +69,11 @@ export const actions = {
 
 		return { userForm };
 	},
-	deleteBooking: async ({ params }) => {
+	deleteAnmeldung: async ({ params }) => {
 		const { slug } = params;
 
 		// Delete booking
-		await prisma.booking.delete({
+		await prisma.anmeldung.delete({
 			where: {
 				id: slug
 			}
@@ -88,26 +81,26 @@ export const actions = {
 
 		throw redirect(303, '/');
 	},
-	editBooking: async ({ params, request }) => {
+	editAnmeldung: async ({ params, request }) => {
 		const { slug } = params;
 
 		// Validate form
-		const bookingForm = await superValidate(request, bookingSchema, {
-			id: 'bookingForm'
+		const anmeldungForm = await superValidate(request, anmeldungSchema, {
+			id: 'anmeldungForm'
 		});
 
-		if (!bookingForm.valid) return fail(400, { bookingForm });
+		if (!anmeldungForm.valid) return fail(400, { anmeldungForm });
 
 		// Update booking in db
-		await prisma.booking.update({
+		await prisma.anmeldung.update({
 			where: {
 				id: slug
 			},
 			data: {
-				...bookingForm.data
+				...anmeldungForm.data
 			}
 		});
 
-		return { bookingForm };
+		return { anmeldungForm };
 	}
 } satisfies Actions;

@@ -3,7 +3,7 @@ import type { Actions, PageServerData } from './$types';
 import { fail } from '@sveltejs/kit';
 import { superValidate } from 'sveltekit-superforms/server';
 import { prisma } from '$lib/db/prisma';
-import { bookingSchema, userSchema } from '$lib/config/zodSchema';
+import { bookingSchema, anmeldungSchema, userSchema } from '$lib/config/zodSchema';
 import { createContext } from '$lib/trpc/context';
 import { router } from '$lib/trpc/router';
 import { transporter } from '$lib/emails/nodemailer';
@@ -29,8 +29,14 @@ export const load = (async (event) => {
 		id: 'userForm'
 	});
 
+	// Validate form
+	const anmeldungForm = await superValidate(event, anmeldungSchema, {
+		id: 'anmeldungForm'
+	});
+
 	// Get bookings from router
 	const bookings = router.createCaller(await createContext(event)).bookings.getBookings();
+	const anmeldungs = router.createCaller(await createContext(event)).bookings.getAnmeldungs();
 
 	// Get user from db
 	const user = await prisma.user.findUnique({
@@ -107,9 +113,11 @@ export const load = (async (event) => {
 
 	return {
 		bookingForm,
+		anmeldungForm,
 		userForm,
 		user,
-		bookings
+		bookings,
+		anmeldungs
 	};
 }) satisfies PageServerData;
 
@@ -206,5 +214,34 @@ export const actions = {
 		});
 
 		throw redirect(303, '/');
+	},
+	addAnmeldung: async (event) => {
+		const anmeldungForm = await superValidate(event, anmeldungSchema, {
+			id: 'anmeldungForm'
+		});
+
+		if (!anmeldungForm.valid) return fail(400, { anmeldungForm });
+
+		// Get user from session
+		const session = await event.locals.getSession();
+
+		// Find user in db
+		const user = await prisma.user.findUnique({
+			where: {
+				email: session?.user?.email as string
+			}
+		});
+
+		// Add anmeldung to db
+		await prisma.anmeldung.create({
+			data: {
+				userId: user?.id,
+				firstName: anmeldungForm.data.firstName,
+				lastName: anmeldungForm.data.lastName,
+				email: anmeldungForm.data.email,
+				place: anmeldungForm.data.place,
+				status: 'pending'
+			}
+		});
 	}
 } satisfies Actions;

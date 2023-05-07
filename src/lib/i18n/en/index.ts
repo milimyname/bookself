@@ -61,7 +61,11 @@ const en = {
 	anotherPlatform: 'Another Booking Platforms?',
 	anotherPlatformText1:
 		"We'd not do it unless other booking platforms are working well. However, we can come up with a solution like with Ausländerbehörde Berlin (in beta).",
-	anotherPlatformText2: "We're thinking of possible to get an Anmeldung appointment in Berlin."
+	anotherPlatformText2: "We're thinking of possible to get an Anmeldung appointment in Berlin.",
+	anmeldung: 'Apartment Registration',
+	auslanderbehorde: 'Berlin Immigration Office',
+	placeAnmeldung: 'Apartment Registration Office',
+	bookingType: 'Booking Type'
 } satisfies BaseTranslation;
 
 export default en;

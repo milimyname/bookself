@@ -235,6 +235,22 @@ type RootTranslation = {
 	 * W​e​'​r​e​ ​t​h​i​n​k​i​n​g​ ​o​f​ ​p​o​s​s​i​b​l​e​ ​t​o​ ​g​e​t​ ​a​n​ ​A​n​m​e​l​d​u​n​g​ ​a​p​p​o​i​n​t​m​e​n​t​ ​i​n​ ​B​e​r​l​i​n​.
 	 */
 	anotherPlatformText2: string
+	/**
+	 * A​p​a​r​t​m​e​n​t​ ​R​e​g​i​s​t​r​a​t​i​o​n
+	 */
+	anmeldung: string
+	/**
+	 * B​e​r​l​i​n​ ​I​m​m​i​g​r​a​t​i​o​n​ ​O​f​f​i​c​e
+	 */
+	auslanderbehorde: string
+	/**
+	 * A​p​a​r​t​m​e​n​t​ ​R​e​g​i​s​t​r​a​t​i​o​n​ ​O​f​f​i​c​e
+	 */
+	placeAnmeldung: string
+	/**
+	 * B​o​o​k​i​n​g​ ​T​y​p​e
+	 */
+	bookingType: string
 }
 
 export type TranslationFunctions = {
@@ -458,6 +474,22 @@ export type TranslationFunctions = {
 	 * We're thinking of possible to get an Anmeldung appointment in Berlin.
 	 */
 	anotherPlatformText2: () => LocalizedString
+	/**
+	 * Apartment Registration
+	 */
+	anmeldung: () => LocalizedString
+	/**
+	 * Berlin Immigration Office
+	 */
+	auslanderbehorde: () => LocalizedString
+	/**
+	 * Apartment Registration Office
+	 */
+	placeAnmeldung: () => LocalizedString
+	/**
+	 * Booking Type
+	 */
+	bookingType: () => LocalizedString
 }
 
 export type Formatters = {}

@@ -498,6 +498,67 @@ export const config = {
 				// 	'Reiseausweis - Neuausstellung1',
 				// ]
 			}
+		],
+		offices: [
+			{
+				'Bürgeramt Halemweg (Außenstelle)': 'Bürgeramt Halemweg (Außenstelle)'
+			},
+			{ 'Bürgeramt Heerstraße': 'Bürgeramt Heerstraße' },
+			{
+				'Bürgeramt Hohenzollerndamm (Flüchtlingsbürgeramt)':
+					'Bürgeramt Hohenzollerndamm (Flüchtlingsbürgeramt)'
+			},
+			{ 'Bürgeramt Wilmersdorfer Straße': 'Bürgeramt Wilmersdorfer Straße' },
+			{ 'Bürgeramt 1 (Kreuzberg), Yorckstraße': 'Bürgeramt 1 (Kreuzberg), Yorckstraße' },
+			{
+				'Bürgeramt 3 (Friedrichshain), Frankfurter Allee':
+					'Bürgeramt 3 (Friedrichshain), Frankfurter Allee'
+			},
+			{
+				'Ausbildungsbürgeramt (Alt- Hohenschönhausen)':
+					'Ausbildungsbürgeramt (Alt- Hohenschönhausen)'
+			},
+			{ 'Bürgeramt 1 (Neu- Hohenschönhausen)': 'Bürgeramt 1 (Neu- Hohenschönhausen)' },
+			{ 'Bürgeramt 2 (Lichtenberg)': 'Bürgeramt 2 (Lichtenberg)' },
+			{
+				'Bürgeramt 3 (Friedrichsfelde) Tierparkcenter':
+					'Bürgeramt 3 (Friedrichsfelde) Tierparkcenter'
+			},
+			{ 'Mobiles Bürgeramt': 'Mobiles Bürgeramt' },
+			{ 'Bürgeramt 1 (Marzahn)': 'Bürgeramt 1 (Marzahn)' },
+			{ 'Bürgeramt Biesdorf - Center': 'Bürgeramt Biesdorf - Center' },
+			{ 'Bürgeramt Helle Mitte': 'Bürgeramt Helle Mitte' },
+			{ 'Bürgeramt Marzahner Promenade': 'Bürgeramt Marzahner Promenade' },
+			{ 'Bürgeramt Rathaus Mitte': 'Bürgeramt Rathaus Mitte' },
+			{ 'Bürgeramt Rathaus Tiergarten': 'Bürgeramt Rathaus Tiergarten' },
+			{ 'Bürgeramt Wedding': 'Bürgeramt Wedding' },
+			{ 'Flüchtlingsbürgeramt Rathaus Tiergarten': 'Flüchtlingsbürgeramt Rathaus Tiergarten' },
+			{ 'Bürgeramt Blaschkoallee': 'Bürgeramt Blaschkoallee' },
+			{ 'Bürgeramt Rathaus Neukölln': 'Bürgeramt Rathaus Neukölln' },
+			{ 'Bürgeramt Zwickauer Damm': 'Bürgeramt Zwickauer Damm' },
+			{ 'Mobiles Bürgeramt Alt-Buckow': 'Mobiles Bürgeramt Alt-Buckow' },
+			{ 'Mobiles Bürgeramt Rudow': 'Mobiles Bürgeramt Rudow' },
+			{ 'Bürgeramt Karow / Buch': 'Bürgeramt Karow / Buch' },
+			{ 'Bürgeramt Pankow': 'Bürgeramt Pankow' },
+			{ 'Bürgeramt Prenzlauer Berg': 'Bürgeramt Prenzlauer Berg' },
+			{ 'Bürgeramt Weißensee': 'Bürgeramt Weißensee' },
+			{ 'Bürgeramt Heiligensee': 'Bürgeramt Heiligensee' },
+			{ 'Bürgeramt Märkisches Viertel': 'Bürgeramt Märkisches Viertel' },
+			{ 'Bürgeramt Rathaus Reinickendorf': 'Bürgeramt Rathaus Reinickendorf' },
+			{ 'Bürgeramt Reinickendorf-Ost': 'Bürgeramt Reinickendorf-Ost' },
+			{ 'Bürgeramt Tegel': 'Bürgeramt Tegel' },
+			{ 'Mobiles Bürgeramt Hermsdorf': 'Mobiles Bürgeramt Hermsdorf' },
+			{ 'Bürgeramt Rathaus Spandau': 'Bürgeramt Rathaus Spandau' },
+			{ 'Bürgeramt Wasserstadt': 'Bürgeramt Wasserstadt' },
+			{ 'Bürgerbüro Kladow': 'Bürgerbüro Kladow' },
+			{ 'Bürgeramt Lankwitz': 'Bürgeramt Lankwitz' },
+			{ 'Bürgeramt Steglitz': 'Bürgeramt Steglitz' },
+			{ 'Bürgeramt Zehlendorf': 'Bürgeramt Zehlendorf' },
+			{ 'Bürgeramt Lichtenrade': 'Bürgeramt Lichtenrade' },
+			{ 'Bürgeramt Schöneberg': 'Bürgeramt Schöneberg' },
+			{ 'Bürgeramt Tempelhof': 'Bürgeramt Tempelhof' },
+			{ 'Bürgeramt Köpenick': 'Bürgeramt Köpenick' },
+			{ 'Bürgeramt Schöneweide': 'Bürgeramt Schöneweide' }
 		]
 	},
 	en: {
@@ -1018,3 +1079,70 @@ export const colors = {
 	borderColor: 'draft',
 	textColor: 'draft'
 };
+
+const citizenOffices = [
+	{
+		'Bürgeramt Halemweg (Außenstelle)': 'Citizens Office Halemweg (Außenstelle)'
+	},
+	{ 'Bürgeramt Heerstraße': 'Citizens Office Heerstraße' },
+	{
+		'Bürgeramt Hohenzollerndamm (Flüchtlingsbürgeramt)':
+			'Citizenss Office Hohenzollerndamm (Refugee Citizenss Office)'
+	},
+	{ 'Bürgeramt Wilmersdorfer Straße': 'Bürgeramt Citizens Office Wilmersdorfer Straße' },
+	{
+		'Bürgeramt 1 (Kreuzberg), Yorckstraße': 'Bürgeramt 1 (KreuzbergCitizens Office ), Yorckstraße'
+	},
+	{
+		'Bürgeramt 3 (Friedrichshain), Frankfurter Allee':
+			'Bürgeramt 3 (Friedrichshain), Citizens Office Frankfurter Allee'
+	},
+	{
+		'Ausbildungsbürgeramt (Alt- Hohenschönhausen)':
+			'Ausbildungsbürgeramt (Alt- Citizens Office Hohenschönhausen)'
+	},
+	{ 'Bürgeramt 1 (Neu- Hohenschönhausen)': 'Bürgeramt 1 (Neu- Citizens Office Hohenschönhausen)' },
+	{ 'Bürgeramt 2 (Lichtenberg)': 'Bürgeramt 2 (Citizens Office Lichtenberg)' },
+	{
+		'Bürgeramt 3 (Friedrichsfelde) Tierparkcenter':
+			'Bürgeramt 3 (Citizens Office Friedrichsfelde) Tierparkcenter'
+	},
+	{ 'Mobiles Bürgeramt': 'Citizens Office Mobiles Bürgeramt' },
+	{ 'Bürgeramt 1 (Marzahn)': 'Bürgeramt 1 (Citizens Office Marzahn)' },
+	{ 'Bürgeramt Biesdorf - Center': 'Bürgeramt Biesdorf Citizens Office - Center' },
+	{ 'Bürgeramt Helle Mitte': 'Bürgeramt Citizens Office Helle Mitte' },
+	{ 'Bürgeramt Marzahner Promenade': 'Bürgeramt Citizens Office Marzahner Promenade' },
+	{ 'Bürgeramt Rathaus Mitte': 'Bürgeramt Citizens Office Rathaus Mitte' },
+	{ 'Bürgeramt Rathaus Tiergarten': 'Bürgeramt Citizens Office Rathaus Tiergarten' },
+	{ 'Bürgeramt Wedding': 'Citizens Office Bürgeramt Wedding' },
+	{
+		'Flüchtlingsbürgeramt Rathaus Tiergarten':
+			'Flüchtlingsbürgeramt Citizens Office Rathaus Tiergarten'
+	},
+	{ 'Bürgeramt Blaschkoallee': 'Citizens Office Bürgeramt Blaschkoallee' },
+	{ 'Bürgeramt Rathaus Neukölln': 'Bürgeramt Citizens Office Rathaus Neukölln' },
+	{ 'Bürgeramt Zwickauer Damm': 'Bürgeramt Citizens Office Zwickauer Damm' },
+	{ 'Mobiles Bürgeramt Alt-Buckow': 'Mobiles Bürgeramt Citizens Office Alt-Buckow' },
+	{ 'Mobiles Bürgeramt Rudow': 'Mobiles Citizens Office Bürgeramt Rudow' },
+	{ 'Bürgeramt Karow / Buch': 'Bürgeramt Karow Citizens Office / Buch' },
+	{ 'Bürgeramt Pankow': 'Citizens Office Bürgeramt Pankow' },
+	{ 'Bürgeramt Prenzlauer Berg': 'Bürgeramt Citizens Office Prenzlauer Berg' },
+	{ 'Bürgeramt Weißensee': 'Citizens Office Bürgeramt Weißensee' },
+	{ 'Bürgeramt Heiligensee': 'Citizens Office Bürgeramt Heiligensee' },
+	{ 'Bürgeramt Märkisches Viertel': 'Citizens Office Märkisches Viertel' },
+	{ 'Bürgeramt Rathaus Reinickendorf': 'Citizens Office Rathaus Reinickendorf' },
+	{ 'Bürgeramt Reinickendorf-Ost': 'Citizens Office Reinickendorf-Ost' },
+	{ 'Bürgeramt Tegel': 'Citizens OfficesTegel' },
+	{ 'Mobiles Bürgeramt Hermsdorf': 'Mobile Citizens Office Hermsdorf' },
+	{ 'Bürgeramt Rathaus Spandau': ' Citizens Office Rathaus Spandau' },
+	{ 'Bürgeramt Wasserstadt': 'Citizens Office  Wasserstadt' },
+	{ 'Bürgerbüro Kladow': 'Citizens Office Kladow' },
+	{ 'Bürgeramt Lankwitz': 'Citizens Office  Lankwitz' },
+	{ 'Bürgeramt Steglitz': 'Citizens Office  Steglitz' },
+	{ 'Bürgeramt Zehlendorf': 'Citizens Office Zehlendorf' },
+	{ 'Bürgeramt Lichtenrade': 'Citizens Office Lichtenrade' },
+	{ 'Bürgeramt Schöneberg': 'Citizens Office Schöneberg' },
+	{ 'Bürgeramt Tempelhof': 'Citizens Office Tempelhof' },
+	{ 'Bürgeramt Köpenick': 'Citizens Office Köpenick' },
+	{ 'Bürgeramt Schöneweide': 'Citizens Office  Schöneweide' }
+];
