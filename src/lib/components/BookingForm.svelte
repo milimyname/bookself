@@ -46,23 +46,6 @@
 		<h2 class="mb-5 px-5 pt-28 text-3xl md:pl-28 md:pt-20">{$LL.newBooking()}</h2>
 		<div>
 			<div class="relative flex flex-col gap-5 px-5 pr-10 md:pl-28">
-				<fieldset class="flex flex-col gap-2">
-					<label for="bookingType" class="font-medium">{$LL.bookingType()}</label>
-					<select
-						name="bookingType"
-						class="rounded-md"
-						id="bookingType"
-						bind:value={$bookingType}
-						on:change={() => {
-							if ($bookingType === 'anmeldung') $bookingType = 'auslanderbehorde';
-							else $bookingType = 'anmeldung';
-						}}
-					>
-						<option value="anmeldung">{$LL.anmeldung()}</option>
-						<option value="auslanderbehorde">{$LL.auslanderbehorde()}</option>
-					</select>
-				</fieldset>
-
 				{#if $editBooking}
 					<fieldset class="flex flex-col gap-2">
 						<label for="status" class="font-medium">Status</label>
@@ -74,6 +57,23 @@
 							bind:value={$form.status}
 							readonly
 						/>
+					</fieldset>
+				{:else}
+					<fieldset class="flex flex-col gap-2">
+						<label for="bookingType" class="font-medium">{$LL.bookingType()}</label>
+						<select
+							name="bookingType"
+							class="rounded-md"
+							id="bookingType"
+							bind:value={$bookingType}
+							on:change={() => {
+								if ($bookingType === 'anmeldung') $bookingType = 'auslanderbehorde';
+								else $bookingType = 'anmeldung';
+							}}
+						>
+							<option value="anmeldung">{$LL.anmeldung()}</option>
+							<option value="auslanderbehorde">{$LL.auslanderbehorde()}</option>
+						</select>
 					</fieldset>
 				{/if}
 				<fieldset class="flex flex-col gap-2">
