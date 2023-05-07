@@ -26,6 +26,23 @@ export const load = (async ({ params, request }) => {
 		id: 'bookingForm'
 	});
 
+	// Booking form data is the booking data
+	bookingForm.data = {
+		applicants: booking.applicants,
+		firstName: booking.firstName,
+		lastName: booking.lastName,
+		birthDate: booking.birthDate.split('.').reverse().join('-'),
+		email: booking.email,
+		citizenship: booking.citizenship,
+		visaType: booking.visaType,
+		visa: booking.visa,
+		familyMember: booking.familyMember,
+		cizitenshipOfFamilyMember: booking.cizitenshipOfFamilyMember || '',
+		currentVisa: booking.currentVisa || '',
+		numberOfCurrentVisa: booking.numberOfCurrentVisa || '',
+		status: booking.status
+	};
+
 	return {
 		bookingForm,
 		userForm,

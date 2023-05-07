@@ -17,7 +17,7 @@
 	import User from '$lib/components/User.svelte';
 	import { clickOutside } from '$lib/hooks/clickOutside';
 	import { LL } from '$lib/i18n/i18n-svelte';
-	import toast from 'svelte-french-toast';
+	import toast, { Toaster } from 'svelte-french-toast';
 
 	// If the user is not signed in, redirect to the login page
 	if (!$page.data.session) goto('/login');
@@ -44,6 +44,7 @@
 	<div class="fixed z-20 h-full w-full bg-black opacity-50" />
 {/if}
 
+<Toaster />
 <BookingForm form1={data.bookingForm} locale={data.locale} />
 <User form2={data.userForm} session={data.session} />
 

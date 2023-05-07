@@ -57,26 +57,6 @@
 			colors.german = 'Erledigt';
 			break;
 	}
-
-	$: if (!$isBookingFormOpen) springValue.set(100, { soft: true });
-
-	// Fill the form with the data of the booking
-	$: {
-		data.bookingForm.data.applicants = data.booking?.applicants;
-		data.bookingForm.data.firstName = data.booking?.firstName;
-		data.bookingForm.data.lastName = data.booking?.lastName;
-		// Format birth date of the form to yyyy-mm-dd  from dd.mm.yyyy
-		data.bookingForm.data.birthDate = data.booking?.birthDate.split('.').reverse().join('-');
-		data.bookingForm.data.email = data.booking?.email;
-		data.bookingForm.data.citizenship = data.booking?.citizenship;
-		data.bookingForm.data.visaType = data.booking?.visaType;
-		data.bookingForm.data.visa = data.booking?.visa;
-		data.bookingForm.data.familyMember = data.booking?.familyMember;
-		data.bookingForm.data.cizitenshipOfFamilyMember = data.booking?.cizitenshipOfFamilyMember || '';
-		data.bookingForm.data.currentVisa = data.booking?.currentVisa || '';
-		data.bookingForm.data.numberOfCurrentVisa = data.booking?.numberOfCurrentVisa || '';
-		data.bookingForm.data.status = data.booking?.status;
-	}
 </script>
 
 <svelte:window on:click={(e) => clickOutside(e, springValue)} />
@@ -85,13 +65,13 @@
 	<div class="fixed z-20 h-full w-full bg-black opacity-50" />
 {/if}
 
-<BookingForm locale={data.locale} form1={data.bookingForm} />
 <User session={data.session} form2={data.userForm} />
+<BookingForm locale={data.locale} form1={data.bookingForm} />
 
 <main
 	class="{$isUserFormOpen || $anyQuestions || $isBookingFormOpen
 		? 'blur'
-		: 'blur-0'} flex w-full flex-1 flex-col items-center gap-5 px-4 py-8 transition-all dark:text-black md:px-10 md:py-20 xl:w-7/12 xl:px-0"
+		: 'blur-0'} flex w-full flex-1 flex-col items-center gap-5 px-4 py-8 transition-all dark:text-black md:px-10 md:py-20 xl:px-0"
 >
 	<header class="flex w-full flex-col justify-between gap-5 xl:w-7/12 xl:px-0">
 		<a class="group flex items-center gap-3" href="/">

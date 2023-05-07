@@ -19,6 +19,7 @@
 	import { quintOut } from 'svelte/easing';
 	import { goto } from '$app/navigation';
 	import Questions from '$lib/components/Questions.svelte';
+	import Transition from '$lib/components/Transition.svelte';
 
 	let springValue = spring(100, { stiffness: 0.03, damping: 0.4 });
 	let springValueQuestions = spring(100, { stiffness: 0.03, damping: 0.4 });
@@ -152,7 +153,9 @@
 	{/if}
 </aside>
 
-<slot />
+<Transition url={$page.url}>
+	<slot />
+</Transition>
 
 <button
 	class="q-button fixed bottom-5 right-4 h-10 rounded-full bg-black px-3 text-lg font-bold text-white drop-shadow transition-all dark:bg-[#864879] md:right-10"

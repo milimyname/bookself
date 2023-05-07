@@ -24,7 +24,7 @@
 </script>
 
 <div
-	class="questionsDrawer fixed z-40 flex h-full w-11/12 flex-col overflow-x-hidden scroll-smooth rounded-r-3xl bg-white dark:text-black md:w-2/3"
+	class="questionsDrawer fixed left-0 z-40 flex h-full w-11/12 flex-col overflow-x-hidden scroll-smooth rounded-r-3xl bg-white dark:text-black md:w-2/3"
 	style="transform: translateX({-$anyQuestionsDrawerSlide}%)"
 >
 	<button

@@ -5,7 +5,7 @@
 	import { superForm } from 'sveltekit-superforms/client';
 	import { bookingSchema } from '$lib/config/zodSchema.js';
 	import { isBookingFormOpen, bookingDrawerSlide, editBooking } from '$lib/stores/stores';
-	import toast, { Toaster } from 'svelte-french-toast';
+	import toast from 'svelte-french-toast';
 	import { LL } from '$lib/i18n/i18n-svelte';
 
 	export let form1;
@@ -27,10 +27,9 @@
 	});
 </script>
 
-<Toaster />
-
 <form
-	class="bookingDrawer absolute z-40 h-fit w-11/12 overflow-auto overflow-x-hidden scroll-smooth rounded-r-3xl bg-white dark:text-black md:fixed md:h-full md:w-2/3"
+	class="bookingDrawer {$bookingDrawerSlide === 100 &&
+		'opacity-0'} absolute left-0 z-40 h-fit w-11/12 overflow-auto overflow-x-hidden scroll-smooth rounded-r-3xl bg-white dark:text-black md:fixed md:h-full md:w-2/3"
 	style="transform: translateX({-$bookingDrawerSlide}%)"
 	method="POST"
 	action="?/addBooking"

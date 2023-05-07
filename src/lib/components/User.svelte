@@ -8,11 +8,9 @@
 	import toast, { Toaster } from 'svelte-french-toast';
 	import { LL } from '$lib/i18n/i18n-svelte';
 	import Modal from '$lib/components/Modal.svelte';
-	import type { Session } from '@prisma/client';
-	import { goto } from '$app/navigation';
 
 	export let form2;
-	export let session: Session;
+	export let session;
 
 	// Super Form
 	const {
@@ -76,7 +74,8 @@
 <Toaster />
 <Modal />
 <form
-	class="userDrawer fixed z-40 flex h-full w-11/12 flex-col overflow-x-hidden scroll-smooth rounded-r-3xl bg-white dark:text-black md:w-2/3"
+	class="userDrawer {$userDrawerSlide === 100 &&
+		'opacity-0'} fixed left-0 z-40 flex h-full w-11/12 flex-col overflow-x-hidden scroll-smooth rounded-r-3xl bg-white dark:text-black md:w-2/3"
 	style="transform: translateX({-$userDrawerSlide}%)"
 	method="POST"
 	action="?/updateUser"
