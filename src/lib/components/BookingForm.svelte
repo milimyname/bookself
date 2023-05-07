@@ -13,7 +13,6 @@
 	import toast from 'svelte-french-toast';
 	import { LL } from '$lib/i18n/i18n-svelte';
 
-
 	export let auslanderbehordeForm;
 	export let locale: string;
 

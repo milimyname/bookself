@@ -27,18 +27,16 @@
 
 	let springValue = spring(100, { stiffness: 0.03, damping: 0.4 });
 
-	$: $bookingDrawerSlide = $springValue;
-
 	// Get length of bookings
 	let amountOfBookings = 0;
 	$: amountOfBookings = data.bookings.bookings.length;
 
-	$: if (!$isBookingFormOpen) springValue.set(100, { soft: true });
-
 	// Show a toast error if the user ain't verified his email yet
 	if (!data.user.emailVerified) toast.error($LL.verifyEmail());
 
-	$: console.log($springValue);
+	// Keep Booking Form Open
+	$: $bookingDrawerSlide = $springValue;
+	$: springValue.set($isBookingFormOpen ? 0 : 100, { soft: true });
 </script>
 
 <svelte:window on:click={(e) => clickOutside(e, springValue)} />

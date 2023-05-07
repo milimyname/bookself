@@ -58,6 +58,10 @@
 			colors.german = 'Erledigt';
 			break;
 	}
+
+	// Keep Booking Form Open
+	$: $bookingDrawerSlide = $springValue;
+	$: springValue.set($isBookingFormOpen ? 0 : 100, { soft: true });
 </script>
 
 <svelte:window on:click={(e) => clickOutside(e, springValue)} />

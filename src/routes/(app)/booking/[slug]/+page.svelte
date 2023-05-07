@@ -23,8 +23,6 @@
 
 	let springValue = spring(100, { stiffness: 0.03, damping: 0.4 });
 
-	$: $bookingDrawerSlide = $springValue;
-
 	const colors = {
 		bgLightColor: 'bg-light-draft',
 		bgColor: 'draft',
@@ -57,6 +55,11 @@
 			colors.german = 'Erledigt';
 			break;
 	}
+
+	$: $bookingDrawerSlide = $springValue;
+
+	// Keep Booking Form Open
+	$: springValue.set($isBookingFormOpen ? 0 : 100, { soft: true });
 </script>
 
 <svelte:window on:click={(e) => clickOutside(e, springValue)} />

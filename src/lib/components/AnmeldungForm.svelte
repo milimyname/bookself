@@ -32,12 +32,6 @@
 			else toast.success($LL.editBookingRequest());
 		}
 	});
-
-	// Keep Booking Form Open
-	$: {
-		if ($isBookingFormOpen) $bookingDrawerSlide = 0;
-		else $bookingDrawerSlide = 100;
- 	}
 </script>
 
 {#if $bookingType === 'anmeldung'}
