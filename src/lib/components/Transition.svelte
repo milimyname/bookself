@@ -7,8 +7,8 @@
 
 {#key url}
 	<div
-		in:fly={{ delay: 250, duration: 0, x: 0 }}
-		out:fly={{ delay: 250, duration: 0, x: 0 }}
+		in:fly={{ delay: 0, duration: 0, x: 0 }}
+		out:fly={{ delay: 0, duration: 0, x: 0 }}
 		class="w-full"
 	>
 		<slot />
