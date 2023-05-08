@@ -39,15 +39,15 @@
 {#if $bookingType === 'anmeldung'}
 	<form
 		class="bookingDrawer {$bookingDrawerSlide === 100 &&
-			'opacity-0'} absolute left-0 top-0 z-40 h-full w-11/12 overflow-hidden rounded-r-3xl bg-white dark:text-black md:fixed md:h-full md:w-2/3"
+			'opacity-0'} absolute left-0 top-0 z-40 h-full w-11/12 overflow-scroll scroll-smooth rounded-r-3xl bg-white dark:text-black sm:overflow-hidden md:fixed md:h-full md:w-2/3"
 		style="transform: translateX({-$bookingDrawerSlide}%)"
 		method="POST"
 		action="?/addAnmeldung"
 		use:anmeldungEnhance
 	>
 		<h2 class="mb-5 px-5 pt-28 text-3xl md:pl-28 md:pt-20">{$LL.newBooking()}</h2>
-		<div class="h-full">
-			<div class="relative flex h-full flex-col gap-5 px-5 pr-10 md:pl-28">
+		<div class="h-fit sm:h-full">
+			<div class="relative flex h-fit flex-col gap-5 px-5 pb-10 pr-10 sm:h-full sm:pb-0 md:pl-28">
 				{#if $editBooking}
 					<fieldset class="flex flex-col gap-2">
 						<label for="status" class="font-medium">Status</label>
