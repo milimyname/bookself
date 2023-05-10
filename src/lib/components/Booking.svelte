@@ -47,7 +47,9 @@
 </script>
 
 <a
-	href={visaType.includes('geramt') ? `/anmeldung/${bookingId}` : `/booking/${bookingId}`}
+	href={visaType.includes('geramt') || visaType.includes('gerbüro')
+		? `/anmeldung/${bookingId}`
+		: `/booking/${bookingId}`}
 	class="flex items-center justify-between justify-items-end
 		rounded-lg border border-gray-100 bg-white py-5 pl-8 pr-4 shadow-custom-lg transition-colors duration-300 md:grid md:grid-cols-[150px_minmax(100px,_1fr)_150px_minmax(100px,_1fr)]
 		{colors.borderColor} {$isBookingFormOpen && 'pointer-events-none'}"

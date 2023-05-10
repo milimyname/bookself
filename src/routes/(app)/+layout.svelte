@@ -153,9 +153,8 @@
 	{/if}
 </aside>
 
-<Transition url={$page.url}>
-	<slot />
-</Transition>
+<slot />
+<!-- <Transition url={$page.url} /> -->
 
 <button
 	class="q-button fixed bottom-5 right-4 h-10 rounded-full bg-black px-3 text-lg font-bold text-white drop-shadow transition-all dark:bg-[#864879] md:right-10"
