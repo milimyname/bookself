@@ -44,7 +44,7 @@
 		use:enhance
 	>
 		<h2 class="mb-5 px-5 pt-28 text-3xl md:pl-28 md:pt-20">{$LL.newBooking()}</h2>
-		<div>
+		{#if $bookingDrawerSlide < 100}
 			<div class="relative flex flex-col gap-5 px-5 pr-10 md:pl-28">
 				{#if $editBooking}
 					<fieldset class="flex flex-col gap-2">
@@ -325,6 +325,6 @@
 					>
 				{/if}
 			</div>
-		</div>
+		{/if}
 	</form>
 {/if}
