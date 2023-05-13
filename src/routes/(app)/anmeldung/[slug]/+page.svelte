@@ -70,6 +70,10 @@
 	<div class="fixed z-20 h-full w-full bg-black opacity-50" />
 {/if}
 
+<head>
+	<title>Anmeldung Booking</title>
+</head>
+
 <User session={data.session} form2={data.userForm} />
 <AnmeldungForm anmeldungForm={data.anmeldungForm} />
 

@@ -71,6 +71,10 @@
 <User session={data.session} form2={data.userForm} />
 <BookingForm locale={data.locale} auslanderbehordeForm={data.bookingForm} />
 
+<head>
+	<title>Auslanderbehorde Booking</title>
+</head>
+
 <main
 	class="{$isUserFormOpen || $anyQuestions || $isBookingFormOpen
 		? 'blur'

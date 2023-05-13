@@ -50,6 +50,10 @@
 <AnmeldungForm anmeldungForm={data.anmeldungForm} />
 <User form2={data.userForm} session={data.session} />
 
+<head>
+	<title>{amountOfBookings} Bookings</title>
+</head>
+
 <main
 	class="{$isBookingFormOpen || $isUserFormOpen || $anyQuestions
 		? 'blur'
