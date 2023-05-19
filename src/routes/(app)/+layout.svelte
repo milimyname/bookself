@@ -19,7 +19,6 @@
 	import { quintOut } from 'svelte/easing';
 	import { goto } from '$app/navigation';
 	import Questions from '$lib/components/Questions.svelte';
-	import Transition from '$lib/components/Transition.svelte';
 
 	let springValueUser = spring(100, { stiffness: 0.03, damping: 0.4 });
 	let springValueQuestions = spring(100, { stiffness: 0.03, damping: 0.4 });
@@ -107,9 +106,12 @@
 	<a href="https://glowing-brand-015819.framer.app/" class="md:p-6">
 		<img src={bookself} class="h-12 w-12" alt="Bookself Logo" /></a
 	>
-	<div
+	<nav
 		class="flex w-full justify-end gap-5 md:mb-5 md:mt-auto md:flex-col md:items-center md:border-b md:border-gray-200 md:pb-10"
 	>
+		<a href="/stats" class="cursor-pointer font-bold text-white">
+			<Icon src={icons.stats} className="w-6 h-6 fill-white" />
+		</a>
 		<button class="cursor-pointer font-bold text-white" on:click={switchLanguage}>
 			{data.locale}
 		</button>
@@ -130,7 +132,7 @@
 				</div>
 			{/if}
 		</button>
-	</div>
+	</nav>
 	{#if $page.data.session}
 		<button
 			class="userButton"

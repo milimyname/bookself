@@ -17,3 +17,4 @@ export const deleteAcc = writable(false);
 export const sentEmail = writable(false);
 export const editBooking = writable(false);
 export const bookingType = writable('auslanderbehorde');
+export const toggleChart = writable('bookings');
