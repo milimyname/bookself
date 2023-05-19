@@ -1,16 +1,11 @@
 <script lang="ts">
 	import ApexCharts from 'apexcharts';
 	import { afterUpdate, onMount } from 'svelte';
-	import {
-		isUserFormOpen,
-		anyQuestions,
-		isBookingFormOpen,
-		darkMode,
-		toggleChart
-	} from '$lib/stores/stores';
+	import { isUserFormOpen, anyQuestions, isBookingFormOpen, toggleChart } from '$lib/stores/stores';
 	import { icons } from '$lib/assets/icons';
 	import Icon from 'svelte-icons-pack/Icon.svelte';
 	import { LL } from '$lib/i18n/i18n-svelte';
+	import User from '$lib/components/User.svelte';
 
 	export let data;
 	let chart: ApexCharts;
@@ -146,6 +141,8 @@
 </head>
 
 <svelte:window bind:innerWidth />
+
+<User form2={data.userForm} session={data.session} />
 
 <main
 	class="{$isUserFormOpen || $anyQuestions || $isBookingFormOpen
