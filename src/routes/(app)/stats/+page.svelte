@@ -30,7 +30,7 @@
 	// Get the total amount of bookings per month according to the status and the months array
 	const getAmountOfBookingsPerMonth = (status: string) =>
 		months.map((month) => {
-			return $toggleChart === 'bookings'
+			return $toggleChart === 'auslanderbehorde'
 				? data.bookings.reduce((acc: number, curr: { createdAt: Date; status: string }) => {
 						if (curr.status === status && getMonth(curr.createdAt) === month) return acc + 1;
 						return acc;
@@ -73,7 +73,8 @@
 			enabled: false
 		},
 		stroke: {
-			curve: 'straight'
+			curve: 'smooth',
+			lineCap: 'round'
 		},
 		grid: {
 			row: {
@@ -100,7 +101,7 @@
 
 	// Accumalate the total amount of pending bookings
 	const totatOfBookings = (type: string) =>
-		$toggleChart === 'bookings'
+		$toggleChart === 'auslanderbehorde'
 			? data.bookings.reduce((acc: number, curr: { status: string }) => {
 					if (curr.status === type) {
 						return acc + 1;
@@ -134,11 +135,17 @@
 
 		chart.updateOptions(options);
 	});
+
+	$: innerWidth > 450 ? (options.chart.height = 500) : (options.chart.height = 400);
 </script>
 
 <head>
 	<title>Stats</title>
 </head>
+
+{#if $isBookingFormOpen || $isUserFormOpen || $anyQuestions}
+	<div class="fixed z-20 h-full w-full bg-black opacity-50" />
+{/if}
 
 <svelte:window bind:innerWidth />
 
@@ -156,7 +163,7 @@
 					src={icons.chevronRight}
 					className="h-6 w-6 rotate-180 dark:fill-white  group-hover:-translate-x-1 transition-transform"
 				/>
-				<span class="text-sm font-semibold dark:text-white">{$LL.goBack()}</span>
+				<span class="hidden text-sm font-semibold dark:text-white sm:block">{$LL.goBack()}</span>
 			</a>
 			<!-- Toggle of bookings or anmeldungs -->
 			<div class="flex items-center gap-2">
@@ -166,8 +173,8 @@
 					bind:value={$toggleChart}
 					class="rounded-md text-sm font-semibold"
 				>
-					<option value="bookings">Bookings</option>
-					<option value="anmeldungs">Anmeldungs</option>
+					<option value="auslanderbehorde">Auslanderbehorde</option>
+					<option value="anmeldung">Anmeldung</option>
 				</select>
 			</div>
 		</div>
