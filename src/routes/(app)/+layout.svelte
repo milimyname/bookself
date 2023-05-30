@@ -161,7 +161,6 @@
 <button
 	class="q-button fixed bottom-5 right-4 h-10 rounded-full bg-black px-3 text-lg font-bold text-white drop-shadow transition-all dark:bg-[#864879] md:right-10"
 	on:click={() => {
-		console.log('clicked');
 		if ($anyQuestions) {
 			$anyQuestions = false;
 			springValueQuestions.set(100, { soft: true });

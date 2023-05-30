@@ -8,6 +8,7 @@
 	import { loginSchema } from '$lib/config/zodSchema.js';
 	import Spinner from '$lib/components/Spinner.svelte';
 	import { loading } from '$lib/stores/stores';
+	import { env } from '$env/dynamic/public';
 
 	// Redirect if logged in
 	if ($page.data.session) goto('/');
@@ -33,6 +34,22 @@
 			console.log(error);
 		}
 	};
+
+	const handleDemoLogin = async () => {
+		$loading = true;
+		// Log in with demo account
+		$form.email = env.PUBLIC_EMAIL;
+		$form.password = env.PUBLIC_EMAIL_PASSWORD;
+
+		// Click the login button
+		const loginButton = document.querySelector('button[type="submit"]') as HTMLButtonElement;
+
+		setTimeout(() => {
+			loginButton.click();
+			goto('/');
+			$loading = false;
+		}, 1000);
+	};
 </script>
 
 <Spinner errors={$errors} />
@@ -47,20 +64,27 @@
 				<h1 class="text-3xl font-bold">Welcome back.</h1>
 				<p class="text-gray-500">Log in to access your account</p>
 			</div>
-			<div class="flex flex-col justify-between gap-5 md:flex-row">
+			<div class="flex flex-col flex-wrap justify-between gap-5 md:flex-row">
 				<button
 					on:click={() => handleSignIn('google')}
 					class=" group flex flex-1 justify-center gap-2 rounded-md border p-4 transition-all duration-500 hover:border-white hover:bg-black"
 				>
-					<Icon src={icons.google} className="h-7 w-7 group-hover:fill-white" />
+					<Icon src={icons.google} className="h-7 w-7 md:w-10 group-hover:fill-white" />
 					<span class="group-hover:text-white"> Continue with Google </span></button
 				>
 				<button
 					on:click={() => handleSignIn('github')}
 					class=" group flex flex-1 justify-center gap-2 rounded-md border p-4 transition-all duration-500 hover:border-white hover:bg-black"
 				>
-					<Icon src={icons.github} className="h-7 w-7 group-hover:fill-white" />
+					<Icon src={icons.github} className="h-7 w-7 md:w-10 group-hover:fill-white" />
 					<span class="group-hover:text-white"> Continue with Github </span></button
+				>
+				<button
+					on:click={() => handleDemoLogin()}
+					class="group flex flex-1 justify-center gap-2 rounded-md border p-4 transition-all duration-500 hover:border-white hover:bg-black"
+				>
+					<Icon src={icons.user} className="h-7 w-7 md:w-10 group-hover:fill-white" />
+					<span class="group-hover:text-white"> Continue with Mili's Acc </span></button
 				>
 			</div>
 			<div class="flex items-center gap-5">

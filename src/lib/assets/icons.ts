@@ -8,6 +8,7 @@ import AiOutlinePlus from 'svelte-icons-pack/ai/AiOutlinePlus';
 import BiChevronRight from 'svelte-icons-pack/bi/BiChevronRight';
 import FiEdit from 'svelte-icons-pack/fi/FiEdit';
 import BiStats from 'svelte-icons-pack/bi/BiStats';
+import BiSolidUserCircle from 'svelte-icons-pack/bi/BiSolidUserCircle';
 
 export const icons = {
 	google: BiLogoGoogle,
@@ -19,5 +20,6 @@ export const icons = {
 	plus: AiOutlinePlus,
 	chevronRight: BiChevronRight,
 	edit: FiEdit,
-	stats: BiStats
+	stats: BiStats,
+	user: BiSolidUserCircle
 };
