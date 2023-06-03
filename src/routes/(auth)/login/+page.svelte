@@ -103,6 +103,7 @@
 				<label for="email">Email</label>
 				<input
 					type="text"
+					id="email"
 					name="email"
 					class="rounded-md"
 					bind:value={$form.email}
@@ -115,6 +116,7 @@
 			<fieldset class="flex flex-col gap-2">
 				<label for="password">Password</label>
 				<input
+					id="password"
 					type="password"
 					name="password"
 					class="rounded-md"

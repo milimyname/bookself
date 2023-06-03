@@ -50,6 +50,7 @@
 				<input
 					type="text"
 					name="email"
+					id="email"
 					class="rounded-md"
 					bind:value={$form.email}
 					{...$constraints.email}
@@ -63,6 +64,7 @@
 				<input
 					type="password"
 					name="password"
+					id="password"
 					class="rounded-md"
 					bind:value={$form.password}
 					{...$constraints.password}
@@ -75,6 +77,7 @@
 				<label for="confirmPassword">Confirm password</label>
 				<input
 					type="password"
+					id="confirmPassword"
 					name="confirmPassword"
 					class="rounded-md"
 					bind:value={$form.confirmPassword}
@@ -88,12 +91,13 @@
 				<input
 					type="checkbox"
 					name="privacy"
+					id="privacy"
 					class="rounded-sm"
 					bind:checked={$form.privacy}
 					{...$constraints.privacy}
 				/>
 
-				<label for="password"
+				<label for="privacy"
 					>I agree to the
 					<a href="https://glowing-brand-015819.framer.app/blog/terms-privacy" class="underline">
 						Terms & Privacy
