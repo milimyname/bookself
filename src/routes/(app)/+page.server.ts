@@ -10,7 +10,7 @@ import { transporter } from '$lib/emails/nodemailer';
 import { render } from 'svelte-email';
 import Hello from '$lib/emails/Hello.svelte';
 import BookingConfirmation from '$lib/emails/BookingConfirmation.svelte';
-import { ZOHO_SENT_FROM } from '$env/static/private';
+// import { ZOHO_SENT_FROM } from '$env/static/private';
 import { stripe } from '$lib/stripe/stripe';
 import { sentEmail } from '$lib/stores/stores';
 
@@ -58,7 +58,7 @@ export const load = (async (event) => {
 		});
 
 		const options = {
-			from: ZOHO_SENT_FROM,
+			from: process.env.ZOHO_SENT_FROM,
 			to: user.email,
 			subject: 'Welcome to Bookself || Verification Email',
 			html: emailHtml
@@ -103,7 +103,7 @@ export const load = (async (event) => {
 			}
 		});
 		const options = {
-			from: ZOHO_SENT_FROM,
+			from: process.env.ZOHO_SENT_FROM,
 			to: user?.email,
 			subject: 'Booking Confirmation',
 			html: emailHtml

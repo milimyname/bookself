@@ -6,7 +6,7 @@ import { superValidate } from 'sveltekit-superforms/server';
 import { prisma } from '$lib/db/prisma';
 import { render } from 'svelte-email';
 import { transporter } from '$lib/emails/nodemailer';
-import { ZOHO_SENT_FROM } from '$env/static/private';
+// import { ZOHO_SENT_FROM } from '$env/static/private';
 import Reset from '$lib/emails/Reset.svelte';
 
 export const load = (async (event) => {
@@ -60,7 +60,7 @@ export const actions = {
 		});
 
 		const options = {
-			from: ZOHO_SENT_FROM,
+			from: process.env.ZOHO_SENT_FROM,
 			to: form.data.email,
 			subject: 'Reset password',
 			html: emailHtml

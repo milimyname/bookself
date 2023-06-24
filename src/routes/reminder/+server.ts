@@ -2,7 +2,7 @@ import { prisma } from '$lib/db/prisma';
 import { transporter } from '$lib/emails/nodemailer';
 import { render } from 'svelte-email';
 import ReminderEmail from '$lib/emails/ReminderEmail.svelte';
-import { ZOHO_SENT_FROM } from '$env/static/private';
+// import { ZOHO_SENT_FROM } from '$env/static/private';
 
 /** @type {import('./$types').RequestHandler} */
 export async function GET() {
@@ -30,7 +30,7 @@ export async function GET() {
 		});
 
 		const options = {
-			from: ZOHO_SENT_FROM,
+			from: process.env.ZOHO_SENT_FROM,
 			to: booking.email,
 			subject: 'Bookself || Reminder Email',
 			html: emailHtml
