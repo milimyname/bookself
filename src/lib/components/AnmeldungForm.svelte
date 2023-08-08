@@ -68,10 +68,6 @@
 							class="rounded-md"
 							id="bookingType"
 							bind:value={$bookingType}
-							on:change={() => {
-								if ($bookingType === 'anmeldung') $bookingType = 'auslanderbehorde';
-								else $bookingType = 'anmeldung';
-							}}
 						>
 							<option value="anmeldung">{$LL.anmeldung()}</option>
 							<option value="auslanderbehorde">{$LL.auslanderbehorde()}</option>
