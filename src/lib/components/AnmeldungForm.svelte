@@ -30,8 +30,6 @@
 			// Toaster success
 			if (!$editBooking) toast.success($LL.bookingRequest());
 			else toast.success($LL.editBookingRequest());
-
-			location.reload();
 		}
 	});
 </script>
@@ -154,7 +152,6 @@
 					>
 				{:else}
 					<button
-						type="submit"
 						class="rounded-full bg-black px-8 py-2 text-white transition-colors hover:bg-gray-900"
 						>{$LL.book()}</button
 					>

@@ -122,8 +122,8 @@ devDependencies:
     specifier: ^3.4.6
     version: 3.4.6(postcss@8.4.27)(svelte@4.1.2)
   sveltekit-superforms:
-    specifier: ^0.6.18
-    version: 0.6.18(@sveltejs/kit@1.22.4)(svelte@4.1.2)(zod@3.21.4)
+    specifier: ^1.5.0
+    version: 1.5.0(@sveltejs/kit@1.22.4)(svelte@4.1.2)(zod@3.21.4)
   tailwindcss:
     specifier: ^3.3.3
     version: 3.3.3
@@ -4124,11 +4124,11 @@ packages:
       magic-string: 0.30.2
       periscopic: 3.1.0
 
-  /sveltekit-superforms@0.6.18(@sveltejs/kit@1.22.4)(svelte@4.1.2)(zod@3.21.4):
-    resolution: {integrity: sha512-dEklp71snow0bfAQMDHld6sEoahxf7kiPhh1BtJCSo67NgoRHnUhDH17qwPb/d//RzcmTRFPIiPCz0A2iB5bhw==}
+  /sveltekit-superforms@1.5.0(@sveltejs/kit@1.22.4)(svelte@4.1.2)(zod@3.21.4):
+    resolution: {integrity: sha512-c/2v6zN9rtIAsOfsd6rBV7Kf0lB2+/o6sAFaOuMrYPlTBro5lpbz3iN/3nM5D3EuLE2Xt/iDdZYpkQdH8rq4nQ==}
     peerDependencies:
       '@sveltejs/kit': 1.x
-      svelte: 3.x
+      svelte: 3.x || 4.x
       zod: 3.x
     dependencies:
       '@sveltejs/kit': 1.22.4(svelte@4.1.2)(vite@4.4.9)
