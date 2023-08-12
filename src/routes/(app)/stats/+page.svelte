@@ -22,7 +22,10 @@
 	let months = [
 		...new Set(
 			data.bookings
-				.filter((booking: { createdAt: Date; status: string }) => booking.status === 'pending')
+				.filter(
+					(booking: { createdAt: Date; status: string }) =>
+						booking.status === 'pending' || booking.status === 'draft'
+				)
 				.map((booking: { createdAt: Date }) => getMonth(booking.createdAt))
 		)
 	];
@@ -135,8 +138,6 @@
 
 		chart.updateOptions(options);
 	});
-
-	$: innerWidth > 450 ? (options.chart.height = 500) : (options.chart.height = 400);
 </script>
 
 <head>
