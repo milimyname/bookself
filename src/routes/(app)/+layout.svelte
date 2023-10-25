@@ -100,6 +100,16 @@
 
 <Questions />
 
+<p
+	class="z-2 fixed bottom-0 h-fit w-full bg-blue-300 pb-20 pt-4 text-center dark:bg-blue-300 sm:top-0 sm:py-4"
+>
+	It doesn't work anymore. Please try to get a new appointment via this <a
+		class="pointer underline"
+		href="https://www.berlin.de/einwanderung/en/services/appointments/artikel.1144334.en.php"
+		>form</a
+	>
+</p>
+
 <aside
 	class="sticky top-0 z-50 flex items-center justify-between gap-5 bg-black p-4 transition-colors dark:bg-[#3F3351] md:h-screen md:flex-col md:rounded-r-3xl md:p-0"
 >
@@ -159,7 +169,7 @@
 <!-- <Transition url={$page.url} /> -->
 
 <button
-	class="q-button fixed bottom-5 right-4 h-10 rounded-full bg-black px-3 text-lg font-bold text-white drop-shadow transition-all dark:bg-[#864879] md:right-10"
+	class="q-button z-3 fixed bottom-5 right-4 h-10 rounded-full bg-black px-3 text-lg font-bold text-white drop-shadow transition-all dark:bg-[#864879] md:right-10"
 	on:click={() => {
 		if ($anyQuestions) {
 			$anyQuestions = false;

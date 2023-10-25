@@ -54,6 +54,8 @@ model User {
   sessions          Session[]
   bookings          Booking[]
   Anmeldung         Anmeldung[]
+
+  @@index([email])
 }
 
 model VerificationToken {
@@ -86,6 +88,8 @@ model Booking {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
+  @@index([status])
+  @@index([email])
 }
 
 model Anmeldung {
@@ -102,6 +106,7 @@ model Anmeldung {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
+  @@index([status])
 }
 
 model CronLogs {

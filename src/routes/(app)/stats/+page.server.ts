@@ -11,21 +11,9 @@ export const load = (async (event) => {
 	if (!session?.user) throw redirect(302, '/');
 
 	// Get all bookings from db
-	const bookings = prisma.booking.findMany({
-		where: {
-			status: {
-				in: ['pending', 'done', 'draft']
-			}
-		}
-	});
+	const bookings = prisma.booking.findMany();
 
-	const anmeldungs = prisma.anmeldung.findMany({
-		where: {
-			status: {
-				in: ['pending', 'done', 'draft']
-			}
-		}
-	});
+	const anmeldungs = prisma.anmeldung.findMany();
 
 	// Validate form
 	const userForm = await superValidate(event, userSchema, {
