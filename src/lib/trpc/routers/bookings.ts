@@ -1,9 +1,11 @@
 import { t } from '$lib/trpc/t';
-import z from 'zod';
 import { auth } from '$lib/trpc/middlewares/auth';
 import { logger } from '$lib/trpc/middlewares/logger';
 import { prisma } from '$lib/db/prisma';
 import { TRPCError } from '@trpc/server';
+import { stripe } from '$lib/stripe/stripe';
+import { env } from '$env/dynamic/public';
+import { z } from 'zod';
 
 // const bookingProcedure = t.procedure.input(z.object({ userId: z.string() }));
 

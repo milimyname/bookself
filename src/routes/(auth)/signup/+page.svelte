@@ -16,17 +16,17 @@
 
 	// Form
 	const { form, enhance, errors, constraints } = superForm(data.form, {
-		taintedMessage: 'Are you sure you want to leave?',
+		taintedMessage: null,
 		validators: signUpSchema
 	});
 </script>
 
 <Spinner errors={$errors} />
 
-<main class="flex h-full w-full">
+<main class="flex w-full lg:h-screen lg:overflow-hidden">
 	<div class="hidden w-1/2 bg-gradient-to-r from-cyan-500 to-blue-500 lg:block" />
 	<section
-		class="flex w-full flex-col items-center justify-center gap-7 px-10 md:gap-10 lg:w-1/2 lg:px-0"
+		class="flex h-screen w-full flex-col items-center justify-center gap-7 px-5 md:gap-10 md:px-10 lg:h-full lg:w-1/2 lg:px-0"
 	>
 		<div class="flex w-full flex-col gap-5 md:w-2/3 lg:gap-10">
 			<div class="flex items-center gap-5">
@@ -38,27 +38,6 @@
 					<p class="text-gray-500">Let's make it quick</p>
 				</div>
 			</div>
-			<!-- <div class="flex flex-col justify-between gap-5 md:flex-row">
-				<button
-					on:click={() => handleSignIn('google')}
-					class=" group flex flex-1 justify-center gap-2 rounded-md border p-4 transition-all duration-500 hover:border-white hover:bg-black"
-				>
-					<Icon src={icons.google} className="h-7 w-7 group-hover:fill-white" />
-					<span class="group-hover:text-white"> Log in with Google </span></button
-				>
-				<button
-					on:click={() => handleSignIn('github')}
-					class=" group flex flex-1 justify-center gap-2 rounded-md border p-4 transition-all duration-500 hover:border-white hover:bg-black"
-				>
-					<Icon src={icons.github} className="h-7 w-7 group-hover:fill-white" />
-					<span class="group-hover:text-white"> Log in with Github </span></button
-				>
-			</div> -->
-			<!-- <div class="flex items-center gap-5">
-				<div class="h-[1px] w-full bg-neutral-200" />
-				<span>or</span>
-				<div class="h-[1px] w-full bg-neutral-200" />
-			</div> -->
 		</div>
 		<form
 			class=" flex w-full flex-col gap-7 md:w-2/3"
@@ -71,6 +50,7 @@
 				<input
 					type="text"
 					name="email"
+					id="email"
 					class="rounded-md"
 					bind:value={$form.email}
 					{...$constraints.email}
@@ -84,6 +64,7 @@
 				<input
 					type="password"
 					name="password"
+					id="password"
 					class="rounded-md"
 					bind:value={$form.password}
 					{...$constraints.password}
@@ -96,6 +77,7 @@
 				<label for="confirmPassword">Confirm password</label>
 				<input
 					type="password"
+					id="confirmPassword"
 					name="confirmPassword"
 					class="rounded-md"
 					bind:value={$form.confirmPassword}
@@ -109,14 +91,17 @@
 				<input
 					type="checkbox"
 					name="privacy"
+					id="privacy"
 					class="rounded-sm"
 					bind:checked={$form.privacy}
 					{...$constraints.privacy}
 				/>
 
-				<label for="password"
+				<label for="privacy"
 					>I agree to the
-					<a href="/terms-privacy" class="underline"> Terms & Privacy </a>
+					<a href="https://glowing-brand-015819.framer.app/blog/terms-privacy" class="underline">
+						Terms & Privacy
+					</a>
 				</label>
 				{#if $errors.privacy}
 					<p class="text-sm text-red-500">{$errors.privacy}</p>

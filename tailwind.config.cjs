@@ -1,20 +1,32 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+	darkMode: 'class',
 	content: ['./src/**/*.{html,js,svelte,ts}'],
 	theme: {
 		extend: {
 			boxShadow: {
-				'negative-lg': '0 -25px 50px -12px rgb(0 0 0 / 0.10);'
+				'negative-lg': '0 -25px 50px -12px rgb(0 0 0 / 0.10);',
+				'custom-lg': '0 10px 20px -10px rgb(0 0 0 / 0.1);'
 			},
 			colors: {
 				pending: '#ff9100',
 				'light-pending': '#ff91000f',
-				draft: '#c5c5c5',
+				draft: '#7e7e7e',
 				'light-draft': '#9d9d9d1a',
-				done: 'green-400',
-				'light-done': '#373b53'
+				done: '#03C988',
+				'light-done': '#DDF7E3',
+				delete: '#EA5455'
+			},
+			keyframes: {
+				wiggle: {
+					'0%, 100%': { transform: 'rotate(-3deg)' },
+					'50%': { transform: 'rotate(3deg)' }
+				}
+			},
+			animation: {
+				wiggle: 'wiggle 1s ease-in-out infinite'
 			}
 		}
 	},
-	plugins: [require('@tailwindcss/forms')]
+	plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography')]
 };

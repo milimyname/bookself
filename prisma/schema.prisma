@@ -19,7 +19,7 @@ model Account {
   providerAccountId String
   refresh_token     String? @db.Text
   access_token      String? @db.Text
-  expires_at        Int?
+  expires_in        Int?
   token_type        String?
   scope             String?
   id_token          String? @db.Text
@@ -42,17 +42,20 @@ model Session {
 }
 
 model User {
-  id                String    @id @default(cuid())
+  id                String      @id @default(cuid())
   name              String?
-  email             String?   @unique
+  email             String?     @unique
   emailVerified     DateTime?
-  password          String?   @db.Text
+  password          String?     @db.Text
   image             String?
   lastFailedAttempt DateTime?
-  failedAttempts    Int       @default(0)
+  failedAttempts    Int         @default(0)
   accounts          Account[]
   sessions          Session[]
   bookings          Booking[]
+  Anmeldung         Anmeldung[]
+
+  @@index([email])
 }
 
 model VerificationToken {
@@ -85,6 +88,32 @@ model Booking {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
+  @@index([status])
+  @@index([email])
+}
+
+model Anmeldung {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId    String
+  status    String   @default("draft")
+  firstName String
+  lastName  String
+  email     String
+  place     String
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([status])
+}
+
+model CronLogs {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  message   String
 }
 
 model CronLogs {

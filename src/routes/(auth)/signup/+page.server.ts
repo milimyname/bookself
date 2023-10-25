@@ -43,7 +43,7 @@ export const actions = {
 		});
 
 		if (user) {
-			form.errors.email = ['Email is already in use'];
+			form.errors.email = ['Email exists'];
 			return fail(400, { form });
 		}
 

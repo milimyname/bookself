@@ -15,7 +15,7 @@ import '$lib/cron/cronjob';
 const protectedPaths = ['/', '/account'];
 
 async function protect({ event, resolve }) {
-	if (event.url.pathname.startsWith('/terms-policy')) return resolve(event);
+	if (event.url.pathname.startsWith('/reminder')) return resolve(event);
 
 	if (!protectedPaths.includes(event.url.pathname)) return resolve(event);
 
@@ -29,8 +29,16 @@ async function protect({ event, resolve }) {
 const authenticate = SvelteKitAuth({
 	adapter: PrismaAdapter(prisma),
 	providers: [
-		GitHub({ clientId: env.GITHUB_ID, clientSecret: env.GITHUB_SECRET }),
-		Google({ clientId: env.GOOGLE_ID, clientSecret: env.GOOGLE_SECRET })
+		GitHub({
+			clientId: env.GITHUB_ID,
+			clientSecret: env.GITHUB_SECRET,
+			allowDangerousEmailAccountLinking: true
+		}),
+		Google({
+			clientId: env.GOOGLE_ID,
+			clientSecret: env.GOOGLE_SECRET,
+			allowDangerousEmailAccountLinking: true
+		})
 	],
 	session: {
 		strategy: 'database',

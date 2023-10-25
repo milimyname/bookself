@@ -1,31 +1,185 @@
 <script lang="ts">
 	import bookself from '$lib/assets/white-bookself.svg';
-	import logo from '$lib/assets/favicon.png';
+	import imagePlaceholder from '$lib/assets/placeholder.png';
 	import { page } from '$app/stores';
+	import { spring } from 'svelte/motion';
 	import { icons } from '$lib/assets/icons';
-	import { signOut } from '@auth/sveltekit/client';
 	import Icon from 'svelte-icons-pack/Icon.svelte';
+	import {
+		isUserFormOpen,
+		userDrawerSlide,
+		darkMode,
+		anyQuestions,
+		anyQuestionsDrawerSlide
+	} from '$lib/stores/stores';
+	import { userClickOutside, questionsClickOutside } from '$lib/hooks/clickOutside';
+	import { handleSwitchDarkMode } from '$lib/hooks/handleDarkMode';
+	import { browser } from '$app/environment';
+	import { slide } from 'svelte/transition';
+	import { quintOut } from 'svelte/easing';
+	import { goto } from '$app/navigation';
+	import Questions from '$lib/components/Questions.svelte';
+
+	let springValueUser = spring(100, { stiffness: 0.03, damping: 0.4 });
+	let springValueQuestions = spring(100, { stiffness: 0.03, damping: 0.4 });
+
+	$: $userDrawerSlide = $springValueUser;
+	$: $anyQuestionsDrawerSlide = $springValueQuestions;
+
+	export let data;
+
+	$: if (!$isUserFormOpen) springValueUser.set(100, { soft: true });
+	$: if (!$anyQuestions) springValueQuestions.set(100, { soft: true });
+
+	// Dark Mode
+	$: if (browser) {
+		if (
+			window.matchMedia('(prefers-color-scheme: dark)').matches &&
+			localStorage.getItem('darkMode') !== 'false'
+		) {
+			document.documentElement.classList.add('dark');
+			$darkMode = true;
+		} else {
+			document.documentElement.classList.remove('dark');
+			$darkMode = false;
+		}
+	}
+
+	// Language
+	const switchLanguage = () => {
+		// Get current url
+		const url = new URL(window.location.href);
+
+		data.locale === 'en' ? goto(`${url.pathname}?lang=de`) : goto(`${url.pathname}?lang=en`);
+	};
+
+	/*
+	 *	Add uestions letters from animate-letters span one by one with smooth animation.
+	 *	Keep the letters for 5 second and then remove them one by one.
+	 */
+	// let span: HTMLSpanElement;
+	// const text = 'Questions?';
+	// let index = 0;
+
+	// onMount(() => {
+	// 	animateTyping();
+	// });
+
+	// function animateTyping() {
+	// 	if (!span) return;
+	// 	if (index < text.length) {
+	// 		span.textContent += text.charAt(index);
+	// 		index++;
+	// 		setTimeout(animateTyping, 500);
+	// 	} else {
+	// 		setTimeout(eraseTyping, 1000);
+	// 	}
+
+	// 	return () => {
+	// 		index = 0;
+	// 		span.textContent = '';
+	// 		setTimeout(animateTyping, 1000);
+	// 	};
+	// }
+
+	// function eraseTyping() {
+	// 	if (index > 1) {
+	// 		span.textContent = text.substring(0, index - 1);
+	// 		index--;
+	// 		setTimeout(eraseTyping, 500);
+	// 	} else setTimeout(animateTyping, 10000);
+	// }
 </script>
 
-<aside class="z-50 flex h-full flex-col items-center justify-between rounded-r-3xl bg-black">
-	<a href="/" class="p-6"> <img src={bookself} alt="Bookself Logo" /></a>
-	<div class="mb-5 mt-auto flex w-full flex-col items-center gap-5 border-b border-gray-200 pb-10">
-		<a href="/booking/1" class="text-white">1</a>
-		<button>
-			<Icon src={icons.language} className="w-5 h-5 fill-white" />
+<svelte:window
+	on:click={(e) => {
+		userClickOutside(e, springValueUser);
+		questionsClickOutside(e, springValueQuestions);
+	}}
+/>
+
+<Questions />
+
+<p
+	class="z-2 fixed bottom-0 h-fit w-full bg-blue-300 pb-20 pt-4 text-center dark:bg-blue-300 sm:top-0 sm:py-4"
+>
+	It doesn't work anymore. Please try to get a new appointment via this <a
+		class="pointer underline"
+		href="https://www.berlin.de/einwanderung/en/services/appointments/artikel.1144334.en.php"
+		>form</a
+	>
+</p>
+
+<aside
+	class="sticky top-0 z-50 flex items-center justify-between gap-5 bg-black p-4 transition-colors dark:bg-[#3F3351] md:h-screen md:flex-col md:rounded-r-3xl md:p-0"
+>
+	<a href="https://glowing-brand-015819.framer.app/" class="md:p-6">
+		<img src={bookself} class="h-12 w-12" alt="Bookself Logo" /></a
+	>
+	<nav
+		class="flex w-full justify-end gap-5 md:mb-5 md:mt-auto md:flex-col md:items-center md:border-b md:border-gray-200 md:pb-10"
+	>
+		<a href="/stats" class="cursor-pointer font-bold text-white">
+			<Icon src={icons.stats} className="w-6 h-6 fill-white" />
+		</a>
+		<button class="cursor-pointer font-bold text-white" on:click={switchLanguage}>
+			{data.locale}
 		</button>
-		<button>
-			<Icon src={icons.sun} className="w-6 h-6 fill-white" />
+		<button on:click={handleSwitchDarkMode} class="transition-all">
+			{#if !$darkMode}
+				<div
+					class="transition-all"
+					transition:slide={{ delay: 0, duration: 500, easing: quintOut, axis: 'y' }}
+				>
+					<Icon src={icons.sun} className="w-6 h-6 fill-white" />
+				</div>
+			{:else}
+				<div
+					class="transition-all"
+					transition:slide={{ delay: 0, duration: 500, easing: quintOut, axis: 'y' }}
+				>
+					<Icon src={icons.moon} className="w-6 h-6 fill-white" />
+				</div>
+			{/if}
 		</button>
-	</div>
+	</nav>
 	{#if $page.data.session}
-		<button on:click={() => signOut()}>
+		<button
+			class="userButton"
+			on:click={() => {
+				if ($isUserFormOpen) {
+					$isUserFormOpen = false;
+					springValueUser.set(100, { soft: true });
+					return;
+				}
+				$isUserFormOpen = true;
+				springValueUser.set($isUserFormOpen ? 0 : 100, { soft: true });
+			}}
+		>
 			<img
-				src={$page.data.session.user?.image ? $page.data.session.user?.image : logo}
+				src={$page.data.session.user?.image ? $page.data.session.user?.image : imagePlaceholder}
 				alt={$page.data.session.user?.name}
-				class="mb-5 h-10 w-10 cursor-pointer rounded-full transition-transform hover:scale-125"
+				class="w-14 cursor-pointer rounded-full transition-transform hover:scale-125 md:mb-5"
 			/>
 		</button>
 	{/if}
 </aside>
+
 <slot />
+<!-- <Transition url={$page.url} /> -->
+
+<button
+	class="q-button z-3 fixed bottom-5 right-4 h-10 rounded-full bg-black px-3 text-lg font-bold text-white drop-shadow transition-all dark:bg-[#864879] md:right-10"
+	on:click={() => {
+		if ($anyQuestions) {
+			$anyQuestions = false;
+			springValueQuestions.set(100, { soft: true });
+			return;
+		}
+
+		$anyQuestions = true;
+		springValueQuestions.set($anyQuestions ? 0 : 100, { soft: true });
+	}}
+>
+	F&Q
+</button>
