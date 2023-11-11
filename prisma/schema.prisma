@@ -115,10 +115,3 @@ model CronLogs {
   updatedAt DateTime @updatedAt
   message   String
 }
-
-model CronLogs {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  message   String
-}
