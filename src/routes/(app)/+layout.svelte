@@ -101,7 +101,7 @@
 <Questions />
 
 <p
-	class="z-2 fixed bottom-0 h-fit w-full bg-blue-300 pb-20 pt-4 text-center dark:bg-blue-300 sm:top-0 sm:py-4"
+	class="z-10 fixed bottom-0 h-fit w-full bg-blue-300 pb-20 pt-4 text-center dark:bg-blue-300 sm:top-0 sm:py-4"
 >
 	It doesn't work anymore. Please try to get a new appointment via this <a
 		class="pointer underline"
